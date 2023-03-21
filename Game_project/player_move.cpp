@@ -4,29 +4,20 @@
 #include <stdlib.h>
 #include <windows.h>
 #include <graphics.h> 
-#define hih 720 
-#define wid 1280 
+#include "var.cpp"
 extern int key, left_walk_cnt, right_walk_cnt, atk_cnt;
-extern struct human // ª±®aªºµ²ºc  
-{
-	int x;	// x ®y¼Ð 
-	int y;	// y ®y¼Ð 
-	int hp;	// ¦å¶q 
-	char dir;// ¤Hª«­±´Âªº¤è¦V 
-	int output_idx; // ¥Î©óÀx¦s­n¿é¥Xªº¹Ï¤ù½s¸¹ 
-	PIMAGE player_img[16], player_msk[16]; // Àx¦s©ñ¤j«áªº¹Ï¤ù 
-}player;
+extern Human player;
 
-void walk_left(); // ©¹¥ª¨« 
-void walk_right();// ©¹¥k¨« 
-void atk();// §ðÀ» 
+void walk_left(); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
+void walk_right();// ï¿½ï¿½ï¿½kï¿½ï¿½ 
+void atk();// ï¿½ï¿½ï¿½ï¿½ 
 
 void move(int speed)
 {
-	if (kbhit()) // ÀË´ú¬O§_¦³Áä½L¿é¤J 
+	if (kbhit()) // ï¿½Ë´ï¿½ï¿½Oï¿½_ï¿½ï¿½ï¿½ï¿½Lï¿½ï¿½J 
 		key = getch();
 	
-	if(atk_cnt) // atk_cnt : 0 ¥Nªí¥¼¶i¦æ§ðÀ» , ¨ä¥L¥¿¾ã¼Æ«h¥Nªí¥¿¦b§ðÀ» 
+	if(atk_cnt) // atk_cnt : 0 ï¿½Nï¿½ï¿½ï¿½ï¿½ï¿½iï¿½ï¿½ï¿½ï¿½ï¿? , ï¿½ï¿½Lï¿½ï¿½ï¿½ï¿½?hï¿½Nï¿½ï¿½ï¿½ï¿½ï¿½bï¿½ï¿½ï¿½ï¿½ 
 	{
 		atk();
 	}
@@ -34,29 +25,29 @@ void move(int speed)
 	{
 		switch (key)
 		{
-			case 97:  // ¿é¤J a 
+			case 97:  // ï¿½ï¿½J a 
 				walk_left();
 				player.x -= speed;
 				
 				break;
-			case 100: // ¿é¤J d
+			case 100: // ï¿½ï¿½J d
 				walk_right();
 				player.x += speed;
 				
 				break;
-			case 106: // ¿é¤J j 
+			case 106: // ï¿½ï¿½J j 
 				atk_cnt = 10;  
 			default:
 				break;
 		}
 	}
-	key = 0; // °õ¦æ°Ê§@«á±N keyÂk 0, Á×§K¤@ª½­«½Æ°Ê§@ 
+	key = 0; // ï¿½ï¿½ï¿½ï¿½Ê§@ï¿½ï¿½N keyï¿½k 0, ï¿½×§Kï¿½@ï¿½ï¿½ï¿½ï¿½ï¿½Æ°Ê§@ 
 }
 
 void walk_left()
 {
-	// ­Y­n²¾°Êªº¤è¦V»Pª±®a­±¹ïªº¤è¦V¤£¦P , «h¥ýÂà¦V
-	// §_«h®Ú¾Ú¨«¸ô­p¼Æ¾¹ Àx¦s­n¿é¥Xªº¹Ï¤ù½s¸¹ 
+	// ï¿½Yï¿½nï¿½ï¿½ï¿½Êªï¿½ï¿½ï¿½Vï¿½Pï¿½ï¿½ï¿½aï¿½ï¿½ï¿½ïªºï¿½ï¿½Vï¿½ï¿½ï¿½P , ï¿½hï¿½ï¿½ï¿½ï¿½V
+	// ï¿½_ï¿½hï¿½Ú¾Ú¨ï¿½ï¿½ï¿½ï¿½pï¿½Æ¾ï¿½ ï¿½xï¿½sï¿½nï¿½ï¿½Xï¿½ï¿½ï¿½Ï¤ï¿½ï¿½sï¿½ï¿½ 
 	if(player.dir != 'a')  
 	{
 		player.output_idx = 1;
@@ -86,8 +77,8 @@ void walk_left()
 
 void walk_right()
 {
-	// ­Y­n²¾°Êªº¤è¦V»Pª±®a­±¹ïªº¤è¦V¤£¦P , «h¥ýÂà¦V
-	// §_«h®Ú¾Ú¨«¸ô­p¼Æ¾¹ Àx¦s­n¿é¥Xªº¹Ï¤ù½s¸¹ 
+	// ï¿½Yï¿½nï¿½ï¿½ï¿½Êªï¿½ï¿½ï¿½Vï¿½Pï¿½ï¿½ï¿½aï¿½ï¿½ï¿½ïªºï¿½ï¿½Vï¿½ï¿½ï¿½P , ï¿½hï¿½ï¿½ï¿½ï¿½V
+	// ï¿½_ï¿½hï¿½Ú¾Ú¨ï¿½ï¿½ï¿½ï¿½pï¿½Æ¾ï¿½ ï¿½xï¿½sï¿½nï¿½ï¿½Xï¿½ï¿½ï¿½Ï¤ï¿½ï¿½sï¿½ï¿½ 
 	if(player.dir != 'd')
 	{
 		player.output_idx = 0;
@@ -117,8 +108,8 @@ void walk_right()
 
 void atk()
 {
-	// ®Ú¾Ú§ðÀ»­p¼Æ¾¹¥H¤Î­±¹ïªº¤è¦V  
-	// Àx¦s­n¿é¥Xªº¹Ï¤ù½s¸¹ 
+	// ï¿½Ú¾Ú§ï¿½ï¿½ï¿½ï¿½pï¿½Æ¾ï¿½ï¿½Hï¿½Î­ï¿½ï¿½ïªºï¿½ï¿½V  
+	// ï¿½xï¿½sï¿½nï¿½ï¿½Xï¿½ï¿½ï¿½Ï¤ï¿½ï¿½sï¿½ï¿½ 
 	if(atk_cnt > 8)
 	{
 		if(player.dir == 'd')

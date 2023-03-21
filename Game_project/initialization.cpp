@@ -1,28 +1,19 @@
 #include <ege.h>
 #include <stdio.h>
 #include <graphics.h> 
-#define hih 720 
-#define wid 1280 
+#include "var.cpp"
 extern PIMAGE new_bg;
 PIMAGE ori_bg;
-// ori_bg : 原始背景	new_bh : 放大後的背景 
+// ori_bg : 嚙踝蕭l嚙瘢嚙踝蕭	new_bh : 嚙踝蕭j嚙賦的嚙瘢嚙踝蕭 
 extern int left_walk_cnt, right_walk_cnt, atk_cnt;
-// left_walk_cnt, right_walk_cnt : 走路計數器 用於計算走路時輸出的圖片
+// left_walk_cnt, right_walk_cnt : 嚙踝蕭嚙踝蕭嚙緘嚙複橘蕭 嚙諄抬蕭p嚙賤走嚙踝蕭嚙褕選蕭X嚙踝蕭嚙誕歹蕭
 
-extern struct human // 玩家的結構  
-{
-	int x;	// x 座標 
-	int y;	// y 座標 
-	int hp;	// 血量 
-	char dir;// 人物面朝的方向 
-	int output_idx; // 用於儲存要輸出的圖片編號 
-	PIMAGE player_img[16], player_msk[16]; // 儲存放大後的圖片 
-}player;
+extern Human player;
 
 PIMAGE player_ori_img[16], player_ori_msk[16];
-// 原始圖片 
+// 嚙踝蕭l嚙誕歹蕭 
 
-void loading(); // 載入圖片 
+void loading(); // 嚙踝蕭嚙皚嚙誕歹蕭 
 
 void initialization()
 {
@@ -30,17 +21,17 @@ void initialization()
 	
 	for(int i = 0; i < 16; i++)
 	{
-		player_ori_img[i] = newimage(); // 創建圖片 
+		player_ori_img[i] = newimage(); // 嚙請建圖歹蕭 
 		player_ori_msk[i] = newimage();
 		
-		player.player_img[i] = newimage(76, 66); // 創建 76 * 66 大小的圖片 
+		player.player_img[i] = newimage(76, 66); // 嚙請恬蕭 76 * 66 嚙篌嚙緘嚙踝蕭嚙誕歹蕭 
 		player.player_msk[i] = newimage(76, 66);
 	}
 	
-	loading(); // 載入圖片
-	// 設定初始值 
-	player.x = wid / 2; // 暫定 
-	player.y = hih / 2; // 暫定
+	loading(); // 嚙踝蕭嚙皚嚙誕歹蕭
+	// 嚙稽嚙緩嚙踝蕭l嚙踝蕭 
+	player.x = wid / 2; // 嚙褓定 
+	player.y = hih / 2; // 嚙褓定
 	player.hp = 5;
 	player.dir = 'd';
 	player.output_idx = 0;
@@ -49,8 +40,8 @@ void initialization()
 	right_walk_cnt = 0;
 	atk_cnt = 0;
 	
-	// 縮放後的圖片儲存在其他位置後
-	// 將原本的圖片刪除 
+	// 嚙磐嚙踝蕭嶊綽蕭洃嚙踝蕭x嚙編嚙箭嚙踝蕭L嚙踝蕭m嚙踝蕭
+	// 嚙瞇嚙趣本嚙踝蕭嚙誕歹蕭嚙磋嚙踝蕭 
 	delimage(ori_bg);
 	
 	for(int i = 0; i < 16; i++)
@@ -60,7 +51,7 @@ void initialization()
 	}
 }
 
-void loading() // 載入圖片 
+void loading() // 嚙踝蕭嚙皚嚙誕歹蕭 
 {
 	getimage(ori_bg, "images\\back_ground_01.png");
 	
@@ -112,7 +103,7 @@ void loading() // 載入圖片
 	getimage(player_ori_msk[15], "images\\main_char\\15_a_atk_5_msk.png");
 	getimage(player_ori_img[15], "images\\main_char\\15_a_atk_5_img.png");
 	
-	// 將載入後的圖片進行縮放 
+	// 嚙瞇嚙踝蕭嚙皚嚙賦的嚙誕歹蕭嚙箠嚙踝蕭嚙磐嚙踝蕭 
 	putimage(new_bg, 0, 0, wid, hih, ori_bg, 0, 0, 1000, 740);
 	
 	for(int i = 0; i < 16; i++)
