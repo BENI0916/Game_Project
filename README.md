@@ -1,0 +1,3 @@
+# Game_Project ver.0322
+1. 新增var.cpp用於存放常用變數(相當於java的介面)
+2. 待續...
