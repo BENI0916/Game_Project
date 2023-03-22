@@ -1,19 +1,19 @@
 #include <ege.h>
 #include <stdio.h>
 #include <graphics.h> 
-#include "var.cpp"
+#include "var.cpp" 
 extern PIMAGE new_bg;
 PIMAGE ori_bg;
-// ori_bg : ï¿½ï¿½lï¿½Iï¿½ï¿½	new_bh : ï¿½ï¿½jï¿½áªºï¿½Iï¿½ï¿½ 
-extern int left_walk_cnt, right_walk_cnt, atk_cnt;
-// left_walk_cnt, right_walk_cnt : ï¿½ï¿½ï¿½ï¿½ï¿½pï¿½Æ¾ï¿½ ï¿½Î©ï¿½pï¿½â¨«ï¿½ï¿½ï¿½É¿ï¿½Xï¿½ï¿½ï¿½Ï¤ï¿½
+// ori_bg : ­ì©l­I´º	new_bg : ©ñ¤j«áªº­I´º 
+extern int atk_cnt, player_walk_cnt;
+// player_walk_cnt : ¨«¸ô­p¼Æ¾¹ ¥Î©ó­pºâ¨«¸ô®É¿é¥Xªº¹Ï¤ù
 
 extern Human player;
 
 PIMAGE player_ori_img[16], player_ori_msk[16];
-// ï¿½ï¿½lï¿½Ï¤ï¿½ 
+// ­ì©l¹Ï¤ù 
 
-void loading(); // ï¿½ï¿½ï¿½Jï¿½Ï¤ï¿½ 
+void loading(); // ¸ü¤J¹Ï¤ù 
 
 void initialization()
 {
@@ -21,27 +21,26 @@ void initialization()
 	
 	for(int i = 0; i < 16; i++)
 	{
-		player_ori_img[i] = newimage(); // ï¿½Ð«Ø¹Ï¤ï¿½ 
+		player_ori_img[i] = newimage(); // ³Ð«Ø¹Ï¤ù 
 		player_ori_msk[i] = newimage();
 		
-		player.player_img[i] = newimage(76, 66); // ï¿½Ð«ï¿½ 76 * 66 ï¿½jï¿½pï¿½ï¿½ï¿½Ï¤ï¿½ 
+		player.player_img[i] = newimage(76, 66); // ³Ð«Ø 76 * 66 ¤j¤pªº¹Ï¤ù 
 		player.player_msk[i] = newimage(76, 66);
 	}
 	
-	loading(); // ï¿½ï¿½ï¿½Jï¿½Ï¤ï¿½
-	// ï¿½]ï¿½wï¿½ï¿½lï¿½ï¿½ 
-	player.x = wid / 2; // ï¿½È©w 
-	player.y = hih / 2; // ï¿½È©w
+	loading(); // ¸ü¤J¹Ï¤ù
+	// ³]©wªì©l­È 
+	player.x = wid / 2; // ¼È©w 
+	player.y = hih / 2; // ¼È©w
 	player.hp = 5;
 	player.dir = 'd';
 	player.output_idx = 0;
 	
-	left_walk_cnt = 0;
-	right_walk_cnt = 0;
+	player_walk_cnt = 11;
 	atk_cnt = 0;
 	
-	// ï¿½Yï¿½ï¿½áªºï¿½Ï¤ï¿½ï¿½xï¿½sï¿½bï¿½ï¿½Lï¿½ï¿½mï¿½ï¿½
-	// ï¿½Nï¿½ì¥»ï¿½ï¿½ï¿½Ï¤ï¿½ï¿½Rï¿½ï¿½ 
+	// ÁY©ñ«áªº¹Ï¤ùÀx¦s¦b¨ä¥L¦ì¸m«á
+	// ±N­ì¥»ªº¹Ï¤ù§R°£ 
 	delimage(ori_bg);
 	
 	for(int i = 0; i < 16; i++)
@@ -51,59 +50,23 @@ void initialization()
 	}
 }
 
-void loading() // ï¿½ï¿½ï¿½Jï¿½Ï¤ï¿½ 
+void loading() // ¸ü¤J¹Ï¤ù 
 {
 	getimage(ori_bg, "images\\back_ground_01.png");
 	
-	getimage(player_ori_msk[0], "images\\main_char\\0_d_stand_msk.png");
-	getimage(player_ori_img[0], "images\\main_char\\0_d_stand_img.png");
+	char img[100];
+	char msk[100];
 	
-	getimage(player_ori_msk[1], "images\\main_char\\1_a_stand_msk.png");
-	getimage(player_ori_img[1], "images\\main_char\\1_a_stand_img.png");
+	for(int i = 0; i < 16; i++)
+	{
+		sprintf(img, "images\\main_char\\img_%d.png", i);
+		sprintf(msk, "images\\main_char\\msk_%d.png", i);
+		
+		getimage(player_ori_img[i], img);
+		getimage(player_ori_msk[i], msk);
+	}
 	
-	getimage(player_ori_msk[2], "images\\main_char\\2_d_walk_1_msk.png");
-	getimage(player_ori_img[2], "images\\main_char\\2_d_walk_1_img.png");
-	
-	getimage(player_ori_msk[3], "images\\main_char\\3_a_walk_1_msk.png");
-	getimage(player_ori_img[3], "images\\main_char\\3_a_walk_1_img.png");
-	
-	getimage(player_ori_msk[4], "images\\main_char\\4_d_walk_2_msk.png");
-	getimage(player_ori_img[4], "images\\main_char\\4_d_walk_2_img.png");
-	
-	getimage(player_ori_msk[5], "images\\main_char\\5_a_walk_2_msk.png");
-	getimage(player_ori_img[5], "images\\main_char\\5_a_walk_2_img.png");
-	
-	getimage(player_ori_msk[6], "images\\main_char\\6_d_atk_1_msk.png");
-	getimage(player_ori_img[6], "images\\main_char\\6_d_atk_1_img.png");
-	
-	getimage(player_ori_msk[7], "images\\main_char\\7_a_atk_1_msk.png");
-	getimage(player_ori_img[7], "images\\main_char\\7_a_atk_1_img.png");
-	
-	getimage(player_ori_msk[8], "images\\main_char\\8_d_atk_2_msk.png");
-	getimage(player_ori_img[8], "images\\main_char\\8_d_atk_2_img.png");
-	
-	getimage(player_ori_msk[9], "images\\main_char\\9_a_atk_2_msk.png");
-	getimage(player_ori_img[9], "images\\main_char\\9_a_atk_2_img.png");
-	
-	getimage(player_ori_msk[10], "images\\main_char\\10_d_atk_3_msk.png");
-	getimage(player_ori_img[10], "images\\main_char\\10_d_atk_3_img.png");
-	
-	getimage(player_ori_msk[11], "images\\main_char\\11_a_atk_3_msk.png");
-	getimage(player_ori_img[11], "images\\main_char\\11_a_atk_3_img.png");
-	
-	getimage(player_ori_msk[12], "images\\main_char\\12_d_atk_4_msk.png");
-	getimage(player_ori_img[12], "images\\main_char\\12_d_atk_4_img.png");
-	
-	getimage(player_ori_msk[13], "images\\main_char\\13_a_atk_4_msk.png");
-	getimage(player_ori_img[13], "images\\main_char\\13_a_atk_4_img.png");
-	
-	getimage(player_ori_msk[14], "images\\main_char\\14_d_atk_5_msk.png");
-	getimage(player_ori_img[14], "images\\main_char\\14_d_atk_5_img.png");
-	
-	getimage(player_ori_msk[15], "images\\main_char\\15_a_atk_5_msk.png");
-	getimage(player_ori_img[15], "images\\main_char\\15_a_atk_5_img.png");
-	
-	// ï¿½Nï¿½ï¿½ï¿½Jï¿½áªºï¿½Ï¤ï¿½ï¿½iï¿½ï¿½ï¿½Yï¿½ï¿½ 
+	// ±N¸ü¤J«áªº¹Ï¤ù¶i¦æÁY©ñ 
 	putimage(new_bg, 0, 0, wid, hih, ori_bg, 0, 0, 1000, 740);
 	
 	for(int i = 0; i < 16; i++)

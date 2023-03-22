@@ -4,19 +4,22 @@
 #include <stdlib.h>
 #include <windows.h>
 #include <graphics.h> 
-#include "var.cpp"
-
-PIMAGE new_bg = newimage(wid, hih); // new_bh : 放大後的背景 
-int key, left_walk_cnt, right_walk_cnt, atk_cnt;
+#include "var.cpp" 
+PIMAGE new_bg = newimage(wid, hih);
+// new_bh : 放大後的背景 
+int key, atk_cnt, player_walk_cnt;
 // key : 鍵盤輸入的儲存位置
 // left_walk_cnt, right_walk_cnt : 走路計數器 用於計算走路時輸出的圖片 
+
 Human player;
+
 void initialization();  // 初始化 
 void move(int speed);	// 玩家移動 speed: 移動一次的距離  
 void output_image();	// 輸出圖片 
 
 
-int main(void) {
+int main(void)
+{
 	initgraph(wid, hih);	// 初始化輸出窗口 
 	initialization();
 	

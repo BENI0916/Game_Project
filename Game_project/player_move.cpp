@@ -5,145 +5,66 @@
 #include <windows.h>
 #include <graphics.h> 
 #include "var.cpp"
-extern int key, left_walk_cnt, right_walk_cnt, atk_cnt;
+extern int key, atk_cnt, player_walk_cnt;
 extern Human player;
 
-void walk_left(); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
-void walk_right();// ï¿½ï¿½ï¿½kï¿½ï¿½ 
-void atk();// ï¿½ï¿½ï¿½ï¿½ 
+void player_walk(int);
+void atk(int);// §ðÀ» 
 
 void move(int speed)
 {
-	if (kbhit()) // ï¿½Ë´ï¿½ï¿½Oï¿½_ï¿½ï¿½ï¿½ï¿½Lï¿½ï¿½J 
+	if (kbhit()) // ÀË´ú¬O§_¦³Áä½L¿é¤J 
 		key = getch();
 	
-	if(atk_cnt) // atk_cnt : 0 ï¿½Nï¿½ï¿½ï¿½ï¿½ï¿½iï¿½ï¿½ï¿½ï¿½ï¿? , ï¿½ï¿½Lï¿½ï¿½ï¿½ï¿½?hï¿½Nï¿½ï¿½ï¿½ï¿½ï¿½bï¿½ï¿½ï¿½ï¿½ 
+	if(atk_cnt > -1) // atk_cnt  < 0 ¥Nªí¥¼¶i¦æ§ðÀ» , ¨ä¥L¥¿¾ã¼Æ«h¥Nªí¥¿¦b§ðÀ» 
 	{
-		atk();
+		if(player.dir == 'd')
+			atk(0);
+		else
+			atk(1);
 	}
 	else
 	{
 		switch (key)
 		{
-			case 97:  // ï¿½ï¿½J a 
-				walk_left();
+			case 97:  // ¿é¤J a 
+				player.dir = 'a';
+				player_walk(1);
 				player.x -= speed;
 				
 				break;
-			case 100: // ï¿½ï¿½J d
-				walk_right();
+			case 100: // ¿é¤J d
+				player.dir = 'd';
+				player_walk(0);
 				player.x += speed;
 				
 				break;
-			case 106: // ï¿½ï¿½J j 
-				atk_cnt = 10;  
+			case 106: // ¿é¤J j 
+				atk_cnt = 9;  
 			default:
 				break;
 		}
 	}
-	key = 0; // ï¿½ï¿½ï¿½ï¿½Ê§@ï¿½ï¿½N keyï¿½k 0, ï¿½×§Kï¿½@ï¿½ï¿½ï¿½ï¿½ï¿½Æ°Ê§@ 
+	key = 0; // °õ¦æ°Ê§@«á±N keyÂk 0, Á×§K¤@ª½­«½Æ°Ê§@ 
 }
 
-void walk_left()
+void player_walk(int val)
 {
-	// ï¿½Yï¿½nï¿½ï¿½ï¿½Êªï¿½ï¿½ï¿½Vï¿½Pï¿½ï¿½ï¿½aï¿½ï¿½ï¿½ïªºï¿½ï¿½Vï¿½ï¿½ï¿½P , ï¿½hï¿½ï¿½ï¿½ï¿½V
-	// ï¿½_ï¿½hï¿½Ú¾Ú¨ï¿½ï¿½ï¿½ï¿½pï¿½Æ¾ï¿½ ï¿½xï¿½sï¿½nï¿½ï¿½Xï¿½ï¿½ï¿½Ï¤ï¿½ï¿½sï¿½ï¿½ 
-	if(player.dir != 'a')  
-	{
-		player.output_idx = 1;
-		player.dir = 'a';
-	}
-	else if(left_walk_cnt < 3)
-	{
-		player.output_idx = 3;
-		left_walk_cnt++;
-	}
-	else if(left_walk_cnt < 6)
-	{
-		player.output_idx = 1;
-		left_walk_cnt++;
-	}
-	else if(left_walk_cnt < 9)
-	{
-		player.output_idx = 5;
-		left_walk_cnt++;
-	}
-	else if(left_walk_cnt == 9)
-	{
-		player.output_idx = 1;
-		left_walk_cnt = 0;
-	}
+	int table[4] = {0, 4, 0, 2};
+	
+	player.output_idx = table[player_walk_cnt / 3] + val;
+	player_walk_cnt--;
+
+	if(player_walk_cnt < 0)
+		player_walk_cnt = 11;
 }
 
-void walk_right()
+void atk(int val)
 {
-	// ï¿½Yï¿½nï¿½ï¿½ï¿½Êªï¿½ï¿½ï¿½Vï¿½Pï¿½ï¿½ï¿½aï¿½ï¿½ï¿½ïªºï¿½ï¿½Vï¿½ï¿½ï¿½P , ï¿½hï¿½ï¿½ï¿½ï¿½V
-	// ï¿½_ï¿½hï¿½Ú¾Ú¨ï¿½ï¿½ï¿½ï¿½pï¿½Æ¾ï¿½ ï¿½xï¿½sï¿½nï¿½ï¿½Xï¿½ï¿½ï¿½Ï¤ï¿½ï¿½sï¿½ï¿½ 
-	if(player.dir != 'd')
-	{
-		player.output_idx = 0;
-		player.dir = 'd';
-	}
-	else if(right_walk_cnt < 3)
-	{
-		player.output_idx = 2;
-		right_walk_cnt++;
-	}
-	else if(right_walk_cnt < 6)
-	{
-		player.output_idx = 0;
-		right_walk_cnt++;
-	}
-	else if(right_walk_cnt < 9)
-	{
-		player.output_idx = 4;
-		right_walk_cnt++;
-	}
-	else if(right_walk_cnt == 9)
-	{
-		player.output_idx = 0;
-		right_walk_cnt = 0;
-	}
-}
-
-void atk()
-{
-	// ï¿½Ú¾Ú§ï¿½ï¿½ï¿½ï¿½pï¿½Æ¾ï¿½ï¿½Hï¿½Î­ï¿½ï¿½ïªºï¿½ï¿½V  
-	// ï¿½xï¿½sï¿½nï¿½ï¿½Xï¿½ï¿½ï¿½Ï¤ï¿½ï¿½sï¿½ï¿½ 
-	if(atk_cnt > 8)
-	{
-		if(player.dir == 'd')
-			player.output_idx = 6;
-		else
-			player.output_idx = 7;
-	}
-	else if(atk_cnt > 6)
-	{
-		if(player.dir == 'd')
-			player.output_idx = 8;
-		else
-			player.output_idx = 9;
-	}
-	else if(atk_cnt > 4)	
-	{
-		if(player.dir == 'd')
-			player.output_idx = 10;
-		else
-			player.output_idx = 11;
-	}
-	else if(atk_cnt > 2)
-	{
-		if(player.dir == 'd')
-			player.output_idx = 12;
-		else
-			player.output_idx = 13;
-	}
-	else if(atk_cnt > 0)
-	{
-		if(player.dir == 'd')
-			player.output_idx = 14;
-		else
-			player.output_idx = 15;
-	}
+	// ®Ú¾Ú§ðÀ»­p¼Æ¾¹¥H¤Î­±¹ïªº¤è¦V  
+	// Àx¦s­n¿é¥Xªº¹Ï¤ù½s¸¹ 
+	int table[5] = {14, 12, 10, 8, 6};
+	
+	player.output_idx = table[atk_cnt / 2] + val;
 	atk_cnt--;
 }
