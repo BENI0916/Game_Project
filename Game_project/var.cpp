@@ -3,7 +3,6 @@
 #include <conio.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
 #include <windows.h>
 #include <graphics.h> 
 
@@ -16,11 +15,14 @@ struct Human
 	int x;	// x 座標 
 	int y;	// y 座標  
 	int hp;	// 血量
-	int damage;
-	int atked;
+	int damage; // 對敵人造成的傷害  
+	int atked;// 判定是否有造成傷害 
 	char dir;// 人物面朝的方向 
 	int output_idx; // 用於儲存要輸出的圖片編號 
 	PIMAGE *player_img, *player_msk;  //角色儲存圖片 
+	int high;
+	int width;
+	int power;// 擊退敵人的距離 
 };
 
 struct Monster
@@ -32,6 +34,12 @@ struct Monster
 	char dir;
 	int output_idx;
 	PIMAGE *enemy_img, *enemy_msk;
+	int high;
+	int width;
+	int power;
+	int speed;
+	int atk_0_cnt;
+	int atk_1_cnt;
 };
 
 struct Bullet
@@ -40,6 +48,8 @@ struct Bullet
 	int y;
 	int output_idx;
 	int status;
-	int space_cal[6];
 	PIMAGE *skill_img, *skill_msk;
+	int high;
+	int width;
+	int power;
 };

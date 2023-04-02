@@ -2,7 +2,6 @@
 #include <conio.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
 #include <windows.h>
 #include <graphics.h> 
 #include "dirent.h"
@@ -10,7 +9,7 @@
 PIMAGE bg = newimage(wid, hih); //bg:儲存背景圖片之變數
 extern Human player;
 extern Monster enemy;
-extern Bullet skill;
+extern Bullet skill[2];
 
 void output_image()
 {
@@ -22,10 +21,14 @@ void output_image()
 		putimage(enemy.x, enemy.y, enemy.enemy_msk[enemy.output_idx], NOTSRCERASE);
 		putimage(enemy.x, enemy.y, enemy.enemy_img[enemy.output_idx], SRCINVERT);
 		
-		if(skill.status)
+		for(int i = 0; i < 2; i++)
 		{
-			putimage(skill.x, skill.y, skill.skill_msk[skill.output_idx], NOTSRCERASE);
-			putimage(skill.x, skill.y, skill.skill_img[skill.output_idx], SRCINVERT);
+			// 若技能正在發動會印出 
+			if(skill[i].status > 0)
+			{
+				putimage(skill[i].x, skill[i].y, skill[i].skill_msk[skill[i].output_idx], NOTSRCERASE);
+				putimage(skill[i].x, skill[i].y, skill[i].skill_img[skill[i].output_idx], SRCINVERT);
+			}
 		}
 	}
 	

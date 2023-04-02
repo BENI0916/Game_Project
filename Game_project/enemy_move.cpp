@@ -2,7 +2,6 @@
 #include <conio.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
 #include <windows.h>
 #include <graphics.h> 
 #include "var.cpp"
@@ -12,25 +11,28 @@ extern Monster enemy;
 
 void enemy_move()
 {
-	if(enemy.x > player.x)
+	if((enemy.x + enemy.width / 2) > (player.x + player.width / 2))
 		enemy.dir = 'a';
 	else
 		enemy.dir = 'd';
-		
-	if(abs(enemy.x - player.x) > 300)
+	
+	// 若敵人與玩家距離大於敵人的兩個身位
+	// 則會往玩家方向移動 
+	if(abs(enemy.x - player.x) >= enemy.width * 2)
 	{
 		if(enemy.x > player.x)
 		{	
-			enemy.x -= 5;
+			enemy.x -= enemy.speed;
 			enemy.output_idx = 1;
 		}
 		else
 		{
-			enemy.x += 5;
+			enemy.x += enemy.speed;
 			enemy.output_idx = 0;
 		}
 	}
 	
+	// 讓敵人走路會有浮動 
 	if(flag == 40)
 	{
 		enemy.y -= 3;

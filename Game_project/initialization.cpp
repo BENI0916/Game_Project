@@ -2,7 +2,6 @@
 #include <conio.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
 #include <windows.h>
 #include <graphics.h>
 #include "dirent.h" 
@@ -11,12 +10,13 @@ extern int atk_cnt, player_walk_cnt, flag, enemy_atk_type, player_jump_cnt, atke
 extern double start;
 extern Human player;
 extern Monster enemy;
-extern Bullet skill;
+extern Bullet skill[2];
 
 void loadBG(char filename[]);
 void loadCHAR(char filename[],PIMAGE **ori_img,PIMAGE **ori_msk,int w,int h);
 void enemy_ini(void);
-void skill_ini(void);
+void skill_ini_00(void);
+void skill_ini_01(void);
 
 void initialization()
 {
@@ -30,23 +30,27 @@ void initialization()
 
 	// 設定初始值 
 	player.x = wid / 4; // 暫定 
-	player.y = hih * 0.6; // 暫定
-	player.hp = 100;
-	player.damage = 25;
-	player.atked = 0;
-	player.dir = 'd';
-	player.output_idx = 0;
+	player.y = hih * 0.6; // 暫定 
+	player.hp = 10;
+	player.damage = 25; // 對敵人造成的傷害 
+	player.atked = 0;   // 判定是否有造成傷害 
+	player.dir = 'd';   // 方向 
+	player.output_idx = 0;// 輸出圖片編號 
+	player.high = 66;   // 人物圖片的高 
+	player.width = 76;  // 人物圖片的寬 
+	player.power = 30;  // 擊退敵人的距離 
 	
-	player_walk_cnt = 11;
+	player_walk_cnt = 11; // 走路計時器 
 	
-	enemy_ini();
+	enemy_ini(); // 初始化敵人 
 	flag = 10;
 	
-	skill_ini();
+	skill_ini_00(); // 初始化敵人的技能 
+	skill_ini_01();
 	
-	start = fclock();
-	enemy_atk_type = -1;
-	player_jump_cnt = -1;
+	start = fclock(); // 用於計時敵人的攻擊時間間隔 
+	enemy_atk_type = -1; // 敵人使用的技能編號 
+	player_jump_cnt = -1;// 人物跳躍計時器 
 }
 
 void enemy_ini()
@@ -63,27 +67,48 @@ void enemy_ini()
 	enemy.y = hih * 0.6 - 165 + 66;
 	enemy.dir = 'a';
 	enemy.hp = 100;
-	enemy.damage = 0;
+	enemy.damage = 0; // 敵人造成的傷害 
 	enemy.output_idx = 1;
+	enemy.high = 165;
+	enemy.width = 165;
+	enemy.power = 100; // 敵人擊退玩家的距離 
+	enemy.speed = 5;    
+	enemy.atk_0_cnt = 199; // 敵人的技能計數器 
+	enemy.atk_1_cnt = 99;  
 }
 
-void skill_ini()
+// 技能1 
+void skill_ini_00()
 {
 	char s[100];
 	
-	skill.skill_img = NULL;
-	skill.skill_msk = NULL;
-	skill.status = 0;
+	skill[0].skill_img = NULL;
+	skill[0].skill_msk = NULL;
+	skill[0].status = 0;
 	
-	skill.space_cal[0] = 10; // a_left
-	skill.space_cal[1] = 240;  // a_right
-	skill.space_cal[2] = -240;   // d_left
-	skill.space_cal[3] = -10;  // d_right
-	skill.space_cal[4] = 10;   // up
-	skill.space_cal[5] = 116;  // down
+	sprintf(s, "%s", "images\\enemy_0_0_skill");
+	loadCHAR(s, &skill[0].skill_img, &skill[0].skill_msk, 250, 126);
 	
-	sprintf(s, "%s", "images\\enemy_0_skill");
-	loadCHAR(s, &skill.skill_img, &skill.skill_msk, 250, 126);
+	skill[0].output_idx = 0;
+	skill[0].high = 126;
+	skill[0].width = 250;
+	skill[0].power = 200;
+}
+
+// 技能2 
+void skill_ini_01()
+{
+	char s[100];
 	
-	skill.output_idx = 0;
+	skill[1].skill_img = NULL;
+	skill[1].skill_msk = NULL;
+	skill[1].status = 0;
+	
+	sprintf(s, "%s", "images\\enemy_0_1_skill");
+	loadCHAR(s, &skill[1].skill_img, &skill[1].skill_msk, 608, 256);
+	
+	skill[1].output_idx = 0;
+	skill[1].high = 256;
+	skill[1].width = 608;
+	skill[1].power = 200;
 }

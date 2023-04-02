@@ -2,7 +2,6 @@
 #include <conio.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
 #include <windows.h>
 #include <graphics.h> 
 #include "var.cpp"
@@ -86,6 +85,7 @@ void player_walk(int val)
 		player_walk_cnt = 11;
 }
 
+// 計算攻擊 
 void atk(int val)
 {
 	// 根據攻擊計數器以及面對的方向  
@@ -96,9 +96,10 @@ void atk(int val)
 	atk_cnt--;
 }
 
+// 計算跳躍 
 void jump()// 2 4 8 -> 16, 12, 10, 8, 4, 2
 {			// 1 2 3 4 5 6
-	int move_distance[4] = {6, 15, 36, 70};
+	int move_distance[4] = {6, 18, 40, 75};
 	
 	if(player_jump_cnt & 1)
 	{
@@ -111,6 +112,7 @@ void jump()// 2 4 8 -> 16, 12, 10, 8, 4, 2
 	player_jump_cnt--;
 }
 
+// 防止玩家走出邊界 未完成 
 int player_move_check(char dir, int speed)
 {
 	if(dir == 'a')
@@ -122,7 +124,7 @@ int player_move_check(char dir, int speed)
 	}
 	else
 	{
-		if(player.x + 76 + speed < wid)
+		if(player.x + player.width + speed < wid)
 			return 1;
 		else
 			return 0;

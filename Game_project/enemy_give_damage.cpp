@@ -3,69 +3,105 @@
 #include <conio.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
 #include <windows.h>
 #include <graphics.h> 
 #include "var.cpp"
+ 
 extern int key, atk_cnt, player_walk_cnt, flag, enemy_atk_cnt, enemy_atk_type, player_enemy_dir, atked;
 extern double start, end;
 extern Human player;
 extern Monster enemy;
-extern Bullet skill;
-bool is_middle(int up, int pos, int down);
+extern Bullet skill[2];
+int is_middle(int up, int pos, int down);
 
 void enemy_give_damage()
 {
 	if(enemy_atk_type == 0)
 	{
+		// 敵人本體與技能均會造成傷害與擊退效果 
 		if(enemy.dir == 'a')
 		{
-			if(player.x + 40 > enemy.x && enemy.x + 100 > player.x)
+			// 判定玩家是否在敵人的攻擊範圍內 
+			if(is_middle(enemy.x + enemy.width * 1.1, player.x + player.width / 2, enemy.x - enemy.width / 10))
 			{
 				player.hp -= enemy.damage;
-				player.x -= 100;
+				player.x -= enemy.power;
 			}
 			
-			//player.x >= skill.x + skill.space_cal[0] && player.x <= skill.space_cal[1]
-			if(skill.status && is_middle(skill.x + skill.space_cal[1], player.x, skill.x + skill.space_cal[0]))
+			// 判定玩家是否在敵人的技能範圍內 
+			if(skill[0].status && is_middle(skill[0].x + skill[0].width, player.x + player.width / 2, skill[0].x))
 			{
 				player.hp -= enemy.damage;
-				player.x -= 300;
-				skill.status = 0;
+				player.x -= skill[0].power;
+				//skill[0].status = 0;
 			}
 		}
 		else
 		{
-			if(player.x > enemy.x + 64 && enemy.x + 165 > player.x)
+			// player.x > enemy.x + 64 && enemy.x + 165 > player.x
+			if(is_middle(enemy.x + enemy.width, player.x + player.width / 2, enemy.x))
 			{
 				player.hp -= enemy.damage;
-				player.x += 100;
+				player.x += enemy.power;
+			}
+			
+			if(skill[0].status && is_middle(skill[0].x + skill[0].width, player.x + player.width / 2, skill[0].x))
+			{
+				player.hp -= enemy.damage;
+				player.x += skill[0].power;
+				//skill[0].status = 0;
 			}
 		}
 	}
 	else if(enemy_atk_type == 1)
 	{
-		if(enemy_atk_cnt <= 16)
+		// 判定玩家是否在敵人的攻擊範圍內 
+		if(is_middle(62, enemy_atk_cnt, 56))
 		{
-			if(player.x >= enemy.x && player.x <= enemy.x + 165)
+			//player.x >= enemy.x && player.x <= enemy.x + 165
+			if(is_middle(enemy.x + enemy.width, player.x + player.width / 2, enemy.x))
 			{
-				if(player.y - 10 > enemy.y - 165)
+				//player.y - 10 > enemy.y - 165
+				if(is_middle(enemy.y + enemy.high * 1.5, player.y + player.high / 2, enemy.y))
 				{
 					player.hp -= enemy.damage;
 					
 					if(enemy.dir == 'a')
-						player.x -= 150;
+						player.x -= enemy.power;
 					else
-						player.x += 150;	
+						player.x += enemy.power;	
 				}	
 			}	
+		}
+		
+		//printf("%d %d %d %d\n", skill[1].x, player.x + player.width / 2, skill[1].x + skill[1].width / 10, is_middle(skill[1].x, player.x + player.width / 2, skill[1].x + skill[1].width / 10));
+		// 此技能較為特殊 一次共有四個範圍造成傷害 故分成左右兩組 
+		if(is_middle(56, enemy_atk_cnt, 0))
+		{
+			// 左 
+			if(is_middle(skill[1].x + skill[1].width / 10, player.x + player.width / 2, skill[1].x) == 1
+			|| is_middle(skill[1].x + skill[1].width * 30 / 100, player.x + player.width / 2, skill[1].x + skill[1].width * 21 / 100) == 1)
+			{
+				player.hp -= enemy.damage;
+				player.x -= skill[1].power;
+				skill[1].status = 0;
+			}
+			// 右 
+			else if(is_middle(skill[1].x + skill[1].width * 84 / 100, player.x + player.width / 2, skill[1].x + skill[1].width * 74 / 100) == 1
+				 || is_middle(skill[1].x + skill[1].width, player.x + player.width / 2, skill[1].x + skill[1].width * 9 / 10) == 1)
+			{
+				player.hp -= enemy.damage;
+				player.x += skill[1].power;
+				skill[1].status = 0;
+			}
 		}	
 	}
 }
 
-bool is_middle(int up, int pos, int down)
+// 用於判斷 pos 是否在 up 和 down 中間 
+int is_middle(int up, int pos, int down)
 {
 	if(up >= pos && pos >= down)
-		return true;
-	return false;
+		return 1;
+	return 0;
 }

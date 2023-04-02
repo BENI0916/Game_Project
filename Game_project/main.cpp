@@ -2,10 +2,9 @@
 #include <conio.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
 #include <windows.h>
 #include <graphics.h> 
-#include "var.cpp"" 
+#include "var.cpp" 
 
 int key, atk_cnt, player_walk_cnt, player_jump_cnt, last_key, flag, enemy_atk_cnt, enemy_atk_type, player_enemy_dir;
 double start, end;
@@ -14,7 +13,7 @@ double start, end;
 
 Human player;
 Monster enemy;
-Bullet skill;
+Bullet skill[2];
 
 void initialization();
 void move(int speed);
@@ -34,11 +33,11 @@ int main(void)
 	{
 		cleardevice(); // 把輸出的窗口清空 
 		
-		if(enemy.hp > 0)
+		if(enemy.hp > 0) // 若敵人血量不為 0 則會行動 
 		{
-			if(enemy_atk_type == -1)
-				enemy_move();
-			enemy_atk();
+			if(enemy_atk_type == -1) // -1 代表 敵人未開始攻擊 
+				enemy_move();		 // 則敵人會開始移動 
+			enemy_atk();			 // 否則會進行攻擊 
 		}
 		
 		move(5);
@@ -47,3 +46,46 @@ int main(void)
 
 	return 0;
 }
+//                                 |~~~~~~~|
+//                                 |       |
+//                                 |       |
+//                                 |       |
+//                                 |       |
+//                                 |       |
+//      |~.\\\_\~~~~~~~~~~~~~~xx~~~         ~~~~~~~~~~~~~~~~~~~~~/_//;~|
+//      |  \  o \_         ,XXXXX),                         _..-~ o /  |
+//      |    ~~\  ~-.     XXXXX`)))),                 _.--~~   .-~~~   |
+//       ~~~~~~~`\   ~\~~~XXX' _/ ';))     |~~~~~~..-~     _.-~ ~~~~~~~
+//                `\   ~~--`_\~\, ;;;\)__.---.~~~      _.-~
+//                  ~-.       `:;;/;; \          _..-~~
+//                     ~-._      `''        /-~-~
+//                         `\              /  /
+//                           |         ,   | |
+//                            |  '        /  |
+//                             \/;          |
+//                              ;;          |
+//                              `;   .       |
+//                              |~~~-----.....|
+//                             | \             \
+//                            | /\~~--...__    |
+//                            (|  `\       __-\|
+//                            ||    \_   /~    |
+//                            |)     \~-'      |
+//                             |      | \      '
+//                             |      |  \    :
+//                              \     |  |    |
+//                               |    )  (    )
+//                                \  /;  /\  |
+//                                |    |/   |
+//                                |    |   |
+//                                 \  .'  ||
+//                                 |  |  | |
+//                                 (  | |  |
+//                                 |   \ \ |
+//                                 || o `.)|
+//                                 |`\\\\) |
+//                                 |       |
+//                                 |       |
+//    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//
+//                      耶穌保佑                永無 BUG
