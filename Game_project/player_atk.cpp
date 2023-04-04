@@ -8,7 +8,7 @@ extern Human player;
 extern Monster enemy;
 
 // ª±®a§ğÀ» 
-int player_atk(int val)
+void player_atk(int val)
 {	
 	if(player.dir == 'd')
 	{	
