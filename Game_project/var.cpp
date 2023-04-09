@@ -9,20 +9,6 @@
 const int hih = 720; //視窗長
 const int wid = 1280; //視窗寬
 
-struct Bullet
-{
-	int x;
-	int y;
-	int output_idx;
-	int status;
-	PIMAGE *skill_img, *skill_msk;
-	int high;
-	int width;
-	int power;
-};
-
-typedef void (*atk_func)(int);
-
 // 玩家的結構 
 struct Human 
 {
@@ -55,7 +41,6 @@ struct Monster
 	int speed;
 	int atk_0_cnt;
 	int atk_1_cnt;
-	atk_func *use_skill;
 };
 
 struct animate
@@ -63,4 +48,16 @@ struct animate
 	int cnt;
 	int output_idx;
 	PIMAGE *loading_img;
+};
+
+struct Bullet
+{
+	int x;
+	int y;
+	int output_idx;
+	int status;
+	PIMAGE *skill_img, *skill_msk;
+	int high;
+	int width;
+	int power;
 };

@@ -4,14 +4,15 @@
 #include "lib/output_image.h"
 #include "lib/enemy_atk.h"
 
-extern int atk_cnt, player_walk_cnt, flag, enemy_atk_type, player_jump_cnt, atked; // player_walk_cnt : 走路計數器 用於計算走路時輸出的圖片
+extern int atk_cnt, player_walk_cnt, flag, enemy_atk_type, player_jump_cnt, atked, enemy_num; // player_walk_cnt : 走路計數器 用於計算走路時輸出的圖片
 extern double start;
 extern Human player;
-extern Monster enemy;
+extern Monster enemy[2];
 extern Bullet skill[2];
 extern animate loading_animate;
 
 void enemy_ini();
+void enemt_ini_01();
 void skill_ini_00();
 void skill_ini_01();
 void loading_img_ini();
@@ -52,6 +53,9 @@ void initialization()
 	printf("enemy ini succes\n");
 	flag = 10;
 	
+	enemy_ini_01();
+	printf("enemy_ini_01 succes\n");
+	
 	skill_ini_01();
 	printf("skill_ini_01 succes\n");
 	
@@ -62,6 +66,8 @@ void initialization()
 	enemy_atk_type = -1; // 敵人使用的技能編號 
 	player_jump_cnt = -1;// 人物跳躍計時器
 	
+	enemy_num = 0;
+	
 	loading_img_ini();
 	printf("loading_img_ini succes\n");
 }
@@ -70,27 +76,48 @@ void enemy_ini()
 {
 	char s[100];
 	
-	enemy.enemy_img = NULL;
-	enemy.enemy_msk = NULL;
+	enemy[0].enemy_img = NULL;
+	enemy[0].enemy_msk = NULL;
 	
 	sprintf(s,"%s","images\\enemy_0");
-	loadCHAR(s, &enemy.enemy_img, &enemy.enemy_msk, 165, 165);
+	loadCHAR(s, &enemy[0].enemy_img, &enemy[0].enemy_msk, 165, 165);
 	
-	enemy.x = 900;
-	enemy.y = hih * 0.6 - 165 + 66;
-	enemy.dir = 'a';
-	enemy.hp = 100;
-	enemy.damage = 0; // 敵人造成的傷害 
-	enemy.output_idx = 1;
-	enemy.high = 165;
-	enemy.width = 165;
-	enemy.power = 100; // 敵人擊退玩家的距離 
-	enemy.speed = 5;    
-	enemy.atk_0_cnt = 199; // 敵人的技能計數器 
-	enemy.atk_1_cnt = 99;  
-	enemy.use_skill = (atk_func *) malloc(sizeof(atk_func));
-	enemy.use_skill[0] = enemy_first_atk;
-	enemy.use_skill[1] = enemy_second_atk;
+	enemy[0].x = 900;
+	enemy[0].y = hih * 0.6 - 165 + 66;
+	enemy[0].dir = 'a';
+	enemy[0].hp = 100;
+	enemy[0].damage = 0; // 敵人造成的傷害 
+	enemy[0].output_idx = 1;
+	enemy[0].high = 165;
+	enemy[0].width = 165;
+	enemy[0].power = 100; // 敵人擊退玩家的距離 
+	enemy[0].speed = 5;    
+	enemy[0].atk_0_cnt = 199; // 敵人的技能計數器 
+	enemy[0].atk_1_cnt = 99;  
+}
+
+void enemy_ini_01()
+{
+	char s[100];
+	
+	enemy[1].enemy_img = NULL;
+	enemy[1].enemy_msk = NULL;
+	
+	sprintf(s,"%s","images\\enemy_1");
+	loadCHAR(s, &enemy[1].enemy_img, &enemy[1].enemy_msk, 114, 125);
+	//508
+	enemy[1].x = 900;
+	enemy[1].y = hih * 0.6 - 125 + 66;
+	enemy[1].dir = 'a';
+	enemy[1].hp = 100;
+	enemy[1].damage = 0; // 敵人造成的傷害 
+	enemy[1].output_idx = 1;
+	enemy[1].high = 125;
+	enemy[1].width = 114;
+	enemy[1].power = 100; // 敵人擊退玩家的距離 
+	enemy[1].speed = 5;    
+	enemy[1].atk_0_cnt = -1; // 敵人的技能計數器 
+	enemy[1].atk_1_cnt = -1;  
 }
 
 // 技能1 
@@ -138,7 +165,7 @@ void loading_img_ini()
 	
 	loading_animate.loading_img = (PIMAGE *)malloc(sizeof(PIMAGE) * 8);
 	
-	for(int i = 0; i < 8; i++)
+	for(int i = 0; i < 9; i++)
 	{
 		loading_animate.loading_img[i] = newimage();
 		sprintf(s, "images\\loading\\0%d_loading_img.png", i);
