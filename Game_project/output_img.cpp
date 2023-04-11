@@ -3,35 +3,46 @@
 #include "lib/output_img.h"
 
 PIMAGE bg = newimage(wid, hih); //bg:儲存背景圖片之變數
+extern int enemy_num;
 extern Human player;
-extern Monster enemy;
+extern Monster enemy[2];
 extern Bullet skill[2];
+extern animate loading_animate;
 
-void output_img()
+void output_image()
 {
-	// 輸出背景 
-	putimage(0, 0, bg);
-	
-	if(enemy.hp > 0)
+	if(loading_animate.cnt < 72)
 	{
-		putimage(enemy.x, enemy.y, enemy.enemy_msk[enemy.output_idx], NOTSRCERASE);
-		putimage(enemy.x, enemy.y, enemy.enemy_img[enemy.output_idx], SRCINVERT);
+		loading_animate.output_idx = loading_animate.cnt / 8;
+		putimage(0, 0, loading_animate.loading_img[loading_animate.output_idx]);
+		loading_animate.cnt++;
+	}
+	else
+	{
+		// 輸出背景 
+		putimage(0, 0, bg);
 		
-		for(int i = 0; i < 2; i++)
+		if(enemy[enemy_num].hp > 0)
 		{
-			// 若技能正在發動會印出 
-			if(skill[i].status > 0)
+			putimage(enemy[enemy_num].x, enemy[enemy_num].y, enemy[enemy_num].enemy_msk[enemy[enemy_num].output_idx], NOTSRCERASE);
+			putimage(enemy[enemy_num].x, enemy[enemy_num].y, enemy[enemy_num].enemy_img[enemy[enemy_num].output_idx], SRCINVERT);
+			
+			for(int i = 0; i < 2; i++)
 			{
-				putimage(skill[i].x, skill[i].y, skill[i].skill_msk[skill[i].output_idx], NOTSRCERASE);
-				putimage(skill[i].x, skill[i].y, skill[i].skill_img[skill[i].output_idx], SRCINVERT);
+				// 若技能正在發動會印出 
+				if(skill[i].status > 0)
+				{
+					putimage(skill[i].x, skill[i].y, skill[i].skill_msk[skill[i].output_idx], NOTSRCERASE);
+					putimage(skill[i].x, skill[i].y, skill[i].skill_img[skill[i].output_idx], SRCINVERT);
+				}
 			}
 		}
+		
+		// 輸出玩家
+		putimage(player.x, player.y, player.player_msk[player.output_idx], NOTSRCERASE);
+		putimage(player.x, player.y, player.player_img[player.output_idx], SRCINVERT);
 	}
-	
-	// 輸出玩家
-	putimage(player.x, player.y, player.player_msk[player.output_idx], NOTSRCERASE);
-	putimage(player.x, player.y, player.player_img[player.output_idx], SRCINVERT);
-}
+}	
 
 //讀取背景圖片 filename:欲讀取背景之路徑及檔名
 void loadBG(char filename[]) 

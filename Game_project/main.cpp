@@ -3,7 +3,7 @@
 #include "lib/enemy_move.h"
 #include "lib/enemy_atk.h"
 #include "lib/player_move.h"
-#include "lib/output_image.h"
+#include "lib/output_img.h"
 
 int key, atk_cnt, player_walk_cnt, player_jump_cnt, last_key, flag, enemy_atk_cnt, enemy_atk_type, player_enemy_dir, enemy_num;
 double start, end;

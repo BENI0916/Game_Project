@@ -1,7 +1,7 @@
 #include "dirent.h"
 #include "lib/var.h"
 #include "lib/initialization.h"
-#include "lib/output_image.h"
+#include "lib/output_img.h"
 #include "lib/enemy_atk.h"
 
 extern int atk_cnt, player_walk_cnt, flag, enemy_atk_type, player_jump_cnt, atked, enemy_num; // player_walk_cnt : 走路計數器 用於計算走路時輸出的圖片
