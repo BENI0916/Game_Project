@@ -1,5 +1,5 @@
-#ifndef ENEMY_GIVE_DMG
-#define ENEMY_GIVE_DMG
+#ifndef ENEMY_GIVE_DMG_H
+#define ENEMY_GIVE_DMG_H
 
 void enemy_give_dmg();
 

@@ -1,5 +1,5 @@
-#ifndef ENEMY_ATK
-#define ENEMY_ATK
+#ifndef ENEMY_ATK_H
+#define ENEMY_ATK_H
 
 void enemy_atk();
 

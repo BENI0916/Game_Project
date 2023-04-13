@@ -11,4 +11,6 @@ void skill_ini_00();
 
 void skill_ini_01();
 
+void loading_img_ini();
+
 #endif

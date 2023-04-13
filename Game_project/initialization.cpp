@@ -9,13 +9,7 @@ extern double start;
 extern Human player;
 extern Monster enemy[2];
 extern Bullet skill[2];
-extern animate loading_animate;
-
-void enemy_ini();
-void enemt_ini_01();
-void skill_ini_00();
-void skill_ini_01();
-void loading_img_ini();
+extern Animate loading_animate;
 
 void initialization()
 {

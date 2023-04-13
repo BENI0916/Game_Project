@@ -13,7 +13,7 @@ const int hih = 720; //視窗長
 const int wid = 1280; //視窗寬
 
 // 玩家的結構 
-struct Human 
+typedef struct 
 {
 	int x;	// x 座標 
 	int y;	// y 座標  
@@ -27,9 +27,9 @@ struct Human
 	int width;
 	int power;// 擊退敵人的距離 
 	int atk_type; // 攻擊的型 
-};
+}Human;
 
-struct Monster
+typedef struct 
 {
 	int x;
 	int y;
@@ -44,17 +44,17 @@ struct Monster
 	int speed;
 	int atk_0_cnt;
 	int atk_1_cnt;
-};
+}Monster;
 
-struct animate
+typedef struct 
 {
 	int cnt;
 	int output_idx;
 	PIMAGE *loading_img;
-};
+}Animate;
 
 
-struct Bullet
+typedef struct 
 {
 	int x;
 	int y;
@@ -64,6 +64,6 @@ struct Bullet
 	int high;
 	int width;
 	int power;
-};
+}Bullet;
 
 #endif
