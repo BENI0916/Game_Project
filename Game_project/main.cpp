@@ -1,12 +1,15 @@
 #include "lib/var.h"
 #include "lib/game_start.h"
 
+PIMAGE bg = newimage(); //bg:儲存背景圖片之變數
 int key, atk_cnt, player_walk_cnt, player_jump_cnt, last_key, flag, enemy_atk_cnt, enemy_atk_type, player_enemy_dir, enemy_num;
 double start, end;
+int inFight = 0;
+int player_walk_cnt3D,bgX,bgY;
 // key : 鍵盤輸入的儲存位置
 // left_walk_cnt, right_walk_cnt : 走路計數器 用於計算走路時輸出的圖片 
 
-Human player;
+Human player,player3D;
 Monster enemy[2];
 Bullet skill[2];
 Animate loading_animate;

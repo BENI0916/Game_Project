@@ -2,12 +2,12 @@
 #include "lib/var.h" 
 #include "lib/output_img.h"
 
-PIMAGE bg = newimage(wid, hih); //bg:儲存背景圖片之變數
+extern PIMAGE bg;
 extern int enemy_num;
 extern Human player;
 extern Monster enemy[2];
 extern Bullet skill[2];
-extern animate loading_animate;
+extern Animate loading_animate;
 
 void output_image()
 {
@@ -46,17 +46,30 @@ void output_image()
 
 //讀取背景圖片 filename:欲讀取背景之路徑及檔名
 void loadBG(char filename[]) 
-{
+{	
+	delimage(bg);
+	bg = newimage(wid,hih);
 	PIMAGE oriBG = newimage(); //建立暫存之背景圖片
 	getimage(oriBG, filename); //取得圖片
 	putimage(bg, 0, 0, wid, hih, oriBG, 0, 0, getwidth(oriBG), getheight(oriBG)); //進行拉伸並儲存
 	delimage(oriBG); //刪除暫存
 }
 
+//讀取背景圖片 filename:欲讀取背景之路徑及檔名 w:伸縮後寬 h:伸縮後高
+void loadBG(char filename[],int w,int h) 
+{	
+	delimage(bg);
+	bg = newimage(w,h);
+	PIMAGE oriBG = newimage(); //建立暫存之背景圖片
+	getimage(oriBG, filename); //取得圖片
+	putimage(bg, 0, 0, w, h, oriBG, 0, 0, getwidth(oriBG), getheight(oriBG)); //進行拉伸並儲存
+	delimage(oriBG); //刪除暫存
+}
+
 //讀取角色圖片 filename:欲讀取圖片之路徑及檔名
 //**ori_img:指向圖片將儲存之指標變數 **ori_msk:指向遮罩將儲存之指標變數
 //w:圖片輸出後之寬 h: 圖片輸出後之高
-void loadCHAR(char filename[],PIMAGE **ori_img,PIMAGE **ori_msk,int w,int h) 
+void loadCHAR(char filename[],PIMAGE **ori_img,PIMAGE **ori_msk,int w,int h,int index) 
 {
 	PIMAGE *img = NULL,*msk = NULL; //暫存圖片及遮罩之指標變數
 	DIR *img_dir = NULL, *msk_dir = NULL; //資料夾的位址
@@ -71,7 +84,7 @@ void loadCHAR(char filename[],PIMAGE **ori_img,PIMAGE **ori_msk,int w,int h)
     }
 	else 
 	{
-		for (int i = 0;(img_entry = readdir(img_dir)), (msk_entry = readdir(msk_dir));) 
+		for (int i = index;(img_entry = readdir(img_dir)), (msk_entry = readdir(msk_dir));) 
 		{ //判斷是否含有未讀取之檔案，若無則離開迭代
 			if (strstr(img_entry->d_name,".png") && strstr(msk_entry->d_name, ".png")) 
 			{ //判斷讀取之檔案的副檔名

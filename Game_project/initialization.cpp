@@ -4,7 +4,7 @@
 #include "lib/output_img.h"
 #include "lib/enemy_atk.h"
 
-extern int atk_cnt, player_walk_cnt, flag, enemy_atk_type, player_jump_cnt, atked, enemy_num; // player_walk_cnt : 走路計數器 用於計算走路時輸出的圖片
+extern int atk_cnt, player_walk_cnt, flag, enemy_atk_type, player_jump_cnt, atked, enemy_num ,player_walk_cnt3D,bgX,bgY; // player_walk_cnt : 走路計數器 用於計算走路時輸出的圖片
 extern double start;
 extern Human player;
 extern Monster enemy[2];
@@ -13,32 +13,34 @@ extern Animate loading_animate;
 
 void initialization()
 {
-	char s[] = "images\\bg\\back_ground_01.png"; //C++無法將字串常數直接轉成char pointer，故有此行
-	loadBG(s); //讀取背景
+	char s[] = "images\\bg\\home2.png"; //C++無法將字串常數直接轉成char pointer，故有此行
+	loadBG(s,1587/2,1300/2); //讀取背景
 	
 	printf("load background succes\n");
 	
 	player.player_img = NULL;
 	player.player_msk = NULL;
 	sprintf(s,"%s","images\\main_char"); //C++無法將字串常數直接轉成char pointer，故有此行
-	loadCHAR(s,&player.player_img,&player.player_msk,76,66); //讀取主角圖片
-	
+	loadCHAR(s,&player.player_img,&player.player_msk,76,66,0); //讀取主角圖片
+	sprintf(s,"%s","images\\3D\\player");
+	loadCHAR(s,&player.player_img,&player.player_msk,24*4,32*4,25);
 	printf("load player image succes\n");
 	
 	// 設定初始值 
-	player.x = wid / 4; // 暫定 
-	player.y = hih * 0.6; // 暫定 
+	player.x = (wid-24*4) / 2;
+	player.y = (hih-32*4) / 2 + 80;
 	player.hp = 10;
 	player.damage = 25; // 對敵人造成的傷害 
 	player.atked = 0;   // 判定是否有造成傷害 
 	player.dir = 'd';   // 方向 
-	player.output_idx = 0;// 輸出圖片編號 
-	player.high = 66;   // 人物圖片的高 
-	player.width = 76;  // 人物圖片的寬 
+	player.output_idx = 26;// 輸出圖片編號 
+	player.high = 24*4;   // 人物圖片的高 
+	player.width = 32*4;  // 人物圖片的寬 
 	player.power = 30;  // 擊退敵人的距離 
 	player.atk_type = 0;
 	
 	player_walk_cnt = 11; // 走路計時器 
+	player_walk_cnt3D = 0,bgX=0,bgY=0;
 	
 	printf("player setting succes\n");
 	
@@ -50,11 +52,11 @@ void initialization()
 	enemy_ini_01();
 	printf("enemy_ini_01 succes\n");
 	
-	skill_ini_01();
-	printf("skill_ini_01 succes\n");
-	
-	skill_ini_00(); // 初始化敵人的技能 
+	skill_ini_00();
 	printf("skill_ini_00 succes\n");
+	
+	skill_ini_01(); // 初始化敵人的技能 
+	printf("skill_ini_01 succes\n");
 	
 	start = fclock(); // 用於計時敵人的攻擊時間間隔 
 	enemy_atk_type = -1; // 敵人使用的技能編號 
@@ -74,7 +76,7 @@ void enemy_ini()
 	enemy[0].enemy_msk = NULL;
 	
 	sprintf(s,"%s","images\\enemy_0");
-	loadCHAR(s, &enemy[0].enemy_img, &enemy[0].enemy_msk, 165, 165);
+	loadCHAR(s, &enemy[0].enemy_img, &enemy[0].enemy_msk, 165, 165,0);
 	
 	enemy[0].x = 900;
 	enemy[0].y = hih * 0.6 - 165 + 66;
@@ -98,7 +100,7 @@ void enemy_ini_01()
 	enemy[1].enemy_msk = NULL;
 	
 	sprintf(s,"%s","images\\enemy_1");
-	loadCHAR(s, &enemy[1].enemy_img, &enemy[1].enemy_msk, 114, 125);
+	loadCHAR(s, &enemy[1].enemy_img, &enemy[1].enemy_msk, 114, 125,0);
 	//508
 	enemy[1].x = 900;
 	enemy[1].y = hih * 0.6 - 125 + 66;
@@ -127,7 +129,7 @@ void skill_ini_00()
 	skill[0].skill_msk = NULL;
 	
 	sprintf(s, "%s", "images\\enemy_0_0_skill");
-	loadCHAR(s, &skill[0].skill_img, &skill[0].skill_msk, 250, 126);
+	loadCHAR(s, &skill[0].skill_img, &skill[0].skill_msk, 250, 126,0);
 	
 	skill[0].high = 126;
 	skill[0].width = 250;
@@ -146,7 +148,7 @@ void skill_ini_01()
 	skill[1].skill_img = NULL;
 	skill[1].skill_msk = NULL;
 	sprintf(s, "%s", "images\\enemy_0_1_skill");
-	loadCHAR(s, &skill[1].skill_img, &skill[1].skill_msk, 608, 256);
+	loadCHAR(s, &skill[1].skill_img, &skill[1].skill_msk, 608, 256,0);
 	
 	skill[1].high = 256;
 	skill[1].width = 608;
