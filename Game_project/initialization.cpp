@@ -8,7 +8,7 @@ extern int atk_cnt, player_walk_cnt, flag, enemy_atk_type, player_jump_cnt, atke
 extern double start;
 extern Human player;
 extern Monster enemy[2];
-extern Bullet skill[2];
+extern Bullet skill[4];
 extern Animate loading_animate;
 
 void initialization()
@@ -50,11 +50,17 @@ void initialization()
 	enemy_ini_01();
 	printf("enemy_ini_01 succes\n");
 	
-	skill_ini_01();
+	skill_ini_00();
+	printf("skill_ini_00 succes\n");
+	
+	skill_ini_01(); // 初始化敵人的技能 
 	printf("skill_ini_01 succes\n");
 	
-	skill_ini_00(); // 初始化敵人的技能 
-	printf("skill_ini_00 succes\n");
+	skill_ini_02();
+	printf("skill_ini_02 succes\n");
+	
+	skill_ini_03();
+	printf("skill_ini_03 succes\n");
 	
 	start = fclock(); // 用於計時敵人的攻擊時間間隔 
 	enemy_atk_type = -1; // 敵人使用的技能編號 
@@ -98,16 +104,16 @@ void enemy_ini_01()
 	enemy[1].enemy_msk = NULL;
 	
 	sprintf(s,"%s","images\\enemy_1");
-	loadCHAR(s, &enemy[1].enemy_img, &enemy[1].enemy_msk, 114, 125);
+	loadCHAR(s, &enemy[1].enemy_img, &enemy[1].enemy_msk, 136, 150);
 	//508
 	enemy[1].x = 900;
-	enemy[1].y = hih * 0.6 - 125 + 66;
+	enemy[1].y = hih * 0.6 - 150 + 66;
 	enemy[1].dir = 'a';
 	enemy[1].hp = 100;
 	enemy[1].damage = 0; // 敵人造成的傷害 
 	enemy[1].output_idx = 1;
-	enemy[1].high = 125;
-	enemy[1].width = 114;
+	enemy[1].high = 150;
+	enemy[1].width = 136;
 	enemy[1].power = 100; // 敵人擊退玩家的距離 
 	enemy[1].speed = 5;    
 	enemy[1].atk_0_cnt = -1; // 敵人的技能計數器 
@@ -169,3 +175,40 @@ void loading_img_ini()
 	loading_animate.cnt = 0;
 	loading_animate.output_idx = 0;
 }
+
+void skill_ini_02()
+{
+	char s[100];
+	
+	skill[2].x = 0;
+	skill[2].y = 0;
+	skill[2].status = 0;
+	skill[2].output_idx = 0;
+	skill[2].skill_img = NULL;
+	skill[2].skill_msk = NULL;
+	sprintf(s, "%s", "images\\enemy_0_2_skill"); // 34 21
+	loadCHAR(s, &skill[2].skill_img, &skill[2].skill_msk, 170, 105);
+	
+	skill[2].high = 105;
+	skill[2].width = 170;
+	skill[2].power = 100;
+}
+
+void skill_ini_03()
+{
+	char s[100];
+	
+	skill[3].x = 0;
+	skill[3].y = 0;
+	skill[3].status = 0;
+	skill[3].output_idx = 0;
+	skill[3].skill_img = NULL;
+	skill[3].skill_msk = NULL;
+	sprintf(s, "%s", "images\\enemy_1_0_skill");
+	loadCHAR(s, &skill[3].skill_img, &skill[3].skill_msk, 125, 125);
+	
+	skill[3].high = 125;
+	skill[3].width = 125;
+	skill[3].power = 80;
+}
+

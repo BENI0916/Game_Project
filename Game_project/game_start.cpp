@@ -5,7 +5,8 @@
 #include "lib/setting.h"
 
 //遊戲開始執行會先跳來這裡
-void gameStart() {
+void gameStart() 
+{
     initgraph(wid, hih);	// 初始化輸出窗口 
 	printf("inigraph succes\n");
 

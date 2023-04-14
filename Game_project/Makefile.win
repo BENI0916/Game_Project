@@ -4,8 +4,8 @@
 CPP      = g++.exe -D__DEBUG__
 CC       = gcc.exe -D__DEBUG__
 WINDRES  = windres.exe
-OBJ      = main.o initialization.o output_image.o player_move.o var.o enemy_move.o enemy_atk.o player_atk.o enemy_give_damage.o
-LINKOBJ  = main.o initialization.o output_image.o player_move.o var.o enemy_move.o enemy_atk.o player_atk.o enemy_give_damage.o
+OBJ      = main.o initialization.o output_image.o player_move.o enemy_move.o enemy_atk.o player_atk.o enemy_give_damage.o lunch.o game_start.o save_load.o setting.o
+LINKOBJ  = main.o initialization.o output_image.o player_move.o enemy_move.o enemy_atk.o player_atk.o enemy_give_damage.o lunch.o game_start.o save_load.o setting.o
 LIBS     = -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib" -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib" -L"C:/Users/benny/Desktop/ege.1/devcpp" -static -static-libgcc -lgraphics64 -luuid -lmsimg32 -lgdi32 -limm32 -lole32 -loleaut32 -lwinmm -lgdiplus -g3
 INCS     = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include"
 CXXINCS  = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++" -I"C:/Users/benny/Desktop/ege.1/include"
@@ -36,9 +36,6 @@ output_image.o: output_image.cpp
 player_move.o: player_move.cpp
 	$(CPP) -c player_move.cpp -o player_move.o $(CXXFLAGS)
 
-var.o: var.cpp
-	$(CPP) -c var.cpp -o var.o $(CXXFLAGS)
-
 enemy_move.o: enemy_move.cpp
 	$(CPP) -c enemy_move.cpp -o enemy_move.o $(CXXFLAGS)
 
@@ -50,3 +47,15 @@ player_atk.o: player_atk.cpp
 
 enemy_give_damage.o: enemy_give_damage.cpp
 	$(CPP) -c enemy_give_damage.cpp -o enemy_give_damage.o $(CXXFLAGS)
+
+lunch.o: lunch.cpp
+	$(CPP) -c lunch.cpp -o lunch.o $(CXXFLAGS)
+
+game_start.o: game_start.cpp
+	$(CPP) -c game_start.cpp -o game_start.o $(CXXFLAGS)
+
+save_load.o: save_load.cpp
+	$(CPP) -c save_load.cpp -o save_load.o $(CXXFLAGS)
+
+setting.o: setting.cpp
+	$(CPP) -c setting.cpp -o setting.o $(CXXFLAGS)

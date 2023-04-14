@@ -8,7 +8,7 @@ double start, end;
 
 Human player;
 Monster enemy[2];
-Bullet skill[2];
+Bullet skill[4];
 Animate loading_animate;
 
 int main(void)

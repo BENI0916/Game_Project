@@ -1,31 +1,30 @@
 #include "lib/var.h"
 #include "lib/enemy_give_dmg.h"
  
-extern int key, atk_cnt, player_walk_cnt, flag, enemy_atk_cnt, enemy_atk_type, player_enemy_dir, atked, enemy_num;
+extern int key, atk_cnt, player_walk_cnt, flag, enemy_atk_cnt, enemy_atk_type, player_enemy_dir, atked;
 extern double start, end;
 extern Human player;
-extern Monster enemy[2];
+extern Monster enemy;
 extern Bullet skill[2];
-int is_middle(int up, int pos, int down);
 
 void enemy_give_dmg()
 {
 	if(enemy_atk_type == 0)
 	{
 		// 敵人本體與技能均會造成傷害與擊退效果 
-		if(enemy[enemy_num].dir == 'a')
+		if(enemy.dir == 'a')
 		{
 			// 判定玩家是否在敵人的攻擊範圍內 
-			if(is_middle(enemy[enemy_num].x + enemy[enemy_num].width * 1.1, player.x + player.width / 2, enemy[enemy_num].x - enemy[enemy_num].width / 10))
+			if(is_middle(enemy.x + enemy.width * 1.1, player.x + player.width / 2, enemy.x - enemy.width / 10))
 			{
-				player.hp -= enemy[enemy_num].damage;
-				player.x -= enemy[enemy_num].power;
+				player.hp -= enemy.damage;
+				player.x -= enemy.power;
 			}
 			
 			// 判定玩家是否在敵人的技能範圍內 
 			if(skill[0].status && is_middle(skill[0].x + skill[0].width, player.x + player.width / 2, skill[0].x))
 			{
-				player.hp -= enemy[enemy_num].damage;
+				player.hp -= enemy.damage;
 				player.x -= skill[0].power;
 				//skill[0].status = 0;
 			}
@@ -33,15 +32,15 @@ void enemy_give_dmg()
 		else
 		{
 			// player.x > enemy.x + 64 && enemy.x + 165 > player.x
-			if(is_middle(enemy[enemy_num].x + enemy[enemy_num].width, player.x + player.width / 2, enemy[enemy_num].x))
+			if(is_middle(enemy.x + enemy.width, player.x + player.width / 2, enemy.x))
 			{
-				player.hp -= enemy[enemy_num].damage;
-				player.x += enemy[enemy_num].power;
+				player.hp -= enemy.damage;
+				player.x += enemy.power;
 			}
 			
 			if(skill[0].status && is_middle(skill[0].x + skill[0].width, player.x + player.width / 2, skill[0].x))
 			{
-				player.hp -= enemy[enemy_num].damage;
+				player.hp -= enemy.damage;
 				player.x += skill[0].power;
 				//skill[0].status = 0;
 			}
@@ -53,17 +52,17 @@ void enemy_give_dmg()
 		if(is_middle(62, enemy_atk_cnt, 56))
 		{
 			//player.x >= enemy.x && player.x <= enemy.x + 165
-			if(is_middle(enemy[enemy_num].x + enemy[enemy_num].width, player.x + player.width / 2, enemy[enemy_num].x))
+			if(is_middle(enemy.x + enemy.width, player.x + player.width / 2, enemy.x))
 			{
 				//player.y - 10 > enemy.y - 165
-				if(is_middle(enemy[enemy_num].y + enemy[enemy_num].high * 1.5, player.y + player.high / 2, enemy[enemy_num].y))
+				if(is_middle(enemy.y + enemy.high * 1.5, player.y + player.high / 2, enemy.y))
 				{
-					player.hp -= enemy[enemy_num].damage;
+					player.hp -= enemy.damage;
 					
-					if(enemy[enemy_num].dir == 'a')
-						player.x -= enemy[enemy_num].power;
+					if(enemy.dir == 'a')
+						player.x -= enemy.power;
 					else
-						player.x += enemy[enemy_num].power;	
+						player.x += enemy.power;	
 				}	
 			}	
 		}
@@ -76,7 +75,7 @@ void enemy_give_dmg()
 			if(is_middle(skill[1].x + skill[1].width / 10, player.x + player.width / 2, skill[1].x) == 1
 			|| is_middle(skill[1].x + skill[1].width * 30 / 100, player.x + player.width / 2, skill[1].x + skill[1].width * 21 / 100) == 1)
 			{
-				player.hp -= enemy[enemy_num].damage;
+				player.hp -= enemy.damage;
 				player.x -= skill[1].power;
 				skill[1].status = 0;
 			}
@@ -84,7 +83,7 @@ void enemy_give_dmg()
 			else if(is_middle(skill[1].x + skill[1].width * 84 / 100, player.x + player.width / 2, skill[1].x + skill[1].width * 74 / 100) == 1
 				 || is_middle(skill[1].x + skill[1].width, player.x + player.width / 2, skill[1].x + skill[1].width * 9 / 10) == 1)
 			{
-				player.hp -= enemy[enemy_num].damage;
+				player.hp -= enemy.damage;
 				player.x += skill[1].power;
 				skill[1].status = 0;
 			}

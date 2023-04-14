@@ -1,10 +1,14 @@
-#ifndef ENEMY_ATK_H
-#define ENEMY_ATK_H
+#ifndef ENEMY_ATK
+#define ENEMY_ATK
 
 void enemy_atk();
 
-void enemy_first_atk(int val);
+void enemy_00_atk(int val);
 
-void enemy_second_atk(int val);
+void enemy_01_atk(int val);
+
+void enemy_02_atk(int val);
+
+void enemy_03_atk(int val);
 
 #endif

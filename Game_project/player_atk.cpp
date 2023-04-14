@@ -8,7 +8,7 @@ extern Human player;
 extern Monster enemy[2];
 
 // ª±®a§ğÀ» 
-void player_atk(int val)
+int player_atk(int val)
 {	
 	switch(enemy_num)
 	{
@@ -34,6 +34,32 @@ void player_atk(int val)
 			}
 			break;
 		
+		case 1:
+			if(player.dir == 'd')
+			{
+				if((is_middle(enemy[1].x + enemy[1].width * 0.64, player.x + player.width, enemy[1].x + enemy[1].width * 0.36)
+				|| is_middle(enemy[1].x + enemy[1].width * 0.64, player.x + player.width * 0.6, enemy[1].x + enemy[1].width * 0.36))
+				&& is_middle(enemy[1].y + enemy[1].high, player.y + player.high / 2, enemy[1].y + enemy[1].high * 0.17))
+				{
+					enemy[1].hp -= player.damage;
+					enemy[1].x += player.power;	
+					player.atked = 1;
+				}
+			}
+			else
+			{
+				if((is_middle(enemy[1].x + enemy[1].width * 0.64, player.x, enemy[1].x + enemy[1].width * 0.36)
+				||  is_middle(enemy[1].x + enemy[1].width * 0.64, player.x + player.width * 0.4, enemy[1].x + enemy[1].width * 0.36))
+				&& is_middle(enemy[1].y + enemy[1].high, player.y + player.high / 2, enemy[1].y + enemy[1].high * 0.17))
+				{
+					enemy[1].hp -= player.damage;
+					enemy[1].x -= player.power;	
+					player.atked = 1;
+				}
+			}
+			
+			break;
+			
 		default :
 			break;
 	}

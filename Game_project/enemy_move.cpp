@@ -51,7 +51,7 @@ void enemy_move()
 			else
 				enemy[enemy_num].dir = 'd';
 			
-			if(abs(enemy[enemy_num].x - player.x) >= 300)
+			if(abs(enemy[enemy_num].x - player.x) >= enemy[enemy_num].width * 3)
 			{
 				if(enemy[enemy_num].x > player.x)
 				{	

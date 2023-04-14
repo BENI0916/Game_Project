@@ -1,12 +1,16 @@
+#include <ege.h>
+#include <conio.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <windows.h>
+#include <graphics.h> 
 #include "dirent.h"
-#include "lib/var.h" 
-#include "lib/output_img.h"
-
+#include "lib/var.h"
 PIMAGE bg = newimage(wid, hih); //bg:儲存背景圖片之變數
 extern int enemy_num;
 extern Human player;
 extern Monster enemy[2];
-extern Bullet skill[2];
+extern Bullet skill[3];
 extern animate loading_animate;
 
 void output_image()
@@ -37,7 +41,7 @@ void output_image()
 				}
 			}
 		}
-		
+		//printf("enemy_num = %d\n", enemy_num);
 		// 輸出玩家
 		putimage(player.x, player.y, player.player_msk[player.output_idx], NOTSRCERASE);
 		putimage(player.x, player.y, player.player_img[player.output_idx], SRCINVERT);
