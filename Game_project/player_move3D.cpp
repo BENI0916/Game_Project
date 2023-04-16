@@ -44,7 +44,6 @@ void keyListener() {
         if (player_walk_cnt3D/fps==4) player_walk_cnt3D = 0; 
 	}
     //home2樓設定
-    cout << strcmp(BgName, "images\\bg\\home2.png") << endl;
     if (strcmp(BgName, "images\\bg\\home2.png")==0) {
         //地圖牆
         if(bgX  <-360) bgX = -360;
