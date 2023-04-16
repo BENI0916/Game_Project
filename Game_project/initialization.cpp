@@ -10,11 +10,11 @@ extern Human player;
 extern Monster enemy[2];
 extern Bullet skill[2];
 extern Animate loading_animate;
-extern char BgName[];
+extern char BgName[50];
 
 void initialization()
 {
-	char BgName[] = "images\\bg\\home2.png"; //C++無法將字串常數直接轉成char pointer，故有此行
+	sprintf(BgName,"%s","images\\bg\\home2.png");
 	loadBG(BgName,1587/2,1300/2); //讀取背景
 	
 	printf("load background succes\n");
