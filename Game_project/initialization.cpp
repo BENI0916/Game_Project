@@ -10,14 +10,15 @@ extern Human player;
 extern Monster enemy[2];
 extern Bullet skill[2];
 extern Animate loading_animate;
+extern char BgName[];
 
 void initialization()
 {
-	char s[] = "images\\bg\\home2.png"; //C++無法將字串常數直接轉成char pointer，故有此行
-	loadBG(s,1587/2,1300/2); //讀取背景
+	char BgName[] = "images\\bg\\home2.png"; //C++無法將字串常數直接轉成char pointer，故有此行
+	loadBG(BgName,1587/2,1300/2); //讀取背景
 	
 	printf("load background succes\n");
-	
+	char s[100];
 	player.player_img = NULL;
 	player.player_msk = NULL;
 	sprintf(s,"%s","images\\main_char"); //C++無法將字串常數直接轉成char pointer，故有此行
@@ -40,7 +41,7 @@ void initialization()
 	player.atk_type = 0;
 	
 	player_walk_cnt = 11; // 走路計時器 
-	player_walk_cnt3D = 0,bgX=0,bgY=0;
+	player_walk_cnt3D = 0,bgX=6,bgY=-32;
 	
 	printf("player setting succes\n");
 	

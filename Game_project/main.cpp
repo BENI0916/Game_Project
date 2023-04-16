@@ -6,6 +6,7 @@ int key, atk_cnt, player_walk_cnt, player_jump_cnt, last_key, flag, enemy_atk_cn
 double start, end;
 int inFight = 0;
 int player_walk_cnt3D,bgX,bgY;
+char BgName[50];
 // key : 鍵盤輸入的儲存位置
 // left_walk_cnt, right_walk_cnt : 走路計數器 用於計算走路時輸出的圖片 
 
