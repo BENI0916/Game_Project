@@ -8,7 +8,7 @@
 #include "lib/player_move3D.h"
 
 extern PIMAGE bg;
-extern int enemy_atk_type, enemy_num, inFight,bgX,bgY;
+extern int enemy_atk_type, enemy_num, inFight, bgX, bgY;
 extern Human player;
 extern Monster enemy[2];
 extern Animate loading_animate;

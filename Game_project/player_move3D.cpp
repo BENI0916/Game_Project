@@ -8,7 +8,7 @@ using namespace std;
 
 extern int player_walk_cnt3D,bgX,bgY, inFight;
 extern Human player;
-extern char BgName[];
+extern char BgName[50];
 int speed = 3;
 int fps = 25;
 int table[] = {0,-1,0,1};
@@ -44,6 +44,7 @@ void keyListener() {
         if (player_walk_cnt3D/fps==4) player_walk_cnt3D = 0; 
 	}
     //home2樓設定
+    cout << strcmp(BgName, "images\\bg\\home2.png") << endl;
     if (strcmp(BgName, "images\\bg\\home2.png")==0) {
         //地圖牆
         if(bgX  <-360) bgX = -360;
@@ -85,6 +86,7 @@ void keyListener() {
         }
         //出門
         if(bgX > 189 && bgX < 249 && bgY == -192) {
+            //inFight =1;
             sprintf(BgName,"%s","images\\bg\\village.png");
             loadBG(BgName);
         }
