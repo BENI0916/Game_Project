@@ -5,4 +5,5 @@
 
 
 1. 新增上下樓和出門
-2. 優化playeratk
+2. main.cpp新增背景名稱變數
+3. 優化playeratk
