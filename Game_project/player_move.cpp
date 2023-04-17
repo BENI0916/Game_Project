@@ -107,7 +107,7 @@ void atk(int val)
 // ­pºâ¸õÅD 
 void jump()// 2 4 8 -> 16, 12, 10, 8, 4, 2
 {			// 1 2 3 4 5 6
-	int move_distance[4] = {6, 18, 40, 75};
+	int move_distance[4] = {10, 30, 50, 80};
 	
 	if(player_jump_cnt & 1)
 	{

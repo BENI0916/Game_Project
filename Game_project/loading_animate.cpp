@@ -2,7 +2,7 @@
 #include "lib/var.h"
 #include "lib/loading_animate.h"
 
-extern Animate loading_img;
+extern animate loading_img;
 
 void loading_animate()
 {	

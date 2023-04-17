@@ -1,7 +1,8 @@
 #include "lib/setting.h"
 
-//è¨­å®šé é¢
-void setting() {
-    //å…ˆç©ºè‘—ï¼Œé‚„æ²’æƒ³åˆ°
+//³]©w­¶­± 
+void setting() 
+{
+    //¥ıªÅµÛ¡AÁÙ¨S·Q¨ì 
 
 }

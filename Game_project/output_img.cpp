@@ -6,7 +6,7 @@ extern PIMAGE bg;
 extern int enemy_num;
 extern Human player;
 extern Monster enemy[2];
-extern Bullet skill[2];
+extern Bullet skill[4];
 extern Animate loading_animate;
 
 void output_image()
@@ -27,7 +27,7 @@ void output_image()
 			putimage(enemy[enemy_num].x, enemy[enemy_num].y, enemy[enemy_num].enemy_msk[enemy[enemy_num].output_idx], NOTSRCERASE);
 			putimage(enemy[enemy_num].x, enemy[enemy_num].y, enemy[enemy_num].enemy_img[enemy[enemy_num].output_idx], SRCINVERT);
 			
-			for(int i = 0; i < 2; i++)
+			for(int i = 0; i < 4; i++)
 			{
 				// 若技能正在發動會印出 
 				if(skill[i].status > 0)

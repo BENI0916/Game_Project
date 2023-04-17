@@ -8,11 +8,12 @@ int inFight = 0;
 int player_walk_cnt3D,bgX,bgY;
 char BgName[50];
 // key : 鍵盤輸入的儲存位置
+// key : 鍵盤輸入的儲存位置
 // left_walk_cnt, right_walk_cnt : 走路計數器 用於計算走路時輸出的圖片 
 
 Human player,player3D;
 Monster enemy[2];
-Bullet skill[2];
+Bullet skill[4];
 Animate loading_animate;
 
 int main(void)
