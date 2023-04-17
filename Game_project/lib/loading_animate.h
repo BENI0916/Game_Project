@@ -1,6 +1,6 @@
 //loading_animate
-#ifndef LOADING_ANIMATE_H
-#define LOADING_ANIMATE_H
+#ifndef LOADING_ANIMATE
+#define LOADING_ANIMATE
 
 void loading_animate();
 

@@ -1,5 +1,5 @@
-#ifndef ENEMY_MOVE_H
-#define ENEMY_MOVE_H
+#ifndef ENEMY_MOVE
+#define ENEMY_MOVE
 
 void enemy_move();
 

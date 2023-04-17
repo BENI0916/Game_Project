@@ -9,6 +9,6 @@ void loadBG(char filename[]);
 
 void loadBG(char filename[],int w,int h);
 
-void loadCHAR(char filename[],PIMAGE **ori_img,PIMAGE **ori_msk,int w,int h,int index);
+void loadCHAR(char filename[],PIMAGE **ori_img,PIMAGE **ori_msk,int w,int h, int index);
 
 #endif

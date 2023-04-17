@@ -1,6 +1,6 @@
-#ifndef PLAYER_ATK_H
-#define PLAYER_ATK_H
+#ifndef PLAYER_ATK
+#define PLAYER_ATK
 
-void player_atk(int val);
+int player_atk(int val);
 
 #endif
