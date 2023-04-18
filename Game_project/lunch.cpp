@@ -5,8 +5,10 @@
 #include "lib/enemy_atk.h"
 #include "lib/player_move.h"
 #include "lib/output_img.h"
+#include "lib/player_move3D.h"
 
-extern int enemy_atk_type, enemy_num;
+extern PIMAGE bg;
+extern int enemy_atk_type, enemy_num, inFight, bgX, bgY;
 extern Human player;
 extern Monster enemy[2];
 extern Animate loading_animate;
@@ -24,7 +26,36 @@ void lunch()
 	{
 		cleardevice(); // 把輸出的窗口清空 
 
-		if(enemy[enemy_num].hp > 0) // 若敵人血量不為 0 則會行動 
+		if (inFight) {//判斷是否在戰鬥中
+			if(enemy[enemy_num].hp > 0) // 若敵人血量不為 0 則會行動 
+			{
+				if(enemy_atk_type == -1) // -1 代表 敵人未開始攻擊 
+					enemy_move();		 // 則敵人會開始移動 
+				enemy_atk();			 // 否則會進行攻擊 
+				//printf("enemy_atk_cnt = %d\n", enemy_atk_cnt);
+			}
+			else if(loading_animate.cnt == 72)
+			{
+				loading_animate.cnt = 0;
+			}
+		
+			move(5);
+			output_image();
+		
+			if(enemy[enemy_num].hp <= 0)
+			{
+				printf("active\n");
+				enemy_num++;
+			}
+		}
+		else {
+			
+			keyListener();
+			putimage(abs(wid-getwidth(bg))/2 + bgX, abs(hih-getheight(bg))/2 + bgY, bg);
+			putimage(player.x, player.y, player.player_msk[player.output_idx], NOTSRCERASE);
+			putimage(player.x, player.y, player.player_img[player.output_idx], SRCINVERT);
+		}
+		/*if(enemy[enemy_num].hp > 0) // 若敵人血量不為 0 則會行動 
 		{
 			if(enemy_atk_type == -1) // -1 代表 敵人未開始攻擊 
 			{
@@ -47,7 +78,7 @@ void lunch()
 			printf("active\n");
 			enemy_num++;
 			loading_animate.cnt = 0;
-		}
+		}*/
 	}
 }
 

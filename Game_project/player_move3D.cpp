@@ -85,8 +85,36 @@ void keyListener() {
         }
         //出門
         if(bgX > 189 && bgX < 249 && bgY == -192) {
-            //inFight =1;
+            bgX = 228;
+            bgY = 108;
             sprintf(BgName,"%s","images\\bg\\village.png");
+            loadBG(BgName,1587/2,1300/2);
+        }
+    }
+    //村莊設定
+    if (strcmp(BgName, "images\\bg\\village.png")==0) {
+        //地圖牆
+        if(bgX  <-360) bgX = -360;
+        if(bgX > 375) bgX = 375;
+        if(bgY  <-192) bgY = -192;
+        if(bgY > 285) bgY = 285;
+        //背景轉換
+        //回家
+        if(bgX >= 190 && bgX <=234 && bgY >=159 && bgY <=222) {
+            bgX=219;
+            bgY=-171;
+            sprintf(BgName,"%s","images\\bg\\home1.png");
+            loadBG(BgName,1587/2,1300/2);
+        }
+        //傳送門
+        if(bgX < -300 && bgY >= 246 && bgY <= 285) {
+            inFight=1;
+            player.x = wid / 4; // 暫定 
+	        player.y = hih * 0.6; // 暫定 
+            player.output_idx = 0;// 輸出圖片編號 
+	        player.high = 66;   // 人物圖片的高 
+	        player.width = 76;  // 人物圖片的寬
+            sprintf(BgName,"%s","images\\bg\\back_ground_01.png");
             loadBG(BgName);
         }
     }

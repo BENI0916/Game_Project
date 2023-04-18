@@ -8,7 +8,7 @@ extern Human player;
 extern Monster enemy[2];
 
 // ª±®a§ğÀ» 
-int player_atk(int val)
+void player_atk(int val)
 {	
 	switch(enemy_num)
 	{
