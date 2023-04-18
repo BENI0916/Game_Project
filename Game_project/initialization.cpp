@@ -24,19 +24,19 @@ void initialization()
 	sprintf(s,"%s","images\\main_char"); //C++無法將字串常數直接轉成char pointer，故有此行
 	loadCHAR(s,&player.player_img,&player.player_msk,76,66, 0); //讀取主角圖片
 	sprintf(s,"%s","images\\3D\\player");
-	loadCHAR(s,&player.player_img,&player.player_msk,24*4,32*4,26);
+	loadCHAR(s,&player.player_img,&player.player_msk,38*3.5,33*3.5,26);
 	printf("load player image succes\n");
 	
 	// 設定初始值 
-	player.x = (wid-24*4) / 2;
-	player.y = (hih-32*4) / 2 + 80;
+	player.x = (wid-28*3.5) / 2;
+	player.y = (hih-33*3.5) / 2 + 80;
 	player.hp = 10;
 	player.damage = 25; // 對敵人造成的傷害 
 	player.atked = 0;   // 判定是否有造成傷害 
 	player.dir = 'd';   // 方向 
 	player.output_idx = 27;// 輸出圖片編號 
-	player.high = 24*4;   // 人物圖片的高 
-	player.width = 32*4;  // 人物圖片的寬 
+	player.high = 28*3.5;   // 人物圖片的高 
+	player.width = 33*3.5;  // 人物圖片的寬 
 	player.power = 30;  // 擊退敵人的距離 
 	player.atk_type = 0;
 	/*player.x = wid / 4; // 暫定 
@@ -52,7 +52,7 @@ void initialization()
 	player.atk_type = 0;*/
 	
 	player_walk_cnt = 11; // 走路計時器 
-	player_walk_cnt3D = 0,bgX=6,bgY=-32;
+	player_walk_cnt3D = 0,bgX=21,bgY=-20;
 	
 	printf("player setting succes\n");
 	
