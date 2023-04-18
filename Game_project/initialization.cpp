@@ -24,7 +24,7 @@ void initialization()
 	sprintf(s,"%s","images\\main_char"); //C++無法將字串常數直接轉成char pointer，故有此行
 	loadCHAR(s,&player.player_img,&player.player_msk,76,66, 0); //讀取主角圖片
 	sprintf(s,"%s","images\\3D\\player");
-	loadCHAR(s,&player.player_img,&player.player_msk,24*4,32*4,25);
+	loadCHAR(s,&player.player_img,&player.player_msk,24*4,32*4,26);
 	printf("load player image succes\n");
 	
 	// 設定初始值 
@@ -34,7 +34,7 @@ void initialization()
 	player.damage = 25; // 對敵人造成的傷害 
 	player.atked = 0;   // 判定是否有造成傷害 
 	player.dir = 'd';   // 方向 
-	player.output_idx = 26;// 輸出圖片編號 
+	player.output_idx = 27;// 輸出圖片編號 
 	player.high = 24*4;   // 人物圖片的高 
 	player.width = 32*4;  // 人物圖片的寬 
 	player.power = 30;  // 擊退敵人的距離 

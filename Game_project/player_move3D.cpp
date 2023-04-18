@@ -24,22 +24,22 @@ void itemwall(int xl, int xr, int yu, int yd) {
 
 void keyListener() {
     if(GetAsyncKeyState(0x41) || GetAsyncKeyState('a'))  {
-        player.output_idx = 29 + table[player_walk_cnt3D++/fps];
+        player.output_idx = 30 + table[player_walk_cnt3D++/fps];
 		bgX += speed;
         if (player_walk_cnt3D/fps==4) player_walk_cnt3D = 0; 
 	}
     if(GetAsyncKeyState(0x44) || GetAsyncKeyState('d'))  {
-        player.output_idx = 35 + table[player_walk_cnt3D++/fps];
+        player.output_idx = 36 + table[player_walk_cnt3D++/fps];
 		bgX -= speed;
         if (player_walk_cnt3D/fps==4) player_walk_cnt3D = 0; 
 	}
     if(GetAsyncKeyState(0x53) || GetAsyncKeyState('s'))  {
-        player.output_idx = 32 + table[player_walk_cnt3D++/fps];
+        player.output_idx = 33 + table[player_walk_cnt3D++/fps];
 		bgY -= speed;
         if (player_walk_cnt3D/fps==4) player_walk_cnt3D = 0; 
 	}
     if(GetAsyncKeyState(0x57) || GetAsyncKeyState('w'))  {
-        player.output_idx = 26 + table[player_walk_cnt3D++/fps];
+        player.output_idx = 27 + table[player_walk_cnt3D++/fps];
 		bgY += speed;
         if (player_walk_cnt3D/fps==4) player_walk_cnt3D = 0; 
 	}
