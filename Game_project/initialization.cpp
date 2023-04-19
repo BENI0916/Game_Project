@@ -52,7 +52,7 @@ void initialization()
 	player.atk_type = 0;*/
 	
 	player_walk_cnt = 11; // 走路計時器 
-	player_walk_cnt3D = 0,bgX=21,bgY=-20;
+	player_walk_cnt3D = 0,bgX=20,bgY=-20;
 	
 	printf("player setting succes\n");
 	

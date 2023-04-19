@@ -51,14 +51,14 @@ void keyListener() {
         if(bgY  <-192) bgY = -192;
         if(bgY > 285) bgY = 285;
         //物件牆
-        itemwall(70,-59,175,-30);
-        itemwall(370,13,285,250);
-        itemwall(375,313,250,210);
-        itemwall(370,211,98,-75);
-        itemwall(-76,-219,285,153);
-        itemwall(-76,-270,213,153);
+        itemwall(75,-39, 180, 54);//電視
+        itemwall(370,237,105,-48);//床
+        //itemwall(375,313,250,210);
+        //itemwall(370,211,98,-75);
+        itemwall(-78,-168,285,174);
+        itemwall(-78,-246,219,180);
         //背景轉換
-        if(bgX == -222 && bgY >=213 && bgY <=285) {
+        if(bgX >= -214 && bgX <= -169&& bgY >=222 && bgY <=285) {
             sprintf(BgName,"%s","images\\bg\\home1.png");
             loadBG(BgName,1587/2,1300/2); //讀取背景
         }
@@ -73,18 +73,18 @@ void keyListener() {
         //物件牆
         itemwall(-231,-360,225,192);
         itemwall(189,-360,-177,-220);
-        itemwall(375,249,-177,-220);
+        itemwall(375,273,-177,-220);
         itemwall(375,165,285,264);
-        itemwall(135,18,285,264);
-        itemwall(132,-30,166,22);
+        itemwall(135,24,285,264);
+        itemwall(138,-30,174,27);//桌子
         //背景轉換
         //上樓
-        if(bgX == -273 && bgY >=213 && bgY <=285) {
+        if(bgX <= -270 && bgY >=228 && bgY <=285) {
             sprintf(BgName,"%s","images\\bg\\home2.png");
             loadBG(BgName,1587/2,1300/2);
         }
         //出門
-        if(bgX > 189 && bgX < 249 && bgY == -192) {
+        if(bgX > 189 && bgX < 270 && bgY <= -186) {
             bgX = 228;
             bgY = 108;
             sprintf(BgName,"%s","images\\bg\\village.png");
