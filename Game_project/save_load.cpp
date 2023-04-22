@@ -1,19 +1,29 @@
 #include "lib/save_load.h"
+#include <stdio.h>
+#include <assert.h>
 
-//¦sÀÉ¥Î¨ç¦¡ 
+//å­˜æª”ç”¨å‡½å¼ 
 void save() 
 {
-    //¥u¶·§¹¦¨¼gÀÉ¤Î«ØÀÉ¥\¯à¡A¼g¤J¤º®e¥ıªÅµÛ´N¦n
-	//¤T­Ó¦sÀÉªºÀÉ¦W¤À§O¬°save1.dat save2.dat sav3.dat
-	//¼g¤J¤§ÀÉ®×¶·©ñ¸m¦bdata/save¸Ì
-	//¤w¸g¥ı©ñ¤F¤@­Ósave1.dat·í§@½d¨Ò 
+	FILE *fptr = fopen("data\\save\\save1.dat","wb");
+	assert(fptr);
+    //åªé ˆå®Œæˆå¯«æª”åŠå»ºæª”åŠŸèƒ½ï¼Œå¯«å…¥å…§å®¹å…ˆç©ºè‘—å°±å¥½
+	//ä¸‰å€‹å­˜æª”çš„æª”ååˆ†åˆ¥ç‚ºsave1.dat save2.dat sav3.dat
+	//å¯«å…¥ä¹‹æª”æ¡ˆé ˆæ”¾ç½®åœ¨data/saveè£¡
+	//å·²ç¶“å…ˆæ”¾äº†ä¸€å€‹save1.datç•¶ä½œç¯„ä¾‹ 
 }
 
-//ÅªÀÉ¥Î¨ç¦¡ 
+//è®€æª”ç”¨å‡½å¼ 
 void load() 
 {
-    //¥u»İ¶i¦æ¶}ÀÉ¤ÎÅªÀÉ¡A­YÀÉ®×¤£¦s¦b¶·§iª¾ª±®a
-	//¤T­Ó¦sÀÉªºÀÉ¦W¤À§O¬°save1.dat save2.dat sav3.dat
-	//¼g¤J¤§ÀÉ®×¶·©ñ¸m¦bdata/save¸Ì
-	//¤w¸g¥ı©ñ¤F¤@­Ósave1.dat·í§@½d¨Ò  
+	FILE *fptr = fopen("data\\save\\save1.dat","rb");
+	if(fptr == NULL)
+	{
+		puts("ERROR: The file doesn't exist.\n");
+		assert(0);
+	}
+    //åªéœ€é€²è¡Œé–‹æª”åŠè®€æª”ï¼Œè‹¥æª”æ¡ˆä¸å­˜åœ¨é ˆå‘ŠçŸ¥ç©å®¶
+	//ä¸‰å€‹å­˜æª”çš„æª”ååˆ†åˆ¥ç‚ºsave1.dat save2.dat sav3.dat
+	//å¯«å…¥ä¹‹æª”æ¡ˆé ˆæ”¾ç½®åœ¨data/saveè£¡
+	//å·²ç¶“å…ˆæ”¾äº†ä¸€å€‹save1.datç•¶ä½œç¯„ä¾‹  
 }

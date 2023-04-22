@@ -4,32 +4,99 @@
 #include "lib/save_load.h"
 #include "lib/setting.h"
 
-//¹CÀ¸¶}©l°õ¦æ·|¥ý¸õ¨Ó³oÃä 
+//éŠæˆ²é–‹å§‹åŸ·è¡Œæœƒå…ˆè·³ä¾†é€™é‚Š 
 void gameStart() 
 {
-    initgraph(wid, hih);	// ªì©l¤Æµ¡¤f 
+    initgraph(wid, hih);	// åˆå§‹åŒ–çª—å£ 
 	printf("inigraph succes\n");
-
-    /*
-    ¹CÀ¸ªº¶}©lµe­±
-	µe­±»Ý­n¦³¥|Áû«ö¶s¡A¤À§O¬O:¶}©l¹CÀ¸ Åª/¦sÀÉ ³]©w µ²§ô¹CÀ¸
-	¥H¤U»¡©ú¦U«ö¶s¥\¯à
 	
-	¶}©l¹CÀ¸ :
-		«ö¤U«á°õ¦æ lunch.cpp ªº lunch() 
-		lunch()¤ºªº¤º®eµL¶·§ó°Ê¡A°õ¦æ¥¦´N¦n
-	Åª/¦sÀÉ:
-		«ö¤U«á¶i¦æµe­±¤Á´«¡A®i¥Ü¥X¤T­Ó¦sÀÉ®æ¡A«ö¤U­Ó¦sÀÉ®æ«á±N¸õ¥X¨â­Ó«ö¶s¡A¤À§O¬O: ¦sÀÉ ÅªÀÉ 
-			¦sÀÉ: °õ¦æ save_load.cpp ªº save()
-			ÅªÀÉ: °õ¦æ save_load.cpp ªº load()
-	³]©w:
-		«ö¤U«á°õ¦æ setting.cpp ªº setting()
-	µ²§ô¹CÀ¸:
-		«ö¤U«á²×¤îµ{¦¡
+	PIMAGE MenubgImg = newimage(wid,hih);
+    //å‰µå»ºè‡¨æ™‚åœ–åƒ
+    PIMAGE tmp = newimage();
+    getimage(tmp,"images\\menu\\menubg.png");
+    //ç²å–åœ–åƒçš„å¯¬é«˜
+	int tmpWidth = getwidth(tmp);
+    int tmpHeight = getheight(tmp);
+    //å°‡èƒŒæ™¯åœ–åƒç¹ªè£½æˆæŒ‡å®šå¤§å°
+    putimage(MenubgImg, 0, 0, wid, hih, tmp, 0, 0, tmpWidth, tmpHeight);
+    //éŠ·æ¯€è‡¨æ™‚åœ–åƒ
+    delimage(tmp);
+    tmp = NULL;
+    //ç¹ªè£½èƒŒæ™¯åœ–åƒ
+    putimage(0,0,MenubgImg);
+    
+    //battle beast logo
+    PIMAGE BattleImg = newimage();
+    getimage(BattleImg,"images\\menu\\battle.png");
+    putimage_withalpha(NULL,BattleImg,50,20);
+    //start button
+    PIMAGE StartImg = newimage();
+    getimage(StartImg,"images\\menu\\start.png");
+    putimage_withalpha(NULL,StartImg,300,550);
+    //quit button
+    PIMAGE QuitImg = newimage();
+    getimage(QuitImg,"images\\menu\\quit.png");
+    putimage_withalpha(NULL,QuitImg,820,550);
+    //setting button
+    PIMAGE SetImg = newimage();
+    getimage(SetImg,"images\\menu\\setting.png");
+    putimage_withalpha(NULL,SetImg,1170,35);
+    
+    mouse_msg msg = {0};
+    for(;is_run();delay_fps(60))
+    {
+    	//char str[32];
+        //int x, y;
+        //mousepos(&x, &y);
+        //sprintf(str, "%4d %4d", x, y);
+        //outtextxy(0, 0, str);
+        
+    	msg.x = msg.y = 0;
+    	//ç²å–é¼ æ¨™è¨Šæ¯
+    	while(mousemsg())
+    	{
+    		msg = getmouse();
+		}
+		if((msg.x >= 299 && msg.x <= 515) && (msg.y >= 555 && msg.y <= 603) && msg.is_left() && msg.is_down())
+		{
+			//é»žæ“Šé–‹å§‹
+			lunch();
+		}
+		else if((msg.x >= 825 && msg.x <= 991) && (msg.y >= 552 && msg.y <= 603) && msg.is_left() && msg.is_down())
+		{
+			//é»žæ“ŠçµæŸ
+			delimage(MenubgImg);
+			delimage(StartImg);
+			delimage(QuitImg);
+			closegraph();
+			exit(0);
+		}
+		else if((msg.x >= 1177 && msg.x <= 1229) && (msg.y >= 46 && msg.y <= 86) && msg.is_left() && msg.is_down())
+		{
+			//é»žæ“Šè¨­å®š
+			setting();
+		}
+	}
+    /*
+    éŠæˆ²çš„é–‹å§‹ç•«é¢
+	ç•«é¢éœ€è¦æœ‰å››é¡†æŒ‰éˆ•ï¼Œåˆ†åˆ¥æ˜¯:é–‹å§‹éŠæˆ² è®€/å­˜æª” è¨­å®š çµæŸéŠæˆ²
+	ä»¥ä¸‹èªªæ˜Žå„æŒ‰éˆ•åŠŸèƒ½
+	
+	é–‹å§‹éŠæˆ² :
+		æŒ‰ä¸‹å¾ŒåŸ·è¡Œ lunch.cpp çš„ lunch() 
+		lunch()å…§çš„å…§å®¹ç„¡é ˆæ›´å‹•ï¼ŒåŸ·è¡Œå®ƒå°±å¥½
+	è®€/å­˜æª”:
+		æŒ‰ä¸‹å¾Œé€²è¡Œç•«é¢åˆ‡æ›ï¼Œå±•ç¤ºå‡ºä¸‰å€‹å­˜æª”æ ¼ï¼ŒæŒ‰ä¸‹å€‹å­˜æª”æ ¼å¾Œå°‡è·³å‡ºå…©å€‹æŒ‰éˆ•ï¼Œåˆ†åˆ¥æ˜¯: å­˜æª” è®€æª” 
+			å­˜æª”: åŸ·è¡Œ save_load.cpp çš„ save()
+			è®€æª”: åŸ·è¡Œ save_load.cpp çš„ load()
+	è¨­å®š:
+		æŒ‰ä¸‹å¾ŒåŸ·è¡Œ setting.cpp çš„ setting()
+	çµæŸéŠæˆ²:
+		æŒ‰ä¸‹å¾Œçµ‚æ­¢ç¨‹å¼
 		
-	¦U¥Î¨ì¤§¨ç¦¡¸Ô²Ó¤º®e½Ð¦Ü¦UcppÀÉ¤º¬d¬Ý 
+	å„ç”¨åˆ°ä¹‹å‡½å¼è©³ç´°å…§å®¹è«‹è‡³å„cppæª”å…§æŸ¥çœ‹ 
 
 
     */
-    lunch();
+    //lunch();
 }
