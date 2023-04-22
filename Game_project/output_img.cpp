@@ -6,20 +6,31 @@ extern PIMAGE bg;
 extern int enemy_num;
 extern Human player;
 extern Monster enemy[2];
-extern Bullet skill[4];
+extern Bullet skill[5], tp_door;
 extern Animate loading_animate;
 
 void output_image()
 {
-	if(loading_animate.cnt < 72)
+	if(loading_animate.printed)
 	{
 		loading_animate.output_idx = loading_animate.cnt / 8;
 		putimage(0, 0, loading_animate.loading_img[loading_animate.output_idx]);
 		loading_animate.cnt++;
+
+		// loadingå‹•ç•«çµæŸæ™‚ï¼Œå¿…å®šæ˜¯éŠœæŽ¥å ´æ™¯æˆ–ä¸‹ä¸€å€‹æ•µäºº
+		// enemy_numç‚ºæ•µäººç·¨è™Ÿï¼Œæœƒæ›åˆ°ä¸‹ä¸€å€‹æ•µäºº
+		// çŽ©å®¶çš„åˆå§‹ä½ç½®ä¹Ÿæœƒå›žå¾©
+		if(loading_animate.cnt >= 72)
+		{
+			loading_animate.printed = 0;
+			enemy_num++;
+			printf("enemy_num = %d\n", enemy_num);
+			player.x = wid / 4;
+		}
 	}
 	else
 	{
-		// ¿é¥X­I´º 
+		// è¼¸å‡ºèƒŒæ™¯ 
 		putimage(0, 0, bg);
 		
 		if(enemy[enemy_num].hp > 0)
@@ -27,9 +38,9 @@ void output_image()
 			putimage(enemy[enemy_num].x, enemy[enemy_num].y, enemy[enemy_num].enemy_msk[enemy[enemy_num].output_idx], NOTSRCERASE);
 			putimage(enemy[enemy_num].x, enemy[enemy_num].y, enemy[enemy_num].enemy_img[enemy[enemy_num].output_idx], SRCINVERT);
 			
-			for(int i = 0; i < 4; i++)
+			for(int i = 0; i < 5; i++)
 			{
-				// ­Y§Þ¯à¥¿¦bµo°Ê·|¦L¥X 
+				// è‹¥æŠ€èƒ½æ­£åœ¨ç™¼å‹•æœƒå°å‡º 
 				if(skill[i].status > 0)
 				{
 					putimage(skill[i].x, skill[i].y, skill[i].skill_msk[skill[i].output_idx], NOTSRCERASE);
@@ -37,72 +48,77 @@ void output_image()
 				}
 			}
 		}
+		else
+		{ // è‹¥æ•µäººè¡€é‡æ­¸0ï¼Œä½†çŽ©å®¶é‚„æ²’èµ°åˆ°å‚³é€é–€å€åŸŸ
+		  // å‰‡æŒçºŒå°å‡ºå‚³é€é–€
+			put_tp_door_img();
+		}
 		
-		// ¿é¥Xª±®a
+		// è¼¸å‡ºçŽ©å®¶
 		putimage(player.x, player.y, player.player_msk[player.output_idx], NOTSRCERASE);
 		putimage(player.x, player.y, player.player_img[player.output_idx], SRCINVERT);
 	}
 }	
 
-//Åª¨ú­I´º¹Ï¤ù filename:±ýÅª¨ú­I´º¤§¸ô®|¤ÎÀÉ¦W
+//è®€å–èƒŒæ™¯åœ–ç‰‡ filename:æ¬²è®€å–èƒŒæ™¯ä¹‹è·¯å¾‘åŠæª”å
 void loadBG(char filename[]) 
 {	
 	delimage(bg);
 	bg = newimage(wid,hih);
-	PIMAGE oriBG = newimage(); //«Ø¥ß¼È¦s¤§­I´º¹Ï¤ù
-	getimage(oriBG, filename); //¨ú±o¹Ï¤ù
-	putimage(bg, 0, 0, wid, hih, oriBG, 0, 0, getwidth(oriBG), getheight(oriBG)); //¶i¦æ©Ô¦ù¨ÃÀx¦s
-	delimage(oriBG); //§R°£¼È¦s
+	PIMAGE oriBG = newimage(); //å»ºç«‹æš«å­˜ä¹‹èƒŒæ™¯åœ–ç‰‡
+	getimage(oriBG, filename); //å–å¾—åœ–ç‰‡
+	putimage(bg, 0, 0, wid, hih, oriBG, 0, 0, getwidth(oriBG), getheight(oriBG)); //é€²è¡Œæ‹‰ä¼¸ä¸¦å„²å­˜
+	delimage(oriBG); //åˆªé™¤æš«å­˜
 }
 
-//Åª¨ú­I´º¹Ï¤ù filename:±ýÅª¨ú­I´º¤§¸ô®|¤ÎÀÉ¦W w:¦ùÁY«á¼e h:¦ùÁY«á°ª
+//è®€å–èƒŒæ™¯åœ–ç‰‡ filename:æ¬²è®€å–èƒŒæ™¯ä¹‹è·¯å¾‘åŠæª”å w:ä¼¸ç¸®å¾Œå¯¬ h:ä¼¸ç¸®å¾Œé«˜
 void loadBG(char filename[],int w,int h) 
 {	
 	delimage(bg);
 	bg = newimage(w,h);
-	PIMAGE oriBG = newimage(); //«Ø¥ß¼È¦s¤§­I´º¹Ï¤ù
-	getimage(oriBG, filename); //¨ú±o¹Ï¤ù
-	putimage(bg, 0, 0, w, h, oriBG, 0, 0, getwidth(oriBG), getheight(oriBG)); //¶i¦æ©Ô¦ù¨ÃÀx¦s
-	delimage(oriBG); //§R°£¼È¦s
+	PIMAGE oriBG = newimage(); //å»ºç«‹æš«å­˜ä¹‹èƒŒæ™¯åœ–ç‰‡
+	getimage(oriBG, filename); //å–å¾—åœ–ç‰‡
+	putimage(bg, 0, 0, w, h, oriBG, 0, 0, getwidth(oriBG), getheight(oriBG)); //é€²è¡Œæ‹‰ä¼¸ä¸¦å„²å­˜
+	delimage(oriBG); //åˆªé™¤æš«å­˜
 }
 
-//Åª¨ú¨¤¦â¹Ï¤ù filename:±ýÅª¨ú¹Ï¤ù¤§¸ô®|¤ÎÀÉ¦W
-//**ori_img:«ü¦V¹Ï¤ù±NÀx¦s¤§«ü¼ÐÅÜ¼Æ **ori_msk:«ü¦V¾B¸n±NÀx¦s¤§«ü¼ÐÅÜ¼Æ
-//w:¹Ï¤ù¿é¥X«á¤§¼e h: ¹Ï¤ù¿é¥X«á¤§°ª
+//è®€å–è§’è‰²åœ–ç‰‡ filename:æ¬²è®€å–åœ–ç‰‡ä¹‹è·¯å¾‘åŠæª”å
+//**ori_img:æŒ‡å‘åœ–ç‰‡å°‡å„²å­˜ä¹‹æŒ‡æ¨™è®Šæ•¸ **ori_msk:æŒ‡å‘é®ç½©å°‡å„²å­˜ä¹‹æŒ‡æ¨™è®Šæ•¸
+//w:åœ–ç‰‡è¼¸å‡ºå¾Œä¹‹å¯¬ h: åœ–ç‰‡è¼¸å‡ºå¾Œä¹‹é«˜
 void loadCHAR(char filename[],PIMAGE **ori_img,PIMAGE **ori_msk,int w,int h,int index) 
 {
-	PIMAGE *img = NULL,*msk = NULL; //¼È¦s¹Ï¤ù¤Î¾B¸n¤§«ü¼ÐÅÜ¼Æ
-	DIR *img_dir = NULL, *msk_dir = NULL; //¸ê®Æ§¨ªº¦ì§}
+	PIMAGE *img = NULL,*msk = NULL; //æš«å­˜åœ–ç‰‡åŠé®ç½©ä¹‹æŒ‡æ¨™è®Šæ•¸
+	DIR *img_dir = NULL, *msk_dir = NULL; //è³‡æ–™å¤¾çš„ä½å€
     struct dirent *img_entry, *msk_entry;
 
 	char img_str[100], msk_str[100];
-	sprintf(img_str, ".\\%s\\img", filename); //©w¦ì
-	sprintf(msk_str, ".\\%s\\msk", filename); //©w¦ì
+	sprintf(img_str, ".\\%s\\img", filename); //å®šä½
+	sprintf(msk_str, ".\\%s\\msk", filename); //å®šä½
 	if((img_dir = opendir(img_str)) == NULL || (msk_dir = opendir(msk_str)) == NULL) 
-	{ //§PÂ_¬O§_¦¨¥\¶}±Ò©Ò«ü©w¤§¸ô®|
+	{ //åˆ¤æ–·æ˜¯å¦æˆåŠŸé–‹å•Ÿæ‰€æŒ‡å®šä¹‹è·¯å¾‘
             printf("opendir failed!\n");   
     }
 	else 
 	{
 		for (int i = index;(img_entry = readdir(img_dir)), (msk_entry = readdir(msk_dir));) 
-		{ //§PÂ_¬O§_§t¦³¥¼Åª¨ú¤§ÀÉ®×¡A­YµL«hÂ÷¶}­¡¥N
+		{ //åˆ¤æ–·æ˜¯å¦å«æœ‰æœªè®€å–ä¹‹æª”æ¡ˆï¼Œè‹¥ç„¡å‰‡é›¢é–‹è¿­ä»£
 			if (strstr(img_entry->d_name,".png") && strstr(msk_entry->d_name, ".png")) 
-			{ //§PÂ_Åª¨ú¤§ÀÉ®×ªº°ÆÀÉ¦W
-				//ÂX¥R°}¦C
+			{ //åˆ¤æ–·è®€å–ä¹‹æª”æ¡ˆçš„å‰¯æª”å
+				//æ“´å……é™£åˆ—
 				*ori_img = (PIMAGE *)realloc(*ori_img,sizeof(PIMAGE)*(i+1));
 				*ori_msk = (PIMAGE *)realloc(*ori_msk,sizeof(PIMAGE)*(i+1));
 				
 				img = (PIMAGE *)realloc(img,sizeof(PIMAGE)*(i+1));
 				msk = (PIMAGE *)realloc(msk,sizeof(PIMAGE)*(i+1));	
 				
-				//«Ø¥ß¹Ï¤ù
+				//å»ºç«‹åœ–ç‰‡
 				(*ori_img)[i] = newimage(w,h);
 				(*ori_msk)[i] = newimage(w,h);
 				
 				img[i] = newimage();
 				msk[i] = newimage();
 
-				//Åª¨ú¹Ï¤ù¨Ã©Ô¦ù¦Ü«ü©wªø°ª
+				//è®€å–åœ–ç‰‡ä¸¦æ‹‰ä¼¸è‡³æŒ‡å®šé•·é«˜
 				sprintf(img_str, "%s\\img\\%s",filename,img_entry->d_name);
 				sprintf(msk_str, "%s\\msk\\%s",filename,msk_entry->d_name);
 				
@@ -112,8 +128,8 @@ void loadCHAR(char filename[],PIMAGE **ori_img,PIMAGE **ori_msk,int w,int h,int 
 				putimage((*ori_img)[i], 0, 0, w, h, img[i], 0, 0, getwidth(img[i]), getheight(img[i]));
 				putimage((*ori_msk)[i], 0, 0, w, h, msk[i], 0, 0, getwidth(msk[i]), getheight(msk[i]));
 				
-				delimage(img[i]); //§R°£¼È¦s
-				delimage(msk[i++]); //§R°£¼È¦s
+				delimage(img[i]); //åˆªé™¤æš«å­˜
+				delimage(msk[i++]); //åˆªé™¤æš«å­˜
 			}
 		}
 		closedir(img_dir);
@@ -122,4 +138,22 @@ void loadCHAR(char filename[],PIMAGE **ori_img,PIMAGE **ori_msk,int w,int h,int 
 
 	free(img);
 	free(msk);
+}
+
+void put_tp_door_img()
+{
+	if(tp_door.power < 20)
+		tp_door.output_idx = 0;
+	else if(tp_door.power < 40)
+		tp_door.output_idx = 1;
+	else if(tp_door.power < 60)
+		tp_door.output_idx = 2;
+	else if(tp_door.power < 80)
+		tp_door.output_idx = 3;
+	else
+		tp_door.power = 0;
+	tp_door.power++;
+
+	putimage(tp_door.x, tp_door.y, tp_door.skill_msk[tp_door.output_idx], NOTSRCERASE);
+	putimage(tp_door.x, tp_door.y, tp_door.skill_img[tp_door.output_idx], SRCINVERT);
 }

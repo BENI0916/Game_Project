@@ -1,24 +1,24 @@
 #include "lib/var.h"
 #include "lib/game_start.h"
 
-PIMAGE bg = newimage(); //bg:Àx¦s­I´º¹Ï¤ù¤§ÅÜ¼Æ
-int key, atk_cnt, player_walk_cnt, player_jump_cnt, last_key, flag, enemy_atk_cnt, enemy_atk_type, player_enemy_dir, enemy_num;
+PIMAGE bg = newimage(); //bg:å„²å­˜èƒŒæ™¯åœ–ç‰‡ä¹‹è®Šæ•¸
+int key, atk_cnt, player_walk_cnt, player_jump_cnt, last_key, flag, enemy_atk_cnt, enemy_atk_type, player_enemy_dir, enemy_num = -1, get_dmg_cnt, skill_dir;
 double start, end;
 int inFight = 0;
 int player_walk_cnt3D,bgX,bgY;
 char BgName[50];
-// key : Áä½L¿é¤JªºÀx¦s¦ì¸m
-// key : Áä½L¿é¤JªºÀx¦s¦ì¸m
-// left_walk_cnt, right_walk_cnt : ¨«¸ô­p¼Æ¾¹ ¥Î©ó­pºâ¨«¸ô®É¿é¥Xªº¹Ï¤ù 
+// key : éµç›¤è¼¸å…¥çš„å„²å­˜ä½ç½®
+// key : éµç›¤è¼¸å…¥çš„å„²å­˜ä½ç½®
+// left_walk_cnt, right_walk_cnt : èµ°è·¯è¨ˆæ•¸å™¨ ç”¨æ–¼è¨ˆç®—èµ°è·¯æ™‚è¼¸å‡ºçš„åœ–ç‰‡ 
 
 Human player,player3D;
 Monster enemy[2];
-Bullet skill[4];
+Bullet skill[5], tp_door;
 Animate loading_animate;
 
 int main(void)
 {
-	//¶}©l¹B¦æ
+	//é–‹å§‹é‹è¡Œ
 	gameStart();
 
 	return 0;
@@ -66,4 +66,4 @@ int main(void)
 //                                 |       |
 //    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
-//                      ­C¿q«O¦ö                ¥ÃµL BUG
+//                      è€¶ç©Œä¿ä½‘                æ°¸ç„¡ BUG

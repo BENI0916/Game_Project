@@ -4,6 +4,8 @@
 #include "lib/save_load.h"
 #include "lib/setting.h"
 
+extern int enemy_num;
+
 //遊戲開始執行會先跳來這邊 
 void gameStart() 
 {
@@ -43,7 +45,9 @@ void gameStart()
     putimage_withalpha(NULL,SetImg,1170,35);
     
     mouse_msg msg = {0};
-    for(;is_run();delay_fps(60))
+	
+	// 新增 enemy_num < 2 : 用來結束程式
+    for(;is_run() && enemy_num < 2 ;delay_fps(60))
     {
     	//char str[32];
         //int x, y;

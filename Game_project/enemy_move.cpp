@@ -15,8 +15,8 @@ void enemy_move()
 			else
 				enemy[enemy_num].dir = 'd';
 				
-			// ­Y¼Ä¤H»Pª±®a¶ZÂ÷¤j©ó¼Ä¤Hªº¨â­Ó¨­¦ì
-			// «h·|©¹ª±®a¤è¦V²¾°Ê 
+			// è‹¥æ•µäººèˆ‡çŽ©å®¶è·é›¢å¤§æ–¼æ•µäººçš„å…©å€‹èº«ä½
+			// å‰‡æœƒå¾€çŽ©å®¶æ–¹å‘ç§»å‹• 
 			if(abs(enemy[enemy_num].x - player.x) >= enemy[enemy_num].width * 2)
 			{
 				if(enemy[enemy_num].x > player.x)
@@ -31,7 +31,7 @@ void enemy_move()
 				}
 			}
 			
-			// Åý¼Ä¤H¨«¸ô·|¦³¯B°Ê 
+			// è®“æ•µäººèµ°è·¯æœƒæœ‰æµ®å‹• 
 			if(flag == 40)
 			{
 				enemy[enemy_num].y -= 3;
@@ -63,9 +63,22 @@ void enemy_move()
 					enemy[enemy_num].x += enemy[enemy_num].speed;
 					enemy[enemy_num].output_idx = 0;
 				}
+
+				// hih * 0.6 - 150 + 66
+				if(flag == 20)
+				{
+					enemy[enemy_num].y -= 10;
+				}
+				else if(flag == 0)
+				{
+					enemy[enemy_num].y += 10;
+					flag = 21;
+				}
+				flag--;
 			}
 			else
 			{
+				enemy[1].y = hih * 0.6 - 150 + 66;
 				if(flag <= 0)
 					flag = 80;
 				flag--;

@@ -3,11 +3,11 @@
 #include "lib/player_move.h"
 #include "lib/enemy_give_dmg.h"
  
-extern int key, atk_cnt, player_walk_cnt, flag, enemy_atk_cnt, enemy_atk_type, player_enemy_dir, atked, enemy_num, player_jump_cnt;
+extern int key, atk_cnt, player_walk_cnt, flag, enemy_atk_cnt, enemy_atk_type, player_enemy_dir, atked, enemy_num, player_jump_cnt, get_dmg_cnt;
 extern double start, end;
 extern Human player;
 extern Monster enemy[2];
-extern Bullet skill[4];
+extern Bullet skill[5];
 int is_middle(int up, int pos, int down);
 
 void enemy_give_dmg()
@@ -30,12 +30,16 @@ void enemy_give_dmg()
 			case_3();
 			break;
 		
+		case 4:
+			case_4();
+			break;
+
 		default :
 			break;
 	}
 }
 
-// ¥Î©ó§PÂ_ pos ¬O§_¦b up ©M down ¤¤¶¡ 
+// ï¿½Î©ï¿½Pï¿½_ pos ï¿½Oï¿½_ï¿½b up ï¿½M down ï¿½ï¿½ï¿½ï¿½ 
 int is_middle(int up, int pos, int down)
 {
 	if(up >= pos && pos >= down)
@@ -47,20 +51,26 @@ void case_0()
 {
 	if(enemy[enemy_num].dir == 'a')
 	{
-		// §P©wª±®a¬O§_¦b¼Ä¤Hªº§ðÀ»½d³ò¤º 
+		// ï¿½Pï¿½wï¿½ï¿½ï¿½aï¿½Oï¿½_ï¿½bï¿½Ä¤Hï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½dï¿½ï¿½ 
 		if(is_middle(enemy[enemy_num].x + enemy[enemy_num].width * 1.1, player.x + player.width / 2, enemy[enemy_num].x - enemy[enemy_num].width / 10)
 		&& (enemy[enemy_num].output_idx == 4 || enemy[enemy_num].output_idx == 5))
 		{
 			player.hp -= enemy[enemy_num].damage;
 			player.x -= enemy[enemy_num].power;
+			get_dmg_cnt = 1;
 		}
 		
-		// §P©wª±®a¬O§_¦b¼Ä¤Hªº§Þ¯à½d³ò¤º 
+		// ï¿½Pï¿½wï¿½ï¿½ï¿½aï¿½Oï¿½_ï¿½bï¿½Ä¤Hï¿½ï¿½ï¿½Þ¯ï¿½dï¿½ï¿½ 
 		if(skill[0].status && is_middle(skill[0].x + skill[0].width, player.x + player.width / 2, skill[0].x))
 		{
 			player.hp -= enemy[enemy_num].damage;
 			player.x -= skill[0].power;
 			//skill[0].status = 0;
+			get_dmg_cnt = 1;
+
+			if(player_jump_cnt == -1)
+				player_jump_cnt = 15;
+			jump();
 		}
 	}
 	else
@@ -71,6 +81,7 @@ void case_0()
 		{
 			player.hp -= enemy[enemy_num].damage;
 			player.x += enemy[enemy_num].power;
+			get_dmg_cnt = 1;
 		}
 		
 		if(skill[0].status && is_middle(skill[0].x + skill[0].width, player.x + player.width / 2, skill[0].x))
@@ -78,6 +89,11 @@ void case_0()
 			player.hp -= enemy[enemy_num].damage;
 			player.x += skill[0].power;
 			//skill[0].status = 0;
+			get_dmg_cnt = 1;
+
+			if(player_jump_cnt == -1)
+				player_jump_cnt = 15;
+			jump();
 		}
 	}	
 }
@@ -93,34 +109,46 @@ void case_1()
 			if(is_middle(enemy[enemy_num].y + enemy[enemy_num].high * 1.5, player.y + player.high / 2, enemy[enemy_num].y))
 			{
 				player.hp -= enemy[enemy_num].damage;
-				
+				get_dmg_cnt = 1;
+
 				if(enemy[enemy_num].dir == 'a')
 					player.x -= enemy[enemy_num].power;
 				else
 					player.x += enemy[enemy_num].power;	
+				if(player_jump_cnt == -1)
+					player_jump_cnt = 15;
+				jump();
 			}	
 		}	
 	}
 	
 	//printf("%d %d %d %d\n", skill[1].x, player.x + player.width / 2, skill[1].x + skill[1].width / 10, is_middle(skill[1].x, player.x + player.width / 2, skill[1].x + skill[1].width / 10));
-	// ¦¹§Þ¯à¸û¬°¯S®í ¤@¦¸¦@¦³¥|­Ó½d³ò³y¦¨¶Ë®` ¬G¤À¦¨¥ª¥k¨â²Õ 
+	// ï¿½ï¿½ï¿½Þ¯ï¿½ï¿½ï¿½ï¿½ï¿½Sï¿½ï¿½ ï¿½@ï¿½ï¿½ï¿½@ï¿½ï¿½ï¿½|ï¿½Ó½dï¿½ï¿½yï¿½ï¿½ï¿½Ë®` ï¿½Gï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½kï¿½ï¿½ï¿½ 
 	if(is_middle(56, enemy_atk_cnt, 0))
 	{
-		// ¥ª 
+		// ï¿½ï¿½ 
 		if(is_middle(skill[1].x + skill[1].width / 10, player.x + player.width / 2, skill[1].x) == 1
 		|| is_middle(skill[1].x + skill[1].width * 30 / 100, player.x + player.width / 2, skill[1].x + skill[1].width * 21 / 100) == 1)
 		{
+			if(player_jump_cnt == -1)
+				player_jump_cnt = 15;
+			jump();
 			player.hp -= enemy[enemy_num].damage;
 			player.x -= skill[1].power;
 			skill[1].status = 0;
+			get_dmg_cnt = 1;
 		}
-		// ¥k 
+		// ï¿½k 
 		else if(is_middle(skill[1].x + skill[1].width * 84 / 100, player.x + player.width / 2, skill[1].x + skill[1].width * 74 / 100) == 1
 			 || is_middle(skill[1].x + skill[1].width, player.x + player.width / 2, skill[1].x + skill[1].width * 9 / 10) == 1)
 		{
+			if(player_jump_cnt == -1)
+				player_jump_cnt = 15;
+			jump();
 			player.hp -= enemy[enemy_num].damage;
 			player.x += skill[1].power;
 			skill[1].status = 0;
+			get_dmg_cnt = 1;
 		}
 	}	
 }
@@ -132,7 +160,8 @@ void case_2()
 	&& is_middle(skill[2].x + 150, player.x + player.width / 2, skill[2].x + 85))
 	{
 		player.hp -= enemy[enemy_num].damage;
-		
+		get_dmg_cnt = 1;
+
 		if(player_jump_cnt == -1)
 			player_jump_cnt = 15;
 		jump();
@@ -149,10 +178,11 @@ void case_2()
 void case_3()
 {
 	if(is_middle(skill[3].x + skill[3].width * 0.8, player.x + player.width / 2, skill[3].x + skill[3].width * 0.2)
-	&& is_middle(skill[3].y + skill[3].high * 0.8, player.y + player.high / 2, skill[3].y + skill[3].high * 0.2))
+	&& is_middle(skill[3].y + skill[3].high * 0.8, player.y + player.high / 3, skill[3].y + skill[3].high * 0.1))
 	{
 		player.hp -= enemy[enemy_num].damage;
-		
+		get_dmg_cnt = 1;
+
 		if(player_jump_cnt == -1)
 			player_jump_cnt = 15;
 		jump();
@@ -168,4 +198,24 @@ void case_3()
 	}	
 }
 
+void case_4()
+{
+	if(is_middle(skill[4].x + skill[4].width * 0.9, player.x + player.width / 2, skill[4].x + skill[4].width * 0.1)
+	&& enemy_atk_cnt < 70)
+	{
+		player.hp -= enemy[enemy_num].damage;
+		get_dmg_cnt = 1;
+		
+		if(player_jump_cnt == -1)
+			player_jump_cnt = 15;
+		jump();
 
+		if(enemy[enemy_num].dir == 'a' && (player.x > 10))
+		{
+			player.x += skill[4].power;
+		}
+		else if(enemy[enemy_num].dir == 'd' && player.x + 10 < wid)
+			player.x -= skill[4].power;
+		
+	}
+}

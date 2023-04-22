@@ -7,7 +7,7 @@ extern double start, end;
 extern Human player;
 extern Monster enemy[2];
 
-// ª±®a§ğÀ» 
+// ç©å®¶æ”»æ“Š  
 void player_atk(int val)
 {	
 	switch(enemy_num)
@@ -15,17 +15,17 @@ void player_atk(int val)
 		case 0:
 			if(player.dir == 'd')
 			{	
-				// ­Y¼Ä¤H¦bª±®a§ğÀ»½d³ò 
-				if(is_middle(enemy[0].x + enemy[0].width * 0.98, player.x + player.width, enemy[0].x + enemy[0].width * 0.02))
+				// è‹¥æ•µäººåœ¨ç©å®¶æ”»æ“Šç¯„åœ  
+				if(is_middle(enemy[0].x + enemy[0].width * 0.98, player.x + player.width * 0.9, enemy[0].x + enemy[0].width * 0.02))
 				{
 					enemy[0].hp -= player.damage;
-					enemy[0].x += player.power;// ¼Ä¤H·|³Qª±®aÀ»°h 
-					player.atked = 1;// ­Y¦³³y¦¨¶Ë®`«h·|°O¿ı Á×§K¤@¦¸§ğÀ»¦³¦h¦¸¶Ë®` 
+					enemy[0].x += player.power;// æ•µäººæœƒè¢«ç©å®¶æ“Šé€€  
+					player.atked = 1;// è‹¥æœ‰é€ æˆå‚·å®³å‰‡æœƒè¨˜éŒ„ é¿å…ä¸€æ¬¡æ”»æ“Šæœ‰å¤šæ¬¡å‚·å®³  
 				}
 			}
 			else
 			{
-				if(is_middle(enemy[0].x + enemy[0].width * 0.98, player.x, enemy[0].x + enemy[0].width * 0.02))
+				if(is_middle(enemy[0].x + enemy[0].width * 0.98, player.x * 1.1, enemy[0].x + enemy[0].width * 0.02))
 				{
 					enemy[0].hp -= player.damage;
 					enemy[0].x -= player.power;	

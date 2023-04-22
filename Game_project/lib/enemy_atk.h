@@ -11,4 +11,6 @@ void enemy_02_atk(int val);
 
 void enemy_03_atk(int val);
 
+void enemy_04_atk(int val);
+
 #endif

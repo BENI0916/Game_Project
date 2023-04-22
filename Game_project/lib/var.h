@@ -1,7 +1,7 @@
 #ifndef VAR_H
 #define VAR_H
 
-//¦¹¬°±`¼ÆÀx¦s°Ï
+//ï¿½ï¿½ï¿½ï¿½ï¿½`ï¿½ï¿½ï¿½xï¿½sï¿½ï¿½
 #include <ege.h>
 #include <conio.h>
 #include <stdio.h>
@@ -9,24 +9,24 @@
 #include <windows.h>
 #include <graphics.h>
 
-const int hih = 720; //µøµ¡ªø
-const int wid = 1280; //µøµ¡¼e
+const int hih = 720; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+const int wid = 1280; //ï¿½ï¿½ï¿½ï¿½ï¿½e
 
-// ª±®aªºµ²ºc 
+// ï¿½ï¿½ï¿½aï¿½ï¿½ï¿½ï¿½ï¿½c 
 typedef struct 
 {
-	int x;	// x ®y¼Ð 
-	int y;	// y ®y¼Ð  
-	int hp;	// ¦å¶q
-	int damage; // ¹ï¼Ä¤H³y¦¨ªº¶Ë®`  
-	int atked;// §P©w¬O§_¦³³y¦¨¶Ë®` 
-	char dir;// ¤Hª«­±´Âªº¤è¦V 
-	int output_idx; // ¥Î©óÀx¦s­n¿é¥Xªº¹Ï¤ù½s¸¹ 
-	PIMAGE *player_img, *player_msk;  //¨¤¦âÀx¦s¹Ï¤ù 
+	int x;	// x ï¿½yï¿½ï¿½ 
+	int y;	// y ï¿½yï¿½ï¿½  
+	int hp;	// ï¿½ï¿½q
+	int damage; // ï¿½ï¿½Ä¤Hï¿½yï¿½ï¿½ï¿½ï¿½ï¿½Ë®`  
+	int atked;// ï¿½Pï¿½wï¿½Oï¿½_ï¿½ï¿½ï¿½yï¿½ï¿½ï¿½Ë®` 
+	char dir;// ï¿½Hï¿½ï¿½ï¿½ï¿½ï¿½Âªï¿½ï¿½ï¿½V 
+	int output_idx; // ï¿½Î©ï¿½ï¿½xï¿½sï¿½nï¿½ï¿½Xï¿½ï¿½ï¿½Ï¤ï¿½ï¿½sï¿½ï¿½ 
+	PIMAGE *player_img, *player_msk;  //ï¿½ï¿½ï¿½ï¿½ï¿½xï¿½sï¿½Ï¤ï¿½ 
 	int high;
 	int width;
-	int power;// À»°h¼Ä¤Hªº¶ZÂ÷ 
-	int atk_type; // §ðÀ»ªº«¬ 
+	int power;// ï¿½ï¿½ï¿½hï¿½Ä¤Hï¿½ï¿½ï¿½Zï¿½ï¿½ 
+	int atk_type; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
 }Human;
 
 typedef struct 
@@ -50,6 +50,7 @@ typedef struct
 {
 	int cnt;
 	int output_idx;
+	int printed;
 	PIMAGE *loading_img;
 }Animate;
 

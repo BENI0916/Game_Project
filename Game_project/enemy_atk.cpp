@@ -3,25 +3,26 @@
 #include "lib/enemy_give_dmg.h"
 #include "lib/initialization.h"
 
-extern int enemy_atk_cnt, enemy_atk_type, enemy_num;
+extern int enemy_atk_cnt, enemy_atk_type, enemy_num, get_dmg_cnt, skill_dir;
 extern double start, end;
 extern Human player;
 extern Monster enemy[2];
-extern Bullet skill[4];
+extern Bullet skill[5];
 
-// ¦¹¨ç¦¡¬°§ïÅÜ¼Ä¤Hªº°Ê§@ ¶È°w¹ï§ðÀ» 
+// æ­¤å‡½å¼ç‚ºæ”¹è®Šæ•µäººçš„å‹•ä½œ åƒ…é‡å°æ”»æ“Š 
 void enemy_atk()
 {
-	end = fclock(); // §ðÀ»¶¡¹j­p®É¾¹ 
+	end = fclock(); // æ”»æ“Šé–“éš”è¨ˆæ™‚å™¨ 
 	
-	// ­Y¶ZÂ÷¤W¦¸§ðÀ»¤w¶W¹L5¬í ¥B ¼Ä¤H»Pª±®aªº¶ZÂ÷ ¾aªñ ¥B ¼Ä¤H¥¼¶i¦æ§ðÀ»²¾°Ê 
-	if(((end - start) > 5) && abs(enemy[enemy_num].x - player.x) < enemy[enemy_num].width * 3 && enemy_atk_type <= -1)
+	// è‹¥è·é›¢ä¸Šæ¬¡æ”»æ“Šå·²è¶…éŽ5ç§’ ä¸” æ•µäººèˆ‡çŽ©å®¶çš„è·é›¢ é è¿‘ ä¸” æ•µäººæœªé€²è¡Œæ”»æ“Šç§»å‹• 
+	if(((end - start) > 4) && abs(enemy[enemy_num].x - player.x) < enemy[enemy_num].width * 3 && enemy_atk_type <= -1)
 	{
-		enemy_atk_type = random(3) + enemy_num * 3; // ¼Ä¤H¨Ï¥Î§Þ¯àªº¿ï¾Ü¬°ÀH¾÷ 
+		enemy_atk_type = random(3) + enemy_num * 3; // æ•µäººä½¿ç”¨æŠ€èƒ½çš„é¸æ“‡ç‚ºéš¨æ©Ÿ 
 		//if(enemy_num == 1)
 		//	enemy_atk_type = -1;
+		get_dmg_cnt = 0;
 		
-		// ±N¹ïÀ³½s¸¹ªº§Þ¯à½á¤©­p®É¾¹ 
+		// å°‡å°æ‡‰ç·¨è™Ÿçš„æŠ€èƒ½è³¦äºˆè¨ˆæ™‚å™¨ 
 		switch(enemy_atk_type)
 		{
 			case 0:
@@ -40,22 +41,30 @@ void enemy_atk()
 				enemy_atk_cnt = 149;
 				break;
 			
+			case 4 :
+				enemy_atk_cnt = 120;
+				break;
+
 			default :
 				enemy_atk_type = -1;
 				break;
 		}
-		start = fclock(); // ¨ê·s§ðÀ»¶¡¹jªº®É¶¡°_ÂI 
+		start = fclock(); // åˆ·æ–°æ”»æ“Šé–“éš”çš„æ™‚é–“èµ·é»ž 
+		if(player.x + player.width / 2 > enemy[enemy_num].x + enemy[enemy_num].width / 2)
+			skill_dir = 0;
+		else	
+			skill_dir = 1;
 	}
 	//printf("skill[0].status = %d output_index = %d\n", skill[0].status, skill[0].output_idx);
 	if(enemy_atk_type == 0)
 	{
-		// ®Ú¾Úª±®a¦ì¸m¬I©ñ§Þ¯à 
+		// æ ¹æ“šçŽ©å®¶ä½ç½®æ–½æ”¾æŠ€èƒ½ 
 		if(player.x + player.width / 2 > enemy[enemy_num].x + enemy[enemy_num].width / 2)
-			enemy_00_atk(0);
+			enemy_00_atk(skill_dir);
 		else
-			enemy_00_atk(1);
+			enemy_00_atk(skill_dir);
 		
-		//­Y§ðÀ»­p®É¾¹¬°-1 ¥Nªí§ðÀ»§¹²¦ «h¬ö¿ý¤w§ðÀ»§¹²¦ 
+		//è‹¥æ”»æ“Šè¨ˆæ™‚å™¨ç‚º-1 ä»£è¡¨æ”»æ“Šå®Œç•¢ å‰‡ç´€éŒ„å·²æ”»æ“Šå®Œç•¢ 
 		if(enemy_atk_cnt == -1)
 		{
 			enemy_atk_type = -1;
@@ -64,9 +73,9 @@ void enemy_atk()
 	else if(enemy_atk_type == 1)
 	{
 		if(player.x + player.width / 2 > enemy[enemy_num].x + enemy[enemy_num].width / 2)
-			enemy_01_atk(0);
+			enemy_01_atk(skill_dir);
 		else
-			enemy_01_atk(1);
+			enemy_01_atk(skill_dir);
 		
 		if(enemy_atk_cnt == -1)
 			enemy_atk_type = -1;
@@ -74,9 +83,9 @@ void enemy_atk()
 	else if(enemy_atk_type == 2)
 	{
 		if(player.x + player.width / 2 > enemy[enemy_num].x + enemy[enemy_num].width / 2)
-			enemy_02_atk(0);
+			enemy_02_atk(skill_dir);
 		else 
-			enemy_02_atk(1);
+			enemy_02_atk(skill_dir);
 		
 		if(enemy_atk_cnt <= -1)
 		{
@@ -86,9 +95,21 @@ void enemy_atk()
 	else if(enemy_atk_type == 3)
 	{
 		if(player.x + player.width / 2 > enemy[enemy_num].x + enemy[enemy_num].width / 2)
-			enemy_03_atk(0);
+			enemy_03_atk(skill_dir);
 		else 
-			enemy_03_atk(1);
+			enemy_03_atk(skill_dir);
+		
+		if(enemy_atk_cnt <= -1)
+		{
+			enemy_atk_type = -1;
+		}
+	}
+	else if(enemy_atk_type == 4)
+	{
+		if(player.x + player.width / 2 > enemy[enemy_num].x + enemy[enemy_num].width / 2)
+			enemy_04_atk(skill_dir);
+		else 
+			enemy_04_atk(skill_dir);
 		
 		if(enemy_atk_cnt <= -1)
 		{
@@ -96,25 +117,26 @@ void enemy_atk()
 		}
 	}
 	
-	// ¦¹¨ç¦¡¬°³y¦¨¶Ë®` 
-	enemy_give_dmg();
+	// æ­¤å‡½å¼ç‚ºé€ æˆå‚·å®³ 
+	if(get_dmg_cnt == 0 && enemy[enemy_num].hp > 0)
+		enemy_give_dmg();
 }
  
 void enemy_00_atk(int val)
 {
 	int table[5] = {0, 2, 4, 2};
 	
-	// ®Ú¾Ú­p®É¾¹¿é¥X°Ê§@ 
+	// ï¿½Ú¾Ú­pï¿½É¾ï¿½ï¿½ï¿½Xï¿½Ê§@ 
 	enemy[enemy_num].output_idx = table[enemy_atk_cnt / 50] + val;
 	
-	// ­Y¦b­p®É¾¹ªº¯S©w®É¶¡¶¡¹j¤º ·|¿é¥X¹ïÀ³ªº§Þ¯à¯S®Ä 
+	// ï¿½Yï¿½bï¿½pï¿½É¾ï¿½ï¿½ï¿½ï¿½Sï¿½wï¿½É¶ï¿½ï¿½ï¿½ï¿½jï¿½ï¿½ ï¿½|ï¿½ï¿½Xï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Þ¯ï¿½Sï¿½ï¿½ 
 	if(enemy[enemy_num].output_idx == 4 || enemy[enemy_num].output_idx == 5)
 	{
-		skill[0].status = 1; // 1 ¥Nªí§Þ¯à¯S®Ä·|¦L¥X¡A 0 «h¥Nªí¤£·| 
+		skill[0].status = 1; // 1 ï¿½Nï¿½ï¿½ï¿½Þ¯ï¿½Sï¿½Ä·|ï¿½Lï¿½Xï¿½A 0 ï¿½hï¿½Nï¿½ï¿½ï¿½ï¿½ï¿½| 
 		
 		if(enemy[0].dir == 'a')
 		{
-			skill[0].x = enemy[enemy_num].x - skill[0].width * 0.9; // ½Õ¾ã§Þ¯à¦L¥Xªº¦ì¸m 
+			skill[0].x = enemy[enemy_num].x - skill[0].width * 0.9; // ï¿½Õ¾ï¿½Þ¯ï¿½Lï¿½Xï¿½ï¿½ï¿½ï¿½m 
 			skill[0].output_idx = 1;
 		}
 		else
@@ -126,9 +148,9 @@ void enemy_00_atk(int val)
 		skill[0].y = enemy[enemy_num].y + 50;
 	}
 	else
-		skill[0].status = 0; // ­Y¤£¦b­p®É¾¹ªº¯S©w®É¶¡¶¡¹j¤º¡A«h¤£·|¿é¥X§Þ¯à¯S®Ä 
+		skill[0].status = 0; // ï¿½Yï¿½ï¿½ï¿½bï¿½pï¿½É¾ï¿½ï¿½ï¿½ï¿½Sï¿½wï¿½É¶ï¿½ï¿½ï¿½ï¿½jï¿½ï¿½ï¿½Aï¿½hï¿½ï¿½ï¿½|ï¿½ï¿½Xï¿½Þ¯ï¿½Sï¿½ï¿½ 
 	
-	enemy_atk_cnt -= 1; // ­p®É¾¹­Ë¼Æ 
+	enemy_atk_cnt -= 1; // ï¿½pï¿½É¾ï¿½ï¿½Ë¼ï¿½ 
 }
 
 void enemy_01_atk(int val)
@@ -138,11 +160,11 @@ void enemy_01_atk(int val)
 	enemy[enemy_num].output_idx = table[(enemy_atk_cnt - 40) / 15] + val;
 	enemy_atk_cnt -= 1;
 	
-	// ¦¹§Þ¯à¸û¬°¯S®í ¬I©ñ§Þ¯à§¹²¦«á »ÝÃB¥~«ü¥O«ì´_¥¿±`«¬ºA 
+	// ï¿½ï¿½ï¿½Þ¯ï¿½ï¿½ï¿½ï¿½ï¿½Sï¿½ï¿½ ï¿½Iï¿½ï¿½Þ¯à§¹ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Bï¿½~ï¿½ï¿½ï¿½Oï¿½ï¿½_ï¿½ï¿½ï¿½`ï¿½ï¿½ï¿½A 
 	if(enemy_atk_cnt == -1)
 		enemy[enemy_num].output_idx = 0 + val;
 	
-	// ¦¹§Þ¯à§t¦³¸õÅD°Ê§@ ¥H¤U«h¬°¹ïÀ³ªº y ¶b¦ì²¾ 
+	// ï¿½ï¿½ï¿½Þ¯ï¿½tï¿½ï¿½ï¿½ï¿½ï¿½Dï¿½Ê§@ ï¿½Hï¿½Uï¿½hï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ y ï¿½bï¿½ì²¾ 
 	switch(enemy_atk_cnt)
 	{
 		case 98 :
@@ -167,7 +189,7 @@ void enemy_01_atk(int val)
 			break;
 	}
 	
-	// ¦b¯S©w®É¶¡¶¡¹j¤º ¿é¥X§Þ¯à¯S®Ä 
+	// ï¿½bï¿½Sï¿½wï¿½É¶ï¿½ï¿½ï¿½ï¿½jï¿½ï¿½ ï¿½ï¿½Xï¿½Þ¯ï¿½Sï¿½ï¿½ 
 	if(is_middle(56, enemy_atk_cnt, 0))
 	{
 		skill[1].status = 1;
@@ -305,4 +327,36 @@ void enemy_03_atk(int val)
 	}
 }
 
+void enemy_04_atk(int val)
+{
+	int table[9] = {10, 8, 6, 4, 4, 2, 2, 0, 0};
+	enemy_atk_cnt--;
+
+	if(enemy_atk_cnt % 30 == 0)
+		get_dmg_cnt = 0;
+
+	if(enemy_atk_cnt < 70)
+		enemy[enemy_num].output_idx = 12 + val;
+	else if(enemy_atk_cnt < 90)
+		enemy[enemy_num].output_idx = 10 + val;
+	else if(enemy_atk_cnt < 120)
+		enemy[enemy_num].output_idx = 8 + val;
+
+	if(enemy_atk_cnt < 90)
+	{
+		if(enemy_atk_cnt > -1)
+		{
+			skill[4].output_idx = table[enemy_atk_cnt / 10] + val;
+			
+			if(!skill[4].status)
+			{
+				skill[4].x = player.x + player.width - skill[4].width;
+			}
+			skill[4].status = 1;
+			skill[4].y = hih * 0.6 + 130 - skill[4].high;
+		}	
+		else
+			skill[4].status = 0;
+	}
+}
 

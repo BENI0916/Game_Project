@@ -11,4 +11,6 @@ void loadBG(char filename[],int w,int h);
 
 void loadCHAR(char filename[],PIMAGE **ori_img,PIMAGE **ori_msk,int w,int h, int index);
 
+void put_tp_door_img();
+
 #endif

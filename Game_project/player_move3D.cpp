@@ -10,7 +10,7 @@ extern int player_walk_cnt3D,bgX,bgY, inFight;
 extern Human player;
 extern char BgName[50];
 int speed = 3;
-int fps = 25;
+int fps = 10;
 int table[] = {0,-1,0,1};
 
 void itemwall(int xl, int xr, int yu, int yd) {

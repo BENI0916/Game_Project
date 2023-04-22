@@ -2,17 +2,19 @@
 #include "lib/player_move.h"
 #include "lib/player_atk.h"
 
-extern int key, atk_cnt, player_walk_cnt, player_jump_cnt, last_key;
+extern int key, atk_cnt, player_walk_cnt, player_jump_cnt, last_key, enemy_num;
 extern Human player;
+extern Monster enemy[2];
+extern Animate loading_animate;
 
 void move(int speed)
 {
-	if (kbhit()) // ÀË´ú¬O§_¦³Áä½L¿é¤J 
+	if (kbhit()) // æª¢æ¸¬æ˜¯å¦æœ‰éµç›¤è¼¸å…¥ 
 		key = getch();
 	
 	if(player_jump_cnt > -1)
 		jump();
-	if(atk_cnt > -1) // atk_cnt  < 0 ¥Nªí¥¼¶i¦æ§ğÀ» , ¨ä¥L¥¿¾ã¼Æ«h¥Nªí¥¿¦b§ğÀ» 
+	if(atk_cnt > -1) // atk_cnt  < 0 ä»£è¡¨æœªé€²è¡Œæ”»æ“Š , å…¶ä»–æ­£æ•´æ•¸å‰‡ä»£è¡¨æ­£åœ¨æ”»æ“Š 
 	{
 		if(player.dir == 'd')
 		{
@@ -31,7 +33,7 @@ void move(int speed)
 	}
 	else 
 	{
-			if(GetAsyncKeyState(0x41) || GetAsyncKeyState('a'))  // ¿é¤J a 
+			if(GetAsyncKeyState(0x41) || GetAsyncKeyState('a'))  // è¼¸å…¥ a 
 			{
 				player.dir = 'a';
 				if(player_move_check(player.dir, speed))
@@ -41,7 +43,7 @@ void move(int speed)
 				}
 			}
 			
-			if(GetAsyncKeyState(0x44) || GetAsyncKeyState('d')) // ¿é¤J d
+			if(GetAsyncKeyState(0x44) || GetAsyncKeyState('d')) // è¼¸å…¥ d
 			{	
 				player.dir = 'd';
 				if(player_move_check(player.dir, speed))
@@ -51,7 +53,7 @@ void move(int speed)
 				}
 	 	    }
 			
-			if(GetAsyncKeyState(0x4A) || GetAsyncKeyState('j'))// ¿é¤J j 
+			if(GetAsyncKeyState(0x4A) || GetAsyncKeyState('j'))// è¼¸å…¥ j 
 			{
 				atk_cnt = 9;  
 				player.atked = 0;
@@ -62,12 +64,12 @@ void move(int speed)
 					player.atk_type = 0;
 			}
 			
-			if(GetAsyncKeyState(0x20) || GetAsyncKeyState(' ')) // ¿é¤JªÅ¥ÕÁä
+			if(GetAsyncKeyState(0x20) || GetAsyncKeyState(' ')) // è¼¸å…¥ç©ºç™½éµ
 				if(player_jump_cnt < 0)
 					player_jump_cnt = 15;
 		}
 	
-	key = 0; // °õ¦æ°Ê§@«á±N keyÂk 0, Á×§K¤@ª½­«½Æ°Ê§@ 
+	key = 0; // åŸ·è¡Œå‹•ä½œå¾Œå°‡ keyæ­¸ 0, é¿å…ä¸€ç›´é‡è¤‡å‹•ä½œ 
 }
 
 void player_walk(int val)
@@ -81,11 +83,11 @@ void player_walk(int val)
 		player_walk_cnt = 11;
 }
 
-// ­pºâ§ğÀ» 
+// è¨ˆç®—æ”»æ“Š 
 void atk(int val)
 {
-	// ®Ú¾Ú§ğÀ»­p¼Æ¾¹¥H¤Î­±¹ïªº¤è¦V  
-	// Àx¦s­n¿é¥Xªº¹Ï¤ù½s¸¹ 
+	// æ ¹æ“šæ”»æ“Šè¨ˆæ•¸å™¨ä»¥åŠé¢å°çš„æ–¹å‘  
+	// å„²å­˜è¦è¼¸å‡ºçš„åœ–ç‰‡ç·¨è™Ÿ 
 	int table[5] = {14, 12, 10, 8, 6};
 	//printf("val = %d player.atk_type = %d\n", val, player.atk_type);
 	switch(player.atk_type)
@@ -104,7 +106,7 @@ void atk(int val)
 	atk_cnt--;
 }
 
-// ­pºâ¸õÅD 
+// è¨ˆç®—è·³èº 
 void jump()// 2 4 8 -> 16, 12, 10, 8, 4, 2
 {			// 1 2 3 4 5 6
 	int move_distance[4] = {10, 30, 50, 80};
@@ -120,9 +122,16 @@ void jump()// 2 4 8 -> 16, 12, 10, 8, 4, 2
 	player_jump_cnt--;
 }
 
-// ¨¾¤îª±®a¨«¥XÃä¬É ¥¼§¹¦¨ 
+// é˜²æ­¢ç©å®¶èµ°å‡ºé‚Šç•Œ 
 int player_move_check(char dir, int speed)
 {
+	// å¦‚æœæ•µäººè¢«æ‰“æ•— ä¸” ç©å®¶èµ°åˆ°å‚³é€é–€æ‰€åœ¨ å‰‡ é–‹å•Ÿloadingçš„å‹•ç•«
+	if(enemy[enemy_num].hp <= 0 && (player.x + player.width) >= (wid - 77))
+	{
+		loading_animate.printed = 1;
+		loading_animate.cnt = 0;
+	}
+
 	if(dir == 'a')
 	{
 		if(player.x - speed > 0)

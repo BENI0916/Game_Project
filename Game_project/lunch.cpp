@@ -12,41 +12,32 @@ extern int enemy_atk_type, enemy_num, inFight, bgX, bgY;
 extern Human player;
 extern Monster enemy[2];
 extern Animate loading_animate;
+extern double end;
 
 void lunch()
 {
-	initgraph(wid, hih);	// ªì©l¤Æ¿é¥Xµ¡¤f 
+	initgraph(wid, hih);	// åˆå§‹åŒ–è¼¸å‡ºçª—å£ 
 	printf("inigraph succes\n");
 	initialization();
 	printf("initialization succes\n"); 
-	
-	// is_run ÀËµøµ{§Ç¬O§_¦¬¨ìÃö³¬®ø®§, ¦¬¨ìªº¸Ü·|ªğ¦^false, §Y°h¥Xµ{§Ç 
-	// delay_fps ±±¨î´V²v, 60 ªí¥Ü"¥­§¡©µ®É"¬°1000/60²@¬í 
+	inFight = 0;
+	// is_run æª¢è¦–ç¨‹åºæ˜¯å¦æ”¶åˆ°é—œé–‰æ¶ˆæ¯, æ”¶åˆ°çš„è©±æœƒè¿”å›false, å³é€€å‡ºç¨‹åº 
+	// delay_fps æ§åˆ¶å¹€ç‡, 60 è¡¨ç¤º"å¹³å‡å»¶æ™‚"ç‚º1000/60æ¯«ç§’ 
 	for (; is_run() && player.hp > 0 && enemy_num < 2; delay_fps(60))
 	{
-		cleardevice(); // §â¿é¥Xªºµ¡¤f²MªÅ 
+		cleardevice(); // æŠŠè¼¸å‡ºçš„çª—å£æ¸…ç©º 
 
-		if (inFight) {//§PÂ_¬O§_¦b¾Ô°«¤¤
-			if(enemy[enemy_num].hp > 0) // ­Y¼Ä¤H¦å¶q¤£¬° 0 «h·|¦æ°Ê 
+		if (inFight) 
+		{//åˆ¤æ–·æ˜¯å¦åœ¨æˆ°é¬¥ä¸­
+			if(enemy[enemy_num].hp > 0) // è‹¥æ•µäººè¡€é‡ä¸ç‚º 0 å‰‡æœƒè¡Œå‹• 
 			{
-				if(enemy_atk_type == -1) // -1 ¥Nªí ¼Ä¤H¥¼¶}©l§ğÀ» 
-					enemy_move();		 // «h¼Ä¤H·|¶}©l²¾°Ê 
-				enemy_atk();			 // §_«h·|¶i¦æ§ğÀ» 
-				//printf("enemy_atk_cnt = %d\n", enemy_atk_cnt);
-			}
-			else if(loading_animate.cnt == 72)
-			{
-				loading_animate.cnt = 0;
+				if(enemy_atk_type == -1) // -1 ä»£è¡¨ æ•µäººæœªé–‹å§‹æ”»æ“Š  
+					enemy_move();		 // å‰‡æ•µäººæœƒé–‹å§‹ç§»å‹• 
+				enemy_atk();			 // å¦å‰‡æœƒé€²è¡Œæ”»æ“Š  
 			}
 		
 			move(5);
 			output_image();
-		
-			if(enemy[enemy_num].hp <= 0)
-			{
-				printf("active\n");
-				enemy_num++;
-			}
 		}
 		else {
 			
@@ -55,30 +46,6 @@ void lunch()
 			putimage(player.x, player.y, player.player_msk[player.output_idx], NOTSRCERASE);
 			putimage(player.x, player.y, player.player_img[player.output_idx], SRCINVERT);
 		}
-		/*if(enemy[enemy_num].hp > 0) // ­Y¼Ä¤H¦å¶q¤£¬° 0 «h·|¦æ°Ê 
-		{
-			if(enemy_atk_type == -1) // -1 ¥Nªí ¼Ä¤H¥¼¶}©l§ğÀ» 
-			{
-				enemy_move();		 // «h¼Ä¤H·|¶}©l²¾°Ê 
-			}
-			enemy_atk();			 // §_«h·|¶i¦æ§ğÀ» 
-			//printf("enemy_atk_cnt = %d\n", enemy_atk_cnt);
-		}
-		else if(loading_animate.cnt == 72)
-		{
-			loading_animate.cnt = 0;
-		}
-		
-		move(5);
-
-		output_image();
-		
-		if(enemy[enemy_num].hp <= 0)
-		{
-			printf("active\n");
-			enemy_num++;
-			loading_animate.cnt = 0;
-		}*/
 	}
 }
 

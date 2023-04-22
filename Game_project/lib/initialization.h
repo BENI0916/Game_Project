@@ -17,4 +17,8 @@ void skill_ini_02();
 
 void skill_ini_03();
 
+void skill_ini_04();
+
+void tp_door_ini();
+
 #endif
