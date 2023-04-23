@@ -7,7 +7,7 @@ extern int key, atk_cnt, player_walk_cnt, flag, enemy_atk_cnt, enemy_atk_type, p
 extern double start, end;
 extern Human player;
 extern Monster enemy[2];
-extern Bullet skill[5];
+extern Bullet skill[6];
 int is_middle(int up, int pos, int down);
 
 void enemy_give_dmg()
@@ -32,6 +32,10 @@ void enemy_give_dmg()
 		
 		case 4:
 			case_4();
+			break;
+
+		case 5:
+			case_5();
 			break;
 
 		default :
@@ -201,7 +205,7 @@ void case_3()
 void case_4()
 {
 	if(is_middle(skill[4].x + skill[4].width * 0.9, player.x + player.width / 2, skill[4].x + skill[4].width * 0.1)
-	&& enemy_atk_cnt < 70)
+	&& enemy_atk_cnt < 55)
 	{
 		player.hp -= enemy[enemy_num].damage;
 		get_dmg_cnt = 1;
@@ -216,6 +220,20 @@ void case_4()
 		}
 		else if(enemy[enemy_num].dir == 'd' && player.x + 10 < wid)
 			player.x -= skill[4].power;
-		
 	}
+}
+
+void case_5()
+{
+	if(is_middle(skill[5].x + skill[5].width , player.x + player.width / 2, skill[5].x)
+	&& (player.y + player.high * 0.2 < skill[5].y + skill[5].high * 0.9))
+	{
+		player.hp -= enemy[enemy_num].damage;
+		get_dmg_cnt = 1;
+
+		if(enemy[enemy_num].dir == 'a' && (player.x > 10))
+			player.x += skill[5].power;
+		else if(enemy[enemy_num].dir == 'd' && player.x + 10 < wid)
+			player.x -= skill[5].power;
+	} 
 }

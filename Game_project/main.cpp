@@ -13,7 +13,7 @@ char BgName[50];
 
 Human player,player3D;
 Monster enemy[2];
-Bullet skill[5], tp_door;
+Bullet skill[6], tp_door;
 Animate loading_animate;
 
 int main(void)

@@ -16,7 +16,7 @@ void player_atk(int val)
 			if(player.dir == 'd')
 			{	
 				// 若敵人在玩家攻擊範圍  
-				if(is_middle(enemy[0].x + enemy[0].width * 0.98, player.x + player.width * 0.9, enemy[0].x + enemy[0].width * 0.02))
+				if(is_middle(enemy[0].x + enemy[0].width * 0.90, player.x + player.width * 0.9, enemy[0].x + enemy[0].width * 0.1))
 				{
 					enemy[0].hp -= player.damage;
 					enemy[0].x += player.power;// 敵人會被玩家擊退  
@@ -25,7 +25,7 @@ void player_atk(int val)
 			}
 			else
 			{
-				if(is_middle(enemy[0].x + enemy[0].width * 0.98, player.x * 1.1, enemy[0].x + enemy[0].width * 0.02))
+				if(is_middle(enemy[0].x + enemy[0].width * 0.90, player.x * 1.1, enemy[0].x + enemy[0].width * 0.1))
 				{
 					enemy[0].hp -= player.damage;
 					enemy[0].x -= player.power;	

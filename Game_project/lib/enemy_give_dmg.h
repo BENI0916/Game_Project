@@ -15,4 +15,6 @@ void case_3();
 
 void case_4();
 
+void case_5();
+
 #endif

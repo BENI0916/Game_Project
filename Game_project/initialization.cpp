@@ -8,7 +8,7 @@ extern int atk_cnt, player_walk_cnt, flag, enemy_atk_type, player_jump_cnt, atke
 extern double start;
 extern Human player;
 extern Monster enemy[2];
-extern Bullet skill[5], tp_door;
+extern Bullet skill[6], tp_door;
 extern Animate loading_animate;
 extern char BgName[50];
 
@@ -79,6 +79,9 @@ void initialization()
 	skill_ini_04();
 	printf("skill_ini_04 succes\n");
 	
+	skill_ini_05();
+	printf("skill_ini_05 succes\n");
+
 	tp_door_ini();
 	printf("tp_door_ini succes\n");
 
@@ -248,9 +251,26 @@ void skill_ini_04()
 	sprintf(s, "%s", "images\\enemy_1_1_skill");
 	loadCHAR(s, &skill[4].skill_img, &skill[4].skill_msk, 336, 296, 0);
 	
-	skill[4].high = 336;
-	skill[4].width = 296;
+	skill[4].high = 296;
+	skill[4].width = 336;
 	skill[4].power = 5;
+}
+
+void skill_ini_05()
+{
+	char s[100];
+	skill[5].x = 0;
+	skill[5].y = 0;
+	skill[5].status = 0;
+	skill[5].output_idx = 0;
+	skill[5].skill_img = NULL;
+	skill[5].skill_msk = NULL;
+	sprintf(s, "%s", "images\\enemy_1_2_skill");
+	loadCHAR(s, &skill[5].skill_img, &skill[5].skill_msk, 116, 280, 0);
+	
+	skill[5].high = 280;
+	skill[5].width = 116;
+	skill[5].power = 60;
 }
 
 // 用來存放傳送門

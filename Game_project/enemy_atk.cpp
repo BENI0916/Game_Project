@@ -7,7 +7,7 @@ extern int enemy_atk_cnt, enemy_atk_type, enemy_num, get_dmg_cnt, skill_dir;
 extern double start, end;
 extern Human player;
 extern Monster enemy[2];
-extern Bullet skill[5];
+extern Bullet skill[6];
 
 // 此函式為改變敵人的動作 僅針對攻擊 
 void enemy_atk()
@@ -43,6 +43,10 @@ void enemy_atk()
 			
 			case 4 :
 				enemy_atk_cnt = 120;
+				break;
+
+			case 5 :
+				enemy_atk_cnt = 56;
 				break;
 
 			default :
@@ -115,6 +119,13 @@ void enemy_atk()
 		{
 			enemy_atk_type = -1;
 		}
+	}
+	else if(enemy_atk_type == 5)
+	{
+		enemy_05_atk(0);
+
+		if(enemy_atk_cnt <= -1)
+			enemy_atk_type = -1;
 	}
 	
 	// 此函式為造成傷害 
@@ -350,7 +361,7 @@ void enemy_04_atk(int val)
 			
 			if(!skill[4].status)
 			{
-				skill[4].x = player.x + player.width - skill[4].width;
+				skill[4].x = player.x + player.width / 2 - skill[4].width / 2;
 			}
 			skill[4].status = 1;
 			skill[4].y = hih * 0.6 + 130 - skill[4].high;
@@ -358,5 +369,63 @@ void enemy_04_atk(int val)
 		else
 			skill[4].status = 0;
 	}
+}
+
+void enemy_05_atk(int val)
+{
+	if(!skill[5].status)
+		skill[5].x = player.x + player.width / 2 - skill[5].width / 2;
+
+	skill[5].status = 1;
+	enemy_atk_cnt--;
+
+
+	switch(enemy_atk_cnt)
+	{
+		case 55:
+			skill[5].output_idx = 0;
+			skill[5].y = hih * 0.6 + 66 - skill[5].high * 1.7;
+			break;
+		
+		case 50:
+			skill[5].output_idx = 1;
+			skill[5].y = hih * 0.6 + 66 - skill[5].high * 1.7;
+			break;
+		
+		case 45:
+			skill[5].output_idx = 2;
+			skill[5].y = hih * 0.6 + 66 - skill[5].high * 1.8;
+			break;
+		
+		case 40:
+			skill[5].y = hih * 0.6 + 66 - skill[5].high * 1.7;
+			break;
+		
+		case 29:
+			skill[5].y = hih * 0.6 + 66 - skill[5].high * 1.5;
+			break;
+
+		case 20:
+			skill[5].y = hih * 0.6 + 66 - skill[5].high * 1.3;
+			break;
+		
+		case 13:
+			skill[5].y = hih * 0.6 + 66 - skill[5].high * 1.1;
+			break;
+
+		case 8:
+			skill[5].output_idx = 3;
+			skill[5].y = hih * 0.6 + 66 - skill[5].high * 0.9;
+			break;
+		
+		case -1:
+			skill[5].status = 0;
+			break;
+
+		default:
+			break;
+	}
+
+
 }
 
