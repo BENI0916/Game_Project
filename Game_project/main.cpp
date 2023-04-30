@@ -12,7 +12,7 @@ char BgName[50];
 // left_walk_cnt, right_walk_cnt : 走路計數器 用於計算走路時輸出的圖片 
 
 Human player,player3D;
-Monster enemy[2];
+Monster enemy[3];
 Bullet skill[6], tp_door;
 Animate loading_animate;
 

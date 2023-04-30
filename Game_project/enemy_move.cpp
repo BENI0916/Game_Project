@@ -3,7 +3,7 @@
 
 extern int key, atk_cnt, player_walk_cnt, flag, enemy_num;
 extern Human player;
-extern Monster enemy[2];
+extern Monster enemy[3];
 
 void enemy_move()
 {
@@ -95,7 +95,45 @@ void enemy_move()
 				}
 			}
 			break;
-			
+		
+		case 2:
+			if((enemy[enemy_num].x + enemy[enemy_num].width / 2) > (player.x + player.width / 2))
+				enemy[enemy_num].dir = 'a';
+			else
+				enemy[enemy_num].dir = 'd';
+			if(abs(player.x - enemy[2].x) > enemy[2].width)
+			{
+				if(enemy[enemy_num].x > player.x)
+				{	
+					enemy[enemy_num].x -= enemy[enemy_num].speed;
+					enemy[enemy_num].output_idx = 1;
+				}
+				else
+				{
+					enemy[enemy_num].x += enemy[enemy_num].speed;
+					enemy[enemy_num].output_idx = 0;
+				}
+			}
+			else
+			{
+				enemy[enemy_num].y = hih * 0.6 - 400 + 66;
+				if(flag <= 0)
+					flag = 80;
+				flag--;
+				
+				int table[2] = {0, 2};
+				
+				if(enemy[enemy_num].dir == 'a')
+				{
+					enemy[enemy_num].output_idx = table[flag / 40 ] + 1;
+				}
+				else
+				{
+					enemy[enemy_num].output_idx = table[flag / 40 ];
+				}
+			}
+			break;
+
 		default :
 			break;
 	}

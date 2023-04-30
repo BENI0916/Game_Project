@@ -6,7 +6,7 @@
 extern int enemy_atk_cnt, enemy_atk_type, enemy_num, get_dmg_cnt, skill_dir;
 extern double start, end;
 extern Human player;
-extern Monster enemy[2];
+extern Monster enemy[3];
 extern Bullet skill[6];
 
 // 此函式為改變敵人的動作 僅針對攻擊 

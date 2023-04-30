@@ -5,7 +5,7 @@
 extern int key, atk_cnt, player_walk_cnt, flag, enemy_atk_cnt, enemy_atk_type, player_enemy_dir, atked, enemy_num;
 extern double start, end;
 extern Human player;
-extern Monster enemy[2];
+extern Monster enemy[3];
 
 // 玩家攻擊  
 void player_atk(int val)

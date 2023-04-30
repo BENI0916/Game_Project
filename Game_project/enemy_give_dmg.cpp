@@ -6,7 +6,7 @@
 extern int key, atk_cnt, player_walk_cnt, flag, enemy_atk_cnt, enemy_atk_type, player_enemy_dir, atked, enemy_num, player_jump_cnt, get_dmg_cnt;
 extern double start, end;
 extern Human player;
-extern Monster enemy[2];
+extern Monster enemy[3];
 extern Bullet skill[6];
 int is_middle(int up, int pos, int down);
 

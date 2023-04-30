@@ -9,6 +9,8 @@ void enemy_ini();
 
 void enemy_ini_01();
 
+void enemy_ini_02();
+
 void skill_ini_00();
 
 void skill_ini_01();

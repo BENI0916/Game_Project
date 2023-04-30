@@ -10,7 +10,7 @@
 extern PIMAGE bg;
 extern int enemy_atk_type, enemy_num, inFight, bgX, bgY;
 extern Human player;
-extern Monster enemy[2];
+extern Monster enemy[3];
 extern Animate loading_animate;
 extern double end;
 
@@ -20,10 +20,11 @@ void lunch()
 	printf("inigraph succes\n");
 	initialization();
 	printf("initialization succes\n"); 
+	randomize();
 	inFight = 0;
 	// is_run 檢視程序是否收到關閉消息, 收到的話會返回false, 即退出程序 
 	// delay_fps 控制幀率, 60 表示"平均延時"為1000/60毫秒 
-	for (; is_run() && player.hp > 0 && enemy_num < 2; delay_fps(60))
+	for (; is_run() && player.hp > 0 && enemy_num < 3; delay_fps(60))
 	{
 		cleardevice(); // 把輸出的窗口清空 
 

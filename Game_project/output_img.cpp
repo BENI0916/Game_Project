@@ -5,7 +5,7 @@
 extern PIMAGE bg;
 extern int enemy_num;
 extern Human player;
-extern Monster enemy[2];
+extern Monster enemy[3];
 extern Bullet skill[6], tp_door;
 extern Animate loading_animate;
 

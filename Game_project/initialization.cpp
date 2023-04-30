@@ -7,7 +7,7 @@
 extern int atk_cnt, player_walk_cnt, flag, enemy_atk_type, player_jump_cnt, atked, enemy_num,player_walk_cnt3D,bgX,bgY, inFight, get_dmg_cnt; // player_walk_cnt : �����p�ƾ� �Ω�p�⨫���ɿ�X���Ϥ�
 extern double start;
 extern Human player;
-extern Monster enemy[2];
+extern Monster enemy[3];
 extern Bullet skill[6], tp_door;
 extern Animate loading_animate;
 extern char BgName[50];
@@ -64,6 +64,9 @@ void initialization()
 	enemy_ini_01();
 	printf("enemy_ini_01 succes\n");
 	
+	enemy_ini_02();
+	printf("enemy_ini_02 succes\n");
+
 	skill_ini_00();
 	printf("skill_ini_00 succes\n");
 	
@@ -144,6 +147,30 @@ void enemy_ini_01()
 	enemy[1].speed = 5;    
 	enemy[1].atk_0_cnt = -1; // 敵人的技能計數器 
 	enemy[1].atk_1_cnt = -1;  
+}
+
+void enemy_ini_02()
+{
+	char s[100];
+	
+	enemy[2].enemy_img = NULL;
+	enemy[2].enemy_msk = NULL;
+	
+	sprintf(s,"%s","images\\enemy_2");
+	loadCHAR(s, &enemy[2].enemy_img, &enemy[2].enemy_msk, 500, 400, 0);
+	//508
+	enemy[2].x = 900;
+	enemy[2].y = hih * 0.6 - 400 + 66;
+	enemy[2].dir = 'a';
+	enemy[2].hp = 100;
+	enemy[2].damage = 0; // 敵人造成的傷害 
+	enemy[2].output_idx = 1;
+	enemy[2].high = 400;
+	enemy[2].width = 500;
+	enemy[2].power = 100; // 敵人擊退玩家的距離 
+	enemy[2].speed = 5;    
+	enemy[2].atk_0_cnt = -1; // 敵人的技能計數器 
+	enemy[2].atk_1_cnt = -1;  
 }
 
 // 技能1 

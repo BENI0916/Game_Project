@@ -4,7 +4,7 @@
 
 extern int key, atk_cnt, player_walk_cnt, player_jump_cnt, last_key, enemy_num;
 extern Human player;
-extern Monster enemy[2];
+extern Monster enemy[3];
 extern Animate loading_animate;
 
 void move(int speed)
