@@ -113,8 +113,8 @@ void keyListener() {
             bgX = -483;
             bgY = -1077;
             PlaySound(TEXT("audio\\bgm\\village.wav"),NULL,SND_LOOP | SND_ASYNC);
-            /*fadeOut();
-            fade = 1;*/
+            fadeOut();
+            fade = 1;
         }
     }
     //村莊設定
@@ -146,8 +146,8 @@ void keyListener() {
             sprintf(BgName,"%s","images\\bg\\home1.png");
             loadBG(BgName,1587/2,1300/2);
             PlaySound(TEXT("audio\\bgm\\home.wav"),NULL,SND_LOOP | SND_ASYNC);
-            //fadeOut();
-            //fade = 1;
+            fadeOut();
+            fade = 1;
         }
         //雜貨店
         if(bgX >= -1311 && bgX <=-1269 && bgY >=-1041 && bgY <=-1023) {
@@ -156,8 +156,8 @@ void keyListener() {
             sprintf(BgName,"%s","images\\bg\\home1.png");
             loadBG(BgName,1587/2,1300/2);
             PlaySound(TEXT("audio\\bgm\\shop.wav"),NULL,SND_LOOP | SND_ASYNC);
-            //fadeOut();
-            //fade = 1;
+            fadeOut();
+            fade = 1;
         }
         //賭場
         if(bgX >= -1404 && bgX <=-1359 && bgY >=-1620 && bgY <=-1596) {
@@ -166,8 +166,8 @@ void keyListener() {
             sprintf(BgName,"%s","images\\bg\\home1.png");
             loadBG(BgName,1587/2,1300/2);
             PlaySound(TEXT("audio\\bgm\\shop.wav"),NULL,SND_LOOP | SND_ASYNC);
-            //fadeOut();
-            //fade = 1;
+            fadeOut();
+            fade = 1;
         }
         //村子右邊BOSS傳送門
         if(bgX < -1956) {

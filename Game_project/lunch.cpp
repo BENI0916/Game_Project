@@ -7,6 +7,7 @@
 #include "lib/output_img.h"
 #include "lib/player_move3D.h"
 #include "lib/esc.h"
+#include "lib/effect.h"
 
 extern PIMAGE bg;
 extern int enemy_atk_type, enemy_num, inFight, bgX, bgY;
@@ -15,7 +16,7 @@ extern Monster enemy[3];
 extern Animate loading_animate;
 extern double end;
 
-int esc,lock;
+int esc,lock,fade = 1;
 PIMAGE escBG;
 PIMAGE screen;
 PIMAGE pauseImg;
@@ -31,19 +32,11 @@ void lunch()
 	escBG = newimage();
 	screen = newimage();
 	pauseImg = newimage();
-	getimage(escBG,"images\\bg\\esc2.png",0,0);
+	getimage(escBG,"images\\bg\\black.png",0,0);
 	getimage(pauseImg,"images\\menu\\pause.png",0,0);
-
-	cleardevice();
+	
 	PlaySound(TEXT("audio\\bgm\\home.wav"),NULL,SND_LOOP | SND_ASYNC);
 
-	PIMAGE begin = newimage();
-	getimage(begin,"images\\bg\\begin.png",0,0);
-	for (int i = 0;i<20;delay_fps(30)) {
-		putimage_alphablend(NULL,begin,0,0,0x2F,0,0,wid,hih);
-		i++;
-	}
-	delimage(begin);
 	flushkey();
 	// is_run 檢視程序是否收到關閉消息, 收到的話會返回false, 即退出程序 
 	// delay_fps 控制幀率, 60 表示"平均延時"為1000/60毫秒 
@@ -79,6 +72,9 @@ void lunch()
 				putimage(player.x, player.y, player.player_img[player.output_idx], SRCINVERT);
 			}
 			getimage(screen,0,0,wid,hih);
+			if (fade) {
+				fade = fadeIn();
+			}
 		}
 	}
 }
