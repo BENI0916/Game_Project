@@ -2,15 +2,14 @@
 #include "lib/var.h"
 #include "lib/output_img.h"
 #include "lib/initialization.h"
+#include "lib/effect.h"
 #include <iostream>
 #include <string>
 using namespace std;
 
-extern int player_walk_cnt3D,bgX,bgY, inFight, isNext;
+extern int player_walk_cnt3D,bgX,bgY, inFight, isNext,key,esc,fade;
 extern Human player;
 extern char BgName[50];
-extern int key;
-extern int esc;
 int speed = 10;
 int fps = 5;
 int table[] = {0,-1,0,1};
@@ -67,7 +66,6 @@ void keyListener() {
 		default:
 			break;
 	}
-    key = 0;
     //home2樓設定
     if (strcmp(BgName, "images\\bg\\home2.png")==0) {
         //地圖牆
@@ -114,7 +112,9 @@ void keyListener() {
             loadBG(BgName, 1859*1.2, 1542*1.3);
             bgX = -483;
             bgY = -1077;
-            PlaySound(TEXT("audio\\bgm\\village.wav"),NULL,SND_LOOP | SND_ASYNC); 
+            PlaySound(TEXT("audio\\bgm\\village.wav"),NULL,SND_LOOP | SND_ASYNC);
+            /*fadeOut();
+            fade = 1;*/
         }
     }
     //村莊設定
@@ -146,6 +146,8 @@ void keyListener() {
             sprintf(BgName,"%s","images\\bg\\home1.png");
             loadBG(BgName,1587/2,1300/2);
             PlaySound(TEXT("audio\\bgm\\home.wav"),NULL,SND_LOOP | SND_ASYNC);
+            //fadeOut();
+            //fade = 1;
         }
         //雜貨店
         if(bgX >= -1311 && bgX <=-1269 && bgY >=-1041 && bgY <=-1023) {
@@ -154,6 +156,8 @@ void keyListener() {
             sprintf(BgName,"%s","images\\bg\\home1.png");
             loadBG(BgName,1587/2,1300/2);
             PlaySound(TEXT("audio\\bgm\\shop.wav"),NULL,SND_LOOP | SND_ASYNC);
+            //fadeOut();
+            //fade = 1;
         }
         //賭場
         if(bgX >= -1404 && bgX <=-1359 && bgY >=-1620 && bgY <=-1596) {
@@ -162,6 +166,8 @@ void keyListener() {
             sprintf(BgName,"%s","images\\bg\\home1.png");
             loadBG(BgName,1587/2,1300/2);
             PlaySound(TEXT("audio\\bgm\\shop.wav"),NULL,SND_LOOP | SND_ASYNC);
+            //fadeOut();
+            //fade = 1;
         }
         //村子右邊BOSS傳送門
         if(bgX < -1956) {
@@ -191,6 +197,8 @@ void keyListener() {
         }
     }
     cout << bgX << " " << bgY << "       \r";
+
+    key = 0;
 }
 
 //g++ *.cpp -o test.exe -lgraphics64 -luuid -lmsimg32 -lgdi32 -limm32 -lole32 -loleaut32 -lwinmm -lgdiplus
