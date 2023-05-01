@@ -2,7 +2,7 @@
 #include "lib/player_move.h"
 #include "lib/player_atk.h"
 
-extern int key, atk_cnt, player_walk_cnt, player_jump_cnt, last_key, enemy_num;
+extern int key, atk_cnt, player_walk_cnt, player_jump_cnt, last_key, enemy_num, isNext;
 extern Human player;
 extern Monster enemy[3];
 extern Animate loading_animate;
@@ -128,6 +128,14 @@ int player_move_check(char dir, int speed)
 	// 如果敵人被打敗 且 玩家走到傳送門所在 則 開啟loading的動畫
 	if(enemy[enemy_num].hp <= 0 && (player.x + player.width) >= (wid - 77))
 	{
+		isNext = 1;
+		loading_animate.printed = 1;
+		loading_animate.cnt = 0;
+	}
+
+	if(enemy[enemy_num].hp <= 0 && player.x <= 7)
+	{
+		isNext = 0;
 		loading_animate.printed = 1;
 		loading_animate.cnt = 0;
 	}

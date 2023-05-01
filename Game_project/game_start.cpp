@@ -4,11 +4,12 @@
 #include "lib/save_load.h"
 #include "lib/setting.h"
 
-extern int enemy_num;
+PIMAGE SetImg;
 
 //遊戲開始執行會先跳來這邊 
 void gameStart() 
 {
+
     initgraph(wid, hih);	// 初始化窗口 
 	printf("inigraph succes\n");
 	
@@ -27,6 +28,8 @@ void gameStart()
     //繪製背景圖像
     putimage(0,0,MenubgImg);
     
+	PlaySound(TEXT("audio\\bgm\\title.wav"),NULL,SND_LOOP | SND_ASYNC);
+
     //battle beast logo
     PIMAGE BattleImg = newimage();
     getimage(BattleImg,"images\\menu\\battle.png");
@@ -40,14 +43,14 @@ void gameStart()
     getimage(QuitImg,"images\\menu\\quit.png");
     putimage_withalpha(NULL,QuitImg,820,550);
     //setting button
-    PIMAGE SetImg = newimage();
+    SetImg = newimage();
     getimage(SetImg,"images\\menu\\setting.png");
     putimage_withalpha(NULL,SetImg,1170,35);
     
     mouse_msg msg = {0};
 	
 	// 新增 enemy_num < 2 : 用來結束程式
-    for(;is_run() && enemy_num < 2 ;delay_fps(60))
+    for(;is_run();delay_fps(60))
     {
     	//char str[32];
         //int x, y;
@@ -55,27 +58,29 @@ void gameStart()
         //sprintf(str, "%4d %4d", x, y);
         //outtextxy(0, 0, str);
         
-    	msg.x = msg.y = 0;
     	//獲取鼠標訊息
-    	while(mousemsg())
+    	while (mousemsg())
     	{
     		msg = getmouse();
 		}
-		if((msg.x >= 299 && msg.x <= 515) && (msg.y >= 555 && msg.y <= 603) && msg.is_left() && msg.is_down())
+		if((msg.x >= 299 && msg.x <= 515) && (msg.y >= 555 && msg.y <= 603) && msg.is_left())
 		{
 			//點擊開始
+			PlaySound(NULL,NULL,0);
 			lunch();
 		}
-		else if((msg.x >= 825 && msg.x <= 991) && (msg.y >= 552 && msg.y <= 603) && msg.is_left() && msg.is_down())
+		else if((msg.x >= 825 && msg.x <= 991) && (msg.y >= 552 && msg.y <= 603) && msg.is_left())
 		{
 			//點擊結束
+			PlaySound(NULL,NULL,0);
 			delimage(MenubgImg);
 			delimage(StartImg);
 			delimage(QuitImg);
+			delimage(BattleImg);
 			closegraph();
 			exit(0);
 		}
-		else if((msg.x >= 1177 && msg.x <= 1229) && (msg.y >= 46 && msg.y <= 86) && msg.is_left() && msg.is_down())
+		else if((msg.x >= 1177 && msg.x <= 1229) && (msg.y >= 46 && msg.y <= 86) && msg.is_left())
 		{
 			//點擊設定
 			setting();

@@ -18,20 +18,33 @@ extern double end;
 int esc,lock;
 PIMAGE escBG;
 PIMAGE screen;
+PIMAGE pauseImg;
 
 void lunch()
 {
-	initgraph(wid, hih);	// 初始化輸出窗口 
-	printf("inigraph succes\n");
 	initialization();
 	printf("initialization succes\n"); 
 	randomize();
 	inFight = 0;
 	lock = 1;
 	esc = 0;
-	escBG = newimage(wid,hih);
-	screen = newimage(wid,hih);
+	escBG = newimage();
+	screen = newimage();
+	pauseImg = newimage();
 	getimage(escBG,"images\\bg\\esc2.png",0,0);
+	getimage(pauseImg,"images\\menu\\pause.png",0,0);
+
+	cleardevice();
+	PlaySound(TEXT("audio\\bgm\\home.wav"),NULL,SND_LOOP | SND_ASYNC);
+
+	PIMAGE begin = newimage();
+	getimage(begin,"images\\bg\\begin.png",0,0);
+	for (int i = 0;i<20;delay_fps(30)) {
+		putimage_alphablend(NULL,begin,0,0,0x2F,0,0,wid,hih);
+		i++;
+	}
+	delimage(begin);
+	flushkey();
 	// is_run 檢視程序是否收到關閉消息, 收到的話會返回false, 即退出程序 
 	// delay_fps 控制幀率, 60 表示"平均延時"為1000/60毫秒 
 	for (; is_run() && player.hp > 0 && enemy_num < 3; delay_fps(60))
@@ -40,7 +53,7 @@ void lunch()
 
 		if (esc) {
 			if (lock) {
-				putimage_alphablend(screen,escBG,0,0,0x90,0,0,wid,hih);
+				putimage_alphablend(screen,escBG,0,0,0xC0,0,0,wid,hih);
 				lock = 0;
 			}
 			escListener();

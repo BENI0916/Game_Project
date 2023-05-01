@@ -8,7 +8,7 @@ extern int atk_cnt, player_walk_cnt, flag, enemy_atk_type, player_jump_cnt, atke
 extern double start;
 extern Human player;
 extern Monster enemy[3];
-extern Bullet skill[6], tp_door;
+extern Bullet skill[6], tp_door[2];
 extern Animate loading_animate;
 extern char BgName[50];
 
@@ -39,17 +39,6 @@ void initialization()
 	player.width = 33*3.5;  // 人物圖片的寬 
 	player.power = 30;  // 擊退敵人的距離 
 	player.atk_type = 0;
-	/*player.x = wid / 4; // 暫定 
-	player.y = hih * 0.6; // 暫定 
-	player.hp = 10;
-	player.damage = 25; // 對敵人造成的傷害 
-	player.atked = 0;   // 判定是否有造成傷害 
-	player.dir = 'd';   // 方向 
-	player.output_idx = 0;// 輸出圖片編號 
-	player.high = 66;   // 人物圖片的高 
-	player.width = 76;  // 人物圖片的寬 
-	player.power = 30;  // 擊退敵人的距離 
-	player.atk_type = 0;*/
 	
 	player_walk_cnt = 11; // 走路計時器 
 	player_walk_cnt3D = 0,bgX=20,bgY=-20;
@@ -305,17 +294,31 @@ void skill_ini_05()
 void tp_door_ini()
 {
 	char s[100];
-	tp_door.x = wid - 77;
-	tp_door.y = hih * 0.6 -11;
-	tp_door.status = 0;
-	tp_door.output_idx = 0;
-	tp_door.skill_img = NULL;
-	tp_door.skill_msk = NULL;
-	sprintf(s, "%s", "images\\tp_door");
-	loadCHAR(s, &tp_door.skill_img, &tp_door.skill_msk, 77, 77, 0);
+	sprintf(s, "%s", "images\\tp_door\\right");
+
+	tp_door[0].x = wid - 77;
+	tp_door[0].y = hih * 0.6 -11;
+	tp_door[0].status = 0;
+	tp_door[0].output_idx = 0;
+	tp_door[0].skill_img = NULL;
+	tp_door[0].skill_msk = NULL;
+	loadCHAR(s, &(tp_door[0]).skill_img, &(tp_door[0]).skill_msk, 77, 77, 0);
 	
-	tp_door.high = 77;
-	tp_door.width = 77;
-	tp_door.power = 0;
+	tp_door[0].high = 77;
+	tp_door[0].width = 77;
+	tp_door[0].power = 0;
+
+	sprintf(s, "%s", "images\\tp_door\\left");
+	tp_door[1].x = 7;
+	tp_door[1].y = hih * 0.6 -11;
+	tp_door[1].status = 0;
+	tp_door[1].output_idx = 0;
+	tp_door[1].skill_img = NULL;
+	tp_door[1].skill_msk = NULL;
+	loadCHAR(s, &(tp_door[1]).skill_img, &(tp_door[1]).skill_msk, 77, 77, 0);
+	
+	tp_door[1].high = 77;
+	tp_door[1].width = 77;
+	tp_door[1].power = 0;
 }
 

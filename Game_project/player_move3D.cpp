@@ -6,7 +6,7 @@
 #include <string>
 using namespace std;
 
-extern int player_walk_cnt3D,bgX,bgY, inFight;
+extern int player_walk_cnt3D,bgX,bgY, inFight, isNext;
 extern Human player;
 extern char BgName[50];
 extern int key;
@@ -67,6 +67,7 @@ void keyListener() {
 		default:
 			break;
 	}
+    key = 0;
     //home2樓設定
     if (strcmp(BgName, "images\\bg\\home2.png")==0) {
         //地圖牆
@@ -113,6 +114,7 @@ void keyListener() {
             loadBG(BgName, 1859*1.2, 1542*1.3);
             bgX = -483;
             bgY = -1077;
+            PlaySound(TEXT("audio\\bgm\\village.wav"),NULL,SND_LOOP | SND_ASYNC); 
         }
     }
     //村莊設定
@@ -143,6 +145,7 @@ void keyListener() {
             bgY=-171;
             sprintf(BgName,"%s","images\\bg\\home1.png");
             loadBG(BgName,1587/2,1300/2);
+            PlaySound(TEXT("audio\\bgm\\home.wav"),NULL,SND_LOOP | SND_ASYNC);
         }
         //雜貨店
         if(bgX >= -1311 && bgX <=-1269 && bgY >=-1041 && bgY <=-1023) {
@@ -150,6 +153,7 @@ void keyListener() {
             bgY=-171;
             sprintf(BgName,"%s","images\\bg\\home1.png");
             loadBG(BgName,1587/2,1300/2);
+            PlaySound(TEXT("audio\\bgm\\shop.wav"),NULL,SND_LOOP | SND_ASYNC);
         }
         //賭場
         if(bgX >= -1404 && bgX <=-1359 && bgY >=-1620 && bgY <=-1596) {
@@ -157,17 +161,21 @@ void keyListener() {
             bgY=-171;
             sprintf(BgName,"%s","images\\bg\\home1.png");
             loadBG(BgName,1587/2,1300/2);
+            PlaySound(TEXT("audio\\bgm\\shop.wav"),NULL,SND_LOOP | SND_ASYNC);
         }
         //村子右邊BOSS傳送門
         if(bgX < -1956) {
             inFight=1;
-            player.x = wid / 4; // 暫定 
-	        player.y = hih * 0.6; // 暫定 
-            player.output_idx = 0;// 輸出圖片編號 
-	        player.high = 66;   // 人物圖片的高 
-	        player.width = 76;  // 人物圖片的寬
+            isNext = 1;
+            player.x = 20;
+	        player.y = hih * 0.6;
+            player.output_idx = 0;
+	        player.high = 66;
+	        player.width = 76;
+            bgX = -1940;
             sprintf(BgName,"%s","images\\bg\\back_ground_01.png");
             loadBG(BgName);
+            PlaySound(NULL,NULL,0);
         }
         //村子上方刷怪副本
         if(bgY > -342) {
@@ -183,8 +191,6 @@ void keyListener() {
         }
     }
     cout << bgX << " " << bgY << "       \r";
-
-    key = 0;
 }
 
 //g++ *.cpp -o test.exe -lgraphics64 -luuid -lmsimg32 -lgdi32 -limm32 -lole32 -loleaut32 -lwinmm -lgdiplus

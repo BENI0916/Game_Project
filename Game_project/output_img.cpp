@@ -3,11 +3,12 @@
 #include "lib/output_img.h"
 
 extern PIMAGE bg;
-extern int enemy_num;
+extern int enemy_num, isNext, inFight;
 extern Human player;
 extern Monster enemy[3];
-extern Bullet skill[6], tp_door;
+extern Bullet skill[6], tp_door[2];
 extern Animate loading_animate;
+extern char BgName[50];
 
 void output_image()
 {
@@ -23,9 +24,25 @@ void output_image()
 		if(loading_animate.cnt >= 72)
 		{
 			loading_animate.printed = 0;
-			enemy_num++;
-			printf("enemy_num = %d\n", enemy_num);
-			player.x = wid / 4;
+			if (isNext) {
+				enemy_num++;
+				printf("enemy_num = %d\n", enemy_num);
+				player.x = wid / 4;
+			}
+			else {
+				loading_animate.printed = 1;
+				loading_animate.cnt = 0;
+				inFight=0;
+            	player.x = (wid-28*3.5) / 2;
+				player.y = (hih-33*3.5) / 2 + 80;
+            	player.output_idx = 30;// 輸出圖片編號 
+	        	player.high = 28*3.5;   // 人物圖片的高 
+				player.width = 33*3.5;  // 人物圖片的寬
+				sprintf(BgName,"%s","images\\bg\\village.png");
+            	loadBG(BgName, 1859*1.2, 1542*1.3);
+            	PlaySound(TEXT("audio\\bgm\\village.wav"),NULL,SND_LOOP | SND_ASYNC);
+			}
+			
 		}
 	}
 	else
@@ -142,18 +159,21 @@ void loadCHAR(char filename[],PIMAGE **ori_img,PIMAGE **ori_msk,int w,int h,int 
 
 void put_tp_door_img()
 {
-	if(tp_door.power < 20)
-		tp_door.output_idx = 0;
-	else if(tp_door.power < 40)
-		tp_door.output_idx = 1;
-	else if(tp_door.power < 60)
-		tp_door.output_idx = 2;
-	else if(tp_door.power < 80)
-		tp_door.output_idx = 3;
+	for (int i = 0;i<2;i++) {
+	if(tp_door[i].power < 20)
+		tp_door[i].output_idx = 0;
+	else if(tp_door[i].power < 40)
+		tp_door[i].output_idx = 1;
+	else if(tp_door[i].power < 60)
+		tp_door[i].output_idx = 2;
+	else if(tp_door[i].power < 80)
+		tp_door[i].output_idx = 3;
 	else
-		tp_door.power = 0;
-	tp_door.power++;
+		tp_door[i].power = 0;
+	tp_door[i].power++;
 
-	putimage(tp_door.x, tp_door.y, tp_door.skill_msk[tp_door.output_idx], NOTSRCERASE);
-	putimage(tp_door.x, tp_door.y, tp_door.skill_img[tp_door.output_idx], SRCINVERT);
+	putimage(tp_door[i].x, tp_door[i].y, tp_door[i].skill_msk[tp_door[i].output_idx], NOTSRCERASE);
+	putimage(tp_door[i].x, tp_door[i].y, tp_door[i].skill_img[tp_door[i].output_idx], SRCINVERT);
+
+	}
 }

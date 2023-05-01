@@ -2,7 +2,7 @@
 #include "lib/game_start.h"
 
 PIMAGE bg = newimage(); //bg:儲存背景圖片之變數
-int key, atk_cnt, player_walk_cnt, player_jump_cnt, last_key, flag, enemy_atk_cnt, enemy_atk_type, player_enemy_dir, enemy_num = -1, get_dmg_cnt, skill_dir;
+int key, atk_cnt, player_walk_cnt, player_jump_cnt, last_key, flag, enemy_atk_cnt, enemy_atk_type, player_enemy_dir, enemy_num = -1, get_dmg_cnt, skill_dir, isNext;
 double start, end;
 int inFight = 0;
 int player_walk_cnt3D,bgX,bgY;
@@ -13,7 +13,7 @@ char BgName[50];
 
 Human player,player3D;
 Monster enemy[3];
-Bullet skill[6], tp_door;
+Bullet skill[6], tp_door[2];
 Animate loading_animate;
 
 int main(void)
