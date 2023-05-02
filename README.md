@@ -22,3 +22,10 @@ output_img.cpp
 esc.cpp
 player_move.cpp
 effect.c
+
+二更
+1.新增敵人走路動畫
+
+有更動之檔案:
+initialization.cpp
+enemy_move.cpp
