@@ -157,7 +157,7 @@ void enemy_ini_02()
 	enemy[2].high = 400;
 	enemy[2].width = 500;
 	enemy[2].power = 100; // 敵人擊退玩家的距離 
-	enemy[2].speed = 5;    
+	enemy[2].speed = 4;    
 	enemy[2].atk_0_cnt = -1; // 敵人的技能計數器 
 	enemy[2].atk_1_cnt = -1;  
 }

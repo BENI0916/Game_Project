@@ -101,18 +101,23 @@ void enemy_move()
 				enemy[enemy_num].dir = 'a';
 			else
 				enemy[enemy_num].dir = 'd';
-			if(abs(player.x - enemy[2].x) > enemy[2].width)
+			if(abs(player.x + player.width / 2 - enemy[2].x - enemy[2].width / 2) > enemy[2].width / 2)
 			{
-				if(enemy[enemy_num].x > player.x)
-				{	
+				if(enemy[enemy_num].dir == 'a')
 					enemy[enemy_num].x -= enemy[enemy_num].speed;
-					enemy[enemy_num].output_idx = 1;
-				}
 				else
-				{
 					enemy[enemy_num].x += enemy[enemy_num].speed;
-					enemy[enemy_num].output_idx = 0;
-				}
+				
+				int table[4] = {10, 8, 6, 4};
+
+				if(flag <= 0 || flag > 60)
+					flag = 60;
+				flag--;
+
+				enemy[enemy_num].output_idx = table[flag / 15];
+
+				if(enemy[enemy_num].dir == 'a')
+					enemy[enemy_num].output_idx++;
 			}
 			else
 			{
