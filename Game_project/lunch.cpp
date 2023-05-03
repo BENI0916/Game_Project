@@ -8,6 +8,7 @@
 #include "lib/player_move3D.h"
 #include "lib/esc.h"
 #include "lib/effect.h"
+#include "lib/status.h"
 
 extern PIMAGE bg;
 extern int enemy_atk_type, enemy_num, inFight, bgX, bgY;
@@ -16,7 +17,7 @@ extern Monster enemy[3];
 extern Animate loading_animate;
 extern double end;
 
-int esc,lock,fade = 1;
+int esc,fade,mazFight;
 PIMAGE escBG;
 PIMAGE screen;
 PIMAGE pauseImg;
@@ -27,8 +28,9 @@ void lunch()
 	printf("initialization succes\n"); 
 	randomize();
 	inFight = 0;
-	lock = 1;
 	esc = 0;
+	fade = 1;
+	mazFight = 0;
 	escBG = newimage();
 	screen = newimage();
 	pauseImg = newimage();
@@ -45,10 +47,6 @@ void lunch()
 		cleardevice(); // 把輸出的窗口清空 
 
 		if (esc) {
-			if (lock) {
-				putimage_alphablend(screen,escBG,0,0,0xC0,0,0,wid,hih);
-				lock = 0;
-			}
 			escListener();
 			escScreen();
 		}
@@ -64,12 +62,18 @@ void lunch()
 				move(5);
 				output_image();
 			}
-			else {
-			
+			else if (!mazFight){
 				keyListener();
 				putimage(abs(wid-getwidth(bg))/2 + bgX, abs(hih-getheight(bg))/2 + bgY, bg);
 				putimage(player.x, player.y, player.player_msk[player.output_idx], NOTSRCERASE);
 				putimage(player.x, player.y, player.player_img[player.output_idx], SRCINVERT);
+			}
+			if (mazFight) {
+				move(5);
+				putimage(0,0,bg);
+				putimage(player.x, player.y, player.player_msk[player.output_idx], NOTSRCERASE);
+				putimage(player.x, player.y, player.player_img[player.output_idx], SRCINVERT);
+				playerBlood(player.hp,player.fhp);
 			}
 			getimage(screen,0,0,wid,hih);
 			if (fade) {

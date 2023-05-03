@@ -3,6 +3,9 @@
 #include "lib/output_img.h"
 #include "lib/initialization.h"
 #include "lib/effect.h"
+
+#include "lib/event.h"
+
 #include <iostream>
 #include <string>
 using namespace std;
@@ -194,6 +197,7 @@ void keyListener() {
 	        player.width = 76;  // 人物圖片的寬
             sprintf(BgName,"%s","images\\bg\\back_ground_01.png");
             loadBG(BgName);*/
+            event();
         }
     }
     cout << bgX << " " << bgY << "       \r";

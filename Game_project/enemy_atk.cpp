@@ -3,7 +3,7 @@
 #include "lib/enemy_give_dmg.h"
 #include "lib/initialization.h"
 
-extern int enemy_atk_cnt, enemy_atk_type, enemy_num, get_dmg_cnt, skill_dir, dash_cnt;
+extern int enemy_atk_cnt, enemy_atk_type, enemy_num, get_dmg_cnt, skill_dir;
 extern double start, end;
 extern Human player;
 extern Monster enemy[3];
@@ -129,7 +129,7 @@ void enemy_atk()
 	}
 	
 	// 此函式為造成傷害 
-	if(get_dmg_cnt == 0 && enemy[enemy_num].hp > 0) // && dash_cnt < 0
+	if(get_dmg_cnt == 0 && enemy[enemy_num].hp > 0)
 		enemy_give_dmg();
 }
  

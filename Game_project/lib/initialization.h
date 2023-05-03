@@ -25,4 +25,6 @@ void skill_ini_05();
 
 void tp_door_ini();
 
+void blood_ini();
+
 #endif

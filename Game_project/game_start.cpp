@@ -9,6 +9,7 @@ PIMAGE SetImg;
 //遊戲開始執行會先跳來這邊 
 void gameStart() 
 {
+	PlaySound(TEXT("audio\\bgm\\title.wav"),NULL,SND_LOOP | SND_ASYNC);
 
     initgraph(wid, hih);	// 初始化窗口 
 	printf("inigraph succes\n");
@@ -27,8 +28,6 @@ void gameStart()
     tmp = NULL;
     //繪製背景圖像
     putimage(0,0,MenubgImg);
-    
-	PlaySound(TEXT("audio\\bgm\\title.wav"),NULL,SND_LOOP | SND_ASYNC);
 
     //battle beast logo
     PIMAGE BattleImg = newimage();

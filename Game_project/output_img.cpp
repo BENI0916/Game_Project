@@ -1,6 +1,7 @@
 #include "dirent.h"
 #include "lib/var.h" 
 #include "lib/output_img.h"
+#include "lib/status.h"
 
 extern PIMAGE bg;
 extern int enemy_num, isNext, inFight;
@@ -74,6 +75,8 @@ void output_image()
 		// 輸出玩家
 		putimage(player.x, player.y, player.player_msk[player.output_idx], NOTSRCERASE);
 		putimage(player.x, player.y, player.player_img[player.output_idx], SRCINVERT);
+		playerBlood(player.hp,player.fhp);
+		monBlood(enemy[enemy_num].hp,enemy[enemy_num].fhp);
 	}
 }	
 

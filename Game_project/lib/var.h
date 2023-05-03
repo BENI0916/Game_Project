@@ -18,6 +18,7 @@ typedef struct
 	int x;	// x �y�� 
 	int y;	// y �y��  
 	int hp;	// ��q
+	int fhp;
 	int damage; // ��ĤH�y�����ˮ`  
 	int atked;// �P�w�O�_���y���ˮ` 
 	char dir;// �H�����ª���V 
@@ -34,6 +35,7 @@ typedef struct
 	int x;
 	int y;
 	int hp;
+	int fhp;
 	int damage;
 	char dir;
 	int output_idx;

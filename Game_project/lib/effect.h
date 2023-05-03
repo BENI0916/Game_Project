@@ -5,4 +5,6 @@ int fadeIn();
 
 int fadeOut();
 
+int flashOut();
+
 #endif
