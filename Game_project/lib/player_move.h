@@ -11,4 +11,6 @@ void jump();
 
 int player_move_check(char dir, int speed);
 
+void dash(int val);
+
 #endif

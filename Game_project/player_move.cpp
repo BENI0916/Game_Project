@@ -2,7 +2,8 @@
 #include "lib/player_move.h"
 #include "lib/player_atk.h"
 
-extern int key, atk_cnt, player_walk_cnt, player_jump_cnt, last_key, enemy_num, isNext;
+extern int key, atk_cnt, player_walk_cnt, player_jump_cnt, last_key, enemy_num, isNext, dash_cnt;
+extern double dash_cd_start, dash_cd_end;
 extern Human player;
 extern Monster enemy[3];
 extern Animate loading_animate;
@@ -12,8 +13,17 @@ void move(int speed)
 	if (kbhit()) // 檢測是否有鍵盤輸入 
 		key = getch();
 	
+	if(dash_cnt > -1)
+	{
+		if(player.dir == 'a')
+			dash(-1);
+		else
+			dash(1);
+	}
+	
 	if(player_jump_cnt > -1)
 		jump();
+
 	if(atk_cnt > -1) // atk_cnt  < 0 代表未進行攻擊 , 其他正整數則代表正在攻擊 
 	{
 		if(player.dir == 'd')
@@ -67,6 +77,10 @@ void move(int speed)
 			if(GetAsyncKeyState(0x20) || GetAsyncKeyState(' ')) // 輸入空白鍵
 				if(player_jump_cnt < 0)
 					player_jump_cnt = 15;
+			
+			if((GetAsyncKeyState(0x4B)) || GetAsyncKeyState('k'))
+				if(dash_cnt < 0)
+					dash_cnt = 3;
 		}
 	
 	key = 0; // 執行動作後將 key歸 0, 避免一直重複動作 
@@ -120,6 +134,16 @@ void jump()// 2 4 8 -> 16, 12, 10, 8, 4, 2
 	}
 	
 	player_jump_cnt--;
+}
+
+void dash(int val)
+{
+	dash_cnt--;
+
+	if(player_move_check(player.dir, 15))
+		player.x += 15 * val;
+	else
+		dash_cnt = -1;
 }
 
 // 防止玩家走出邊界 

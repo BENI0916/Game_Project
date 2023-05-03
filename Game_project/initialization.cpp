@@ -4,7 +4,7 @@
 #include "lib/output_img.h"
 #include "lib/enemy_atk.h"
 
-extern int atk_cnt, player_walk_cnt, flag, enemy_atk_type, player_jump_cnt, atked, enemy_num,player_walk_cnt3D,bgX,bgY, inFight, get_dmg_cnt; // player_walk_cnt : �����p�ƾ� �Ω�p�⨫���ɿ�X���Ϥ�
+extern int atk_cnt, player_walk_cnt, flag, enemy_atk_type, player_jump_cnt, atked, enemy_num,player_walk_cnt3D,bgX,bgY, inFight, get_dmg_cnt, dash_cnt; // player_walk_cnt : �����p�ƾ� �Ω�p�⨫���ɿ�X���Ϥ�
 extern double start;
 extern Human player;
 extern Monster enemy[3];
@@ -88,6 +88,7 @@ void initialization()
 	
 	inFight = 0;
 	get_dmg_cnt = 0;
+	dash_cnt = 0;
 }
 
 void enemy_ini()
