@@ -1,24 +1,15 @@
 # Game_Project
-1.新增"閃爍"轉場
-2.增加副本區戰鬥bgm
-3.增加副本區小怪及掉落物圖檔
-4.新增血條顯示
+1.新增副本區小怪
 
 更動檔案
-audio/
-images/blood/
-images/3D/
+images/3D/obj/
+images/3D/monster/rabbit/
+images/bg
 
-新增status.cpp status.h
-新增event.cpp event.h
+新增enemy_move3D.cpp enemy_move3D.h
 
-var.h
-effect.cpp effect.h
-esc.cpp
-game_start.cpp
-initialization.cpp initialization.h
-lunch.cpp
-main.cpp
-output_img.cpp
+event.cpp
+player_atk.cpp
 player_move3D.cpp
-
+lunch.cpp
+output_img.cpp output_img.h
