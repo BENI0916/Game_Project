@@ -2,14 +2,15 @@
 #include "lib/player_atk.h"
 #include "lib/enemy_give_dmg.h"
 
-extern int key, atk_cnt, player_walk_cnt, flag, enemy_atk_cnt, enemy_atk_type, player_enemy_dir, atked, enemy_num;
+extern int key, atk_cnt, player_walk_cnt, flag, enemy_atk_cnt, enemy_atk_type, player_enemy_dir, atked, enemy_num, inFight;
 extern double start, end;
 extern Human player;
-extern Monster enemy[3];
+extern Monster enemy[3],monster;
 
 // 玩家攻擊  
 void player_atk(int val)
 {	
+	if (inFight) {
 	switch(enemy_num)
 	{
 		case 0:
@@ -62,5 +63,19 @@ void player_atk(int val)
 			
 		default :
 			break;
+	}}
+	else {
+		if (player.dir=='d') {
+			if (player.x+player.width>monster.x) {
+				monster.hp -= player.damage;
+				player.atked = 1;
+			}
+		}
+		else {
+			if (player.x<monster.x+monster.width) {
+				monster.hp -= player.damage;
+				player.atked = 1;
+			}
+		}
 	}
 }

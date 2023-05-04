@@ -9,6 +9,7 @@
 #include "lib/esc.h"
 #include "lib/effect.h"
 #include "lib/status.h"
+#include "lib/enemy_move3D.h"
 
 extern PIMAGE bg;
 extern int enemy_atk_type, enemy_num, inFight, bgX, bgY;
@@ -17,7 +18,7 @@ extern Monster enemy[3];
 extern Animate loading_animate;
 extern double end;
 
-int esc,fade,mazFight;
+int esc,fade,metEvent;
 PIMAGE escBG;
 PIMAGE screen;
 PIMAGE pauseImg;
@@ -30,7 +31,7 @@ void lunch()
 	inFight = 0;
 	esc = 0;
 	fade = 1;
-	mazFight = 0;
+	metEvent = 0;
 	escBG = newimage();
 	screen = newimage();
 	pauseImg = newimage();
@@ -62,18 +63,21 @@ void lunch()
 				move(5);
 				output_image();
 			}
-			else if (!mazFight){
+			else if (!metEvent){
 				keyListener();
 				putimage(abs(wid-getwidth(bg))/2 + bgX, abs(hih-getheight(bg))/2 + bgY, bg);
 				putimage(player.x, player.y, player.player_msk[player.output_idx], NOTSRCERASE);
 				putimage(player.x, player.y, player.player_img[player.output_idx], SRCINVERT);
 			}
-			if (mazFight) {
-				move(5);
-				putimage(0,0,bg);
-				putimage(player.x, player.y, player.player_msk[player.output_idx], NOTSRCERASE);
-				putimage(player.x, player.y, player.player_img[player.output_idx], SRCINVERT);
-				playerBlood(player.hp,player.fhp);
+			if (metEvent) {
+				if (metEvent<10) {
+					move(5);
+					putimage(0,0,bg);
+					putEnemy(metEvent);
+					putimage(player.x, player.y, player.player_msk[player.output_idx], NOTSRCERASE);
+					putimage(player.x, player.y, player.player_img[player.output_idx], SRCINVERT);
+					playerBlood(player.hp,player.fhp);
+				}
 			}
 			getimage(screen,0,0,wid,hih);
 			if (fade) {
@@ -82,4 +86,3 @@ void lunch()
 		}
 	}
 }
-

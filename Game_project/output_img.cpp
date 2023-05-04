@@ -160,6 +160,50 @@ void loadCHAR(char filename[],PIMAGE **ori_img,PIMAGE **ori_msk,int w,int h,int 
 	free(msk);
 }
 
+void loadCHAR(char filename[],PIMAGE **ori_img,int w,int h,int index) 
+{
+	PIMAGE *img = NULL; //暫存圖片及遮罩之指標變數
+	DIR *img_dir = NULL; //資料夾的位址
+    struct dirent *img_entry;
+
+	char img_str[100];
+	sprintf(img_str, ".\\%s", filename); //定位
+	if((img_dir = opendir(img_str)) == NULL) 
+	{ //判斷是否成功開啟所指定之路徑
+            printf("opendir failed!\n");   
+    }
+	else 
+	{
+		for (int i = index;img_entry = readdir(img_dir);) 
+		{ //判斷是否含有未讀取之檔案，若無則離開迭代
+			if (strstr(img_entry->d_name,".png")) 
+			{ //判斷讀取之檔案的副檔名
+				//擴充陣列
+				*ori_img = (PIMAGE *)realloc(*ori_img,sizeof(PIMAGE)*(i+1));
+				
+				img = (PIMAGE *)realloc(img,sizeof(PIMAGE)*(i+1));
+				
+				//建立圖片
+				(*ori_img)[i] = newimage(w,h);
+				
+				img[i] = newimage();
+
+				//讀取圖片並拉伸至指定長高
+				sprintf(img_str, "%s\\%s",filename,img_entry->d_name);
+				
+				getimage(img[i], img_str);
+				
+				putimage((*ori_img)[i], 0, 0, w, h, img[i], 0, 0, getwidth(img[i]), getheight(img[i]));
+				
+				delimage(img[i++]); //刪除暫存
+			}
+		}
+		closedir(img_dir);
+	}
+	free(img);
+}
+
+
 void put_tp_door_img()
 {
 	for (int i = 0;i<2;i++) {

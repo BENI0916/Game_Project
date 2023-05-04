@@ -1,8 +1,8 @@
 #ifndef EVENT_H
 #define EVENT_H
 
-void event();
+int event();
 
-void choMon();
+int choMon();
 
 #endif

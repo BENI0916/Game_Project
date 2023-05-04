@@ -3,19 +3,21 @@
 #include "lib/output_img.h"
 #include "lib/initialization.h"
 #include "lib/effect.h"
-
 #include "lib/event.h"
 
 #include <iostream>
 #include <string>
 using namespace std;
 
-extern int player_walk_cnt3D,bgX,bgY, inFight, isNext,key,esc,fade;
+extern PIMAGE bg;
+extern int player_walk_cnt3D,bgX,bgY, inFight, isNext,key,esc,fade,metEvent;
 extern Human player;
 extern char BgName[50];
 int speed = 10;
 int fps = 5;
 int table[] = {0,-1,0,1};
+unsigned int treasurePlace = random(6);
+int open = 1;
 
 void itemwall(int xl, int xr, int yu, int yd) {
     if(bgX <= xl && bgX >= xr && bgY <= yu &bgY >= yd) {
@@ -187,17 +189,405 @@ void keyListener() {
             PlaySound(NULL,NULL,0);
         }
         //村子上方刷怪副本
-        if(bgY > -342) {
-            //還沒做
-            /*inFight=1;
-            player.x = wid / 4; // 暫定 
-	        player.y = hih * 0.6; // 暫定 
-            player.output_idx = 0;// 輸出圖片編號 
-	        player.high = 66;   // 人物圖片的高 
-	        player.width = 76;  // 人物圖片的寬
-            sprintf(BgName,"%s","images\\bg\\back_ground_01.png");
-            loadBG(BgName);*/
-            event();
+        if(bgY > -300 && bgX > -1103 && bgX < -1003) {
+            PlaySound(NULL,NULL,0);
+            //還沒做完
+            open = 1;//寶箱未開
+            unsigned int cavenum = random(3);
+            sprintf(BgName,"images\\bg\\cave0%u.png", cavenum + 1);
+            //寶箱圖
+            PIMAGE treasure = newimage();
+            getimage(treasure,"images\\3D\\obj\\treasure.png");
+            //傳送門圖
+            PIMAGE img = newimage();
+            PIMAGE msk = newimage();
+            getimage(img,"images\\3D\\obj\\door_img.png");
+            getimage(msk,"images\\3D\\obj\\door_msk.png");
+            if(cavenum == 0) {
+                loadBG(BgName, 1463*1.3, 1957*1.3);
+                if(random(2)) {
+                    bgX = -1383;
+                    bgY = -2737;
+                } else {
+                    bgX = -197;
+                    bgY = -747;
+                }
+                //圖一寶箱、傳送門bg位置
+                int place[6][2]={{720,217},{1308,514},{251,1137},{1309,1129},{100,1723},{1112,1722}};
+                treasurePlace = random(6);
+                putimage(bg, place[treasurePlace][0]*1.3, place[treasurePlace][1]*1.3, treasure, SRCCOPY);
+                putimage(bg, place[5-treasurePlace][0]*1.3, place[5-treasurePlace][1]*1.3, msk, NOTSRCERASE);
+                putimage(bg, place[5-treasurePlace][0]*1.3, place[5-treasurePlace][1]*1.3, img, SRCINVERT);
+            }
+            if(cavenum == 1) {
+                loadBG(BgName, 1480*1.3, 1374*1.3);
+                if(random(2)) {
+                    bgX = -1153;
+                    bgY = -377;
+                } else {
+                    bgX = -113;
+                    bgY = -1157;
+                }
+                int place[6][2]={{122,226},{1347,271},{1130,520},{713,818},{270,1114},{1210,1130}};
+                treasurePlace = random(6);
+                putimage(bg, place[treasurePlace][0]*1.3, place[treasurePlace][1]*1.3, treasure, SRCCOPY);
+                putimage(bg, place[5-treasurePlace][0]*1.3, place[5-treasurePlace][1]*1.3, msk, NOTSRCERASE);
+                putimage(bg, place[5-treasurePlace][0]*1.3, place[5-treasurePlace][1]*1.3, img, SRCINVERT);
+            }
+            if(cavenum == 2) {
+                loadBG(BgName, 1935*1.3, 1744*1.3);
+                if(random(2)) {
+                    bgX = -2343;
+                    bgY = -1317;
+                } else {
+                    bgX = -893;
+                    bgY = -2017;
+                }
+                int place[6][2]={{97,174},{1213,485},{1480,1041},{83,1039},{1389,1628},{1788,1618}};
+                treasurePlace = random(6);
+                putimage(bg, place[treasurePlace][0]*1.3, place[treasurePlace][1]*1.3, treasure, SRCCOPY);
+                putimage(bg, place[5-treasurePlace][0]*1.3, place[5-treasurePlace][1]*1.3, msk, NOTSRCERASE);
+                putimage(bg, place[5-treasurePlace][0]*1.3, place[5-treasurePlace][1]*1.3, img, SRCINVERT);
+            }
+            delimage(treasure);
+            delimage(img);
+            delimage(msk);
+        }
+    }
+    if (strcmp(BgName, "images\\bg\\cave01.png")==0) {
+        //地圖牆
+        if(bgX < -1443) bgX = -1443;
+        if(bgX > 237) bgX = 237;
+        if(bgY < -2767) bgY = -2767;
+        if(bgY > -647) bgY = -647;
+        //物件牆
+        itemwall(-673,-793,-647,-817);
+        itemwall(237,-273,-817,-1027);
+        itemwall(-413,-1053,-817,-1027);
+        itemwall(-1193,-1443,-817,-1027);
+        itemwall(237,-533,-1207,-1417);
+        itemwall(-673,-1053,-1207,-1417);
+        itemwall(-1193,-1443,-1207,-1417);
+        itemwall(-1393,-1443,-1417,-1477);
+        itemwall(-933,-1053,-1207,-1807);
+        itemwall(107,-1053,-1597,-1807);
+        itemwall(-153,-273,-1597,-2767);
+        itemwall(-1193,-1313,-1597,-2197);
+        itemwall(107,-273,-1987,-2197);
+        itemwall(-413,-1053,-1987,-2197);
+        itemwall(-1193,-1443,-1987,-2197);
+        itemwall(-933,-1053,-1987,-2587);
+        itemwall(237,-13,-2377,-2587);
+        itemwall(-413,-1313,-2377,-2587);
+        itemwall(-1193,-1313,-2377,-2767);
+        itemwall(-33,-143,-1877,-1977);
+        //寶箱牆
+        int loc[6][4]={{-583,-643,-707,-747},{-1343,-1413,-1087,-1127},{27,-23,-1897,-1947},{-1343,-1413,-1887,-1927},{227,157,-2657,-2697},{-1093,-1153,-2657,-2697}};
+        if(open) itemwall(loc[treasurePlace][0],loc[treasurePlace][1],loc[treasurePlace][2],loc[treasurePlace][3]);
+        if(open && bgX<loc[treasurePlace][0]+20 && bgX>loc[treasurePlace][1]-20 && bgY<loc[treasurePlace][2]+20 && bgY>loc[treasurePlace][3]-20 && key == 102) {
+            //獎勵畫面 未做
+            /*mouse_msg msg = {0};
+            while (1) {
+                msg.x = msg.y = 0;
+                while(mousemsg()) msg = getmouse();
+                
+            }*/
+            open = 0;//寶箱已開
+            loadBG(BgName, 1463*1.3, 1957*1.3);
+            int place[6][2]={{720,217},{1308,514},{251,1137},{1309,1129},{100,1723},{1112,1722}};
+            PIMAGE img = newimage();
+            PIMAGE msk = newimage();
+            getimage(img,"images\\3D\\obj\\door_img.png");
+            getimage(msk,"images\\3D\\obj\\door_msk.png");
+            putimage(bg, place[5-treasurePlace][0]*1.3, place[5-treasurePlace][1]*1.3, msk, NOTSRCERASE);
+            putimage(bg, place[5-treasurePlace][0]*1.3, place[5-treasurePlace][1]*1.3, img, SRCINVERT);
+            delimage(img);
+            delimage(msk);
+        }
+        //背景轉換
+        if(bgX<loc[5-treasurePlace][0] && bgX>loc[5-treasurePlace][1] && bgY<loc[5-treasurePlace][2] && bgY>loc[5-treasurePlace][3]) {
+            open = 1;//寶箱未開
+            unsigned int cavenum = random(3);
+            sprintf(BgName,"images\\bg\\cave0%u.png", cavenum + 1);
+            //寶箱圖
+            PIMAGE treasure = newimage();
+            getimage(treasure,"images\\3D\\obj\\treasure.png");
+            //傳送門圖
+            PIMAGE img = newimage();
+            PIMAGE msk = newimage();
+            getimage(img,"images\\3D\\obj\\door_img.png");
+            getimage(msk,"images\\3D\\obj\\door_msk.png");
+            if(cavenum == 0) {
+                loadBG(BgName, 1463*1.3, 1957*1.3);
+                if(random(2)) {
+                    bgX = -1383;
+                    bgY = -2737;
+                } else {
+                    bgX = -197;
+                    bgY = -747;
+                }
+                //圖一寶箱、傳送門bg位置
+                int place[6][2]={{720,217},{1308,514},{251,1137},{1309,1129},{100,1723},{1112,1722}};
+                treasurePlace = random(6);
+                putimage(bg, place[treasurePlace][0]*1.3, place[treasurePlace][1]*1.3, treasure, SRCCOPY);
+                putimage(bg, place[5-treasurePlace][0]*1.3, place[5-treasurePlace][1]*1.3, msk, NOTSRCERASE);
+                putimage(bg, place[5-treasurePlace][0]*1.3, place[5-treasurePlace][1]*1.3, img, SRCINVERT);
+            }
+            if(cavenum == 1) {
+                loadBG(BgName, 1480*1.3, 1374*1.3);
+                if(random(2)) {
+                    bgX = -1153;
+                    bgY = -377;
+                } else {
+                    bgX = -113;
+                    bgY = -1157;
+                }
+                int place[6][2]={{122,226},{1347,271},{1130,520},{713,818},{270,1114},{1210,1130}};
+                treasurePlace = random(6);
+                putimage(bg, place[treasurePlace][0]*1.3, place[treasurePlace][1]*1.3, treasure, SRCCOPY);
+                putimage(bg, place[5-treasurePlace][0]*1.3, place[5-treasurePlace][1]*1.3, msk, NOTSRCERASE);
+                putimage(bg, place[5-treasurePlace][0]*1.3, place[5-treasurePlace][1]*1.3, img, SRCINVERT);
+            }
+            if(cavenum == 2) {
+                loadBG(BgName, 1935*1.3, 1744*1.3);
+                if(random(2)) {
+                    bgX = -2343;
+                    bgY = -1317;
+                } else {
+                    bgX = -893;
+                    bgY = -2017;
+                }
+                int place[6][2]={{97,174},{1213,485},{1480,1041},{83,1039},{1389,1628},{1788,1618}};
+                treasurePlace = random(6);
+                putimage(bg, place[treasurePlace][0]*1.3, place[treasurePlace][1]*1.3, treasure, SRCCOPY);
+                putimage(bg, place[5-treasurePlace][0]*1.3, place[5-treasurePlace][1]*1.3, msk, NOTSRCERASE);
+                putimage(bg, place[5-treasurePlace][0]*1.3, place[5-treasurePlace][1]*1.3, img, SRCINVERT);
+            }
+            delimage(treasure);
+            delimage(img);
+            delimage(msk);
+        }
+    }
+    if (strcmp(BgName, "images\\bg\\cave02.png")==0) {
+        //地圖牆
+        if(bgX < -1473) bgX = -1473;
+        if(bgX > 217) bgX = 217;
+        if(bgY < -1607) bgY = -1607;
+        if(bgY > -277) bgY = -277;
+        //物件牆
+        itemwall(-1223,-1333,-277,-647);
+        itemwall(-1373,-1473,-277,-367);
+        itemwall(217,-553,-447,-647);
+        itemwall(-703,-1333,-447,-647);
+        itemwall(-443,-553,-657,-1037);
+        itemwall(-963,-1073,-657,-1037);
+        itemwall(77,-293,-837,-1037);
+        itemwall(-443,-813,-837,-1037);
+        itemwall(-963,-1333,-837,-1037);
+        itemwall(77,-33,-1037,-1427);
+        itemwall(-703,-813,-1037,-1427);
+        itemwall(77,-293,-1227,-1427);
+        itemwall(-443,-813,-1227,-1427);
+        itemwall(-963,-1473,-1227,-1427);
+        itemwall(-183,-293,-1227,-1607);
+        itemwall(-663,-693,-1117,-1217);
+        itemwall(-123,-173,-1437,-1607);
+        itemwall(-63,-173,-1557,-1607);
+        itemwall(-1313,-1473,-1497,-1607);//地洞
+        //寶箱牆
+        int loc[6][4]={{187,117,-337,-377},{-1403,-1473,-397,-437},{-1123,-1193,-717,-757},{-583,-653,-1107,-1147},{-3,-73,-1497,-1527},{-1233,-1293,-1517,-1547}};
+        if(open) itemwall(loc[treasurePlace][0],loc[treasurePlace][1],loc[treasurePlace][2],loc[treasurePlace][3]);
+        if(open && bgX<loc[treasurePlace][0]+20 && bgX>loc[treasurePlace][1]-20 && bgY<loc[treasurePlace][2]+20 && bgY>loc[treasurePlace][3]-20 && key == 102) {
+            //獎勵畫面 未做
+            open = 0;//寶箱已開
+            loadBG(BgName, 1480*1.3, 1374*1.3);
+            int place[6][2]={{122,226},{1347,271},{1130,520},{713,818},{270,1114},{1210,1130}};
+            PIMAGE img = newimage();
+            PIMAGE msk = newimage();
+            getimage(img,"images\\3D\\obj\\door_img.png");
+            getimage(msk,"images\\3D\\obj\\door_msk.png");
+            putimage(bg, place[5-treasurePlace][0]*1.3, place[5-treasurePlace][1]*1.3, msk, NOTSRCERASE);
+            putimage(bg, place[5-treasurePlace][0]*1.3, place[5-treasurePlace][1]*1.3, img, SRCINVERT);
+            delimage(img);
+            delimage(msk);
+        }
+        //背景轉換
+        if(bgX<loc[5-treasurePlace][0] && bgX>loc[5-treasurePlace][1] && bgY<loc[5-treasurePlace][2] && bgY>loc[5-treasurePlace][3]) {
+            open = 1;//寶箱未開
+            unsigned int cavenum = random(3);
+            sprintf(BgName,"images\\bg\\cave0%u.png", cavenum + 1);
+            //寶箱圖
+            PIMAGE treasure = newimage();
+            getimage(treasure,"images\\3D\\obj\\treasure.png");
+            //傳送門圖
+            PIMAGE img = newimage();
+            PIMAGE msk = newimage();
+            getimage(img,"images\\3D\\obj\\door_img.png");
+            getimage(msk,"images\\3D\\obj\\door_msk.png");
+            if(cavenum == 0) {
+                loadBG(BgName, 1463*1.3, 1957*1.3);
+                if(random(2)) {
+                    bgX = -1383;
+                    bgY = -2737;
+                } else {
+                    bgX = -197;
+                    bgY = -747;
+                }
+                //圖一寶箱、傳送門bg位置
+                int place[6][2]={{720,217},{1308,514},{251,1137},{1309,1129},{100,1723},{1112,1722}};
+                treasurePlace = random(6);
+                putimage(bg, place[treasurePlace][0]*1.3, place[treasurePlace][1]*1.3, treasure, SRCCOPY);
+                putimage(bg, place[5-treasurePlace][0]*1.3, place[5-treasurePlace][1]*1.3, msk, NOTSRCERASE);
+                putimage(bg, place[5-treasurePlace][0]*1.3, place[5-treasurePlace][1]*1.3, img, SRCINVERT);
+            }
+            if(cavenum == 1) {
+                loadBG(BgName, 1480*1.3, 1374*1.3);
+                if(random(2)) {
+                    bgX = -1153;
+                    bgY = -377;
+                } else {
+                    bgX = -113;
+                    bgY = -1157;
+                }
+                int place[6][2]={{122,226},{1347,271},{1130,520},{713,818},{270,1114},{1210,1130}};
+                treasurePlace = random(6);
+                putimage(bg, place[treasurePlace][0]*1.3, place[treasurePlace][1]*1.3, treasure, SRCCOPY);
+                putimage(bg, place[5-treasurePlace][0]*1.3, place[5-treasurePlace][1]*1.3, msk, NOTSRCERASE);
+                putimage(bg, place[5-treasurePlace][0]*1.3, place[5-treasurePlace][1]*1.3, img, SRCINVERT);
+            }
+            if(cavenum == 2) {
+                loadBG(BgName, 1935*1.3, 1744*1.3);
+                if(random(2)) {
+                    bgX = -2343;
+                    bgY = -1317;
+                } else {
+                    bgX = -893;
+                    bgY = -2017;
+                }
+                int place[6][2]={{97,174},{1213,485},{1480,1041},{83,1039},{1389,1628},{1788,1618}};
+                treasurePlace = random(6);
+                putimage(bg, place[treasurePlace][0]*1.3, place[treasurePlace][1]*1.3, treasure, SRCCOPY);
+                putimage(bg, place[5-treasurePlace][0]*1.3, place[5-treasurePlace][1]*1.3, msk, NOTSRCERASE);
+                putimage(bg, place[5-treasurePlace][0]*1.3, place[5-treasurePlace][1]*1.3, img, SRCINVERT);
+            }
+            delimage(treasure);
+            delimage(img);
+            delimage(msk);
+        }
+    }
+    if (strcmp(BgName, "images\\bg\\cave03.png")==0) {
+        //地圖牆
+        if(bgX < -2403) bgX = -2403;
+        if(bgX > -33) bgX = -33;
+        if(bgY < -2497) bgY = -2497;
+        if(bgY > -457) bgY = -457;
+        //物件牆
+        itemwall(-33,-523,-637,-877);
+        itemwall(-663,-1333,-637,-877);
+        itemwall(-1423,-1763,-637,-877);
+        itemwall(-1853,-2263,-637,-877);
+        itemwall(-1163,-1333,-637,-1257);
+        itemwall(-1603,-1863,-707,-1257);
+        itemwall(-163,-1773,-1017,-1257);
+        itemwall(-1913,-2403,-1017,-1257);
+        itemwall(-663,-833,-1017,-1937);
+        itemwall(-33,-523,-1387,-1627);
+        itemwall(-913,-1573,-1387,-1627);
+        itemwall(-1663,-2403,-1387,-1627);
+        itemwall(-1413,-1573,-1387,-1937);
+        itemwall(-33,-273,-1697,-1937);
+        itemwall(-413,-1023,-1697,-1937);
+        itemwall(-1103,-1573,-1697,-1937);
+        itemwall(-1663,-2333,-1697,-1937);
+        itemwall(-163,-2023,-2077,-2317);
+        itemwall(-2163,-2403,-2077,-2317);
+        itemwall(-1853,-2023,-2077,-2497);
+        itemwall(-693,-803,-457,-507);//河
+        itemwall(-693,-803,-567,-627);
+        itemwall(-1343,-1383,-707,-797);
+        itemwall(-1753,-1863,-1317,-1687);
+        itemwall(-1613,-1653,-1837,-1917);
+        itemwall(-1003,-1113,-1837,-2377);
+        itemwall(-1003,-1113,-2437,-2497);
+        //寶箱牆
+        int loc[6][4]={{-73,-143,-507,-547},{-1523,-1593,-917,-947},{-1873,-1943,-1637,-1677},{-53,-123,-1637,-1667},{-1753,-1823,-2397,-2437},{-2273,-2343,-2387,-2427}};
+        if(open) itemwall(loc[treasurePlace][0],loc[treasurePlace][1],loc[treasurePlace][2],loc[treasurePlace][3]);
+        if(open && bgX<loc[treasurePlace][0]+20 && bgX>loc[treasurePlace][1]-20 && bgY<loc[treasurePlace][2]+20 && bgY>loc[treasurePlace][3]-20 && key == 102) {
+            //獎勵畫面 未做
+            open = 0;//寶箱已開
+            loadBG(BgName, 1935*1.3, 1744*1.3);
+            int place[6][2]={{97,174},{1213,485},{1480,1041},{83,1039},{1389,1628},{1788,1618}};
+            PIMAGE img = newimage();
+            PIMAGE msk = newimage();
+            getimage(img,"images\\3D\\obj\\door_img.png");
+            getimage(msk,"images\\3D\\obj\\door_msk.png");
+            putimage(bg, place[5-treasurePlace][0]*1.3, place[5-treasurePlace][1]*1.3, msk, NOTSRCERASE);
+            putimage(bg, place[5-treasurePlace][0]*1.3, place[5-treasurePlace][1]*1.3, img, SRCINVERT);
+            delimage(img);
+            delimage(msk);
+        }
+        //背景轉換
+        if(bgX<loc[5-treasurePlace][0] && bgX>loc[5-treasurePlace][1] && bgY<loc[5-treasurePlace][2] && bgY>loc[5-treasurePlace][3]) {
+            open = 1;//寶箱未開
+            unsigned int cavenum = random(3);
+            sprintf(BgName,"images\\bg\\cave0%u.png", cavenum + 1);
+            //寶箱圖
+            PIMAGE treasure = newimage();
+            getimage(treasure,"images\\3D\\obj\\treasure.png");
+            //傳送門圖
+            PIMAGE img = newimage();
+            PIMAGE msk = newimage();
+            getimage(img,"images\\3D\\obj\\door_img.png");
+            getimage(msk,"images\\3D\\obj\\door_msk.png");
+            if(cavenum == 0) {
+                loadBG(BgName, 1463*1.3, 1957*1.3);
+                if(random(2)) {
+                    bgX = -1383;
+                    bgY = -2737;
+                } else {
+                    bgX = -197;
+                    bgY = -747;
+                }
+                //圖一寶箱、傳送門bg位置
+                int place[6][2]={{720,217},{1308,514},{251,1137},{1309,1129},{100,1723},{1112,1722}};
+                treasurePlace = random(6);
+                putimage(bg, place[treasurePlace][0]*1.3, place[treasurePlace][1]*1.3, treasure, SRCCOPY);
+                putimage(bg, place[5-treasurePlace][0]*1.3, place[5-treasurePlace][1]*1.3, msk, NOTSRCERASE);
+                putimage(bg, place[5-treasurePlace][0]*1.3, place[5-treasurePlace][1]*1.3, img, SRCINVERT);
+            }
+            if(cavenum == 1) {
+                loadBG(BgName, 1480*1.3, 1374*1.3);
+                if(random(2)) {
+                    bgX = -1153;
+                    bgY = -377;
+                } else {
+                    bgX = -113;
+                    bgY = -1157;
+                }
+                int place[6][2]={{122,226},{1347,271},{1130,520},{713,818},{270,1114},{1210,1130}};
+                treasurePlace = random(6);
+                putimage(bg, place[treasurePlace][0]*1.3, place[treasurePlace][1]*1.3, treasure, SRCCOPY);
+                putimage(bg, place[5-treasurePlace][0]*1.3, place[5-treasurePlace][1]*1.3, msk, NOTSRCERASE);
+                putimage(bg, place[5-treasurePlace][0]*1.3, place[5-treasurePlace][1]*1.3, img, SRCINVERT);
+            }
+            if(cavenum == 2) {
+                loadBG(BgName, 1935*1.3, 1744*1.3);
+                if(random(2)) {
+                    bgX = -2343;
+                    bgY = -1317;
+                } else {
+                    bgX = -893;
+                    bgY = -2017;
+                }
+                int place[6][2]={{97,174},{1213,485},{1480,1041},{83,1039},{1389,1628},{1788,1618}};
+                treasurePlace = random(6);
+                putimage(bg, place[treasurePlace][0]*1.3, place[treasurePlace][1]*1.3, treasure, SRCCOPY);
+                putimage(bg, place[5-treasurePlace][0]*1.3, place[5-treasurePlace][1]*1.3, msk, NOTSRCERASE);
+                putimage(bg, place[5-treasurePlace][0]*1.3, place[5-treasurePlace][1]*1.3, img, SRCINVERT);
+            }
+            delimage(treasure);
+            delimage(img);
+            delimage(msk);
         }
     }
     cout << bgX << " " << bgY << "       \r";
