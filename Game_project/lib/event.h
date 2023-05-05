@@ -5,4 +5,6 @@ int event();
 
 int choMon();
 
+void leaveFight();
+
 #endif

@@ -1,19 +1,11 @@
 #include "lib/var.h"
 #include "lib/enemy_move3D.h"
 #include "lib/status.h"
+#include "lib/event.h"
 
 extern Monster monster;
 extern Human player;
 int cnt;
-
-/*void leaveFight() {
-    player.x = (wid-28*3.5) / 2;
-	player.y = (hih-33*3.5) / 2 + 80;
-    player.output_idx = 30;// 輸出圖片編號 
-	player.high = 28*3.5;   // 人物圖片的高 
-	player.width = 33*3.5;  // 人物圖片的寬
-    PlaySound(NULL,NULL,0);
-}*/
 
 void enemyMove(int idx) {
     if (idx==1) {   //雜燴兔
@@ -56,7 +48,7 @@ void enemyMove(int idx) {
                 monster.output_idx = 1;
             }
         }
-        //if (monster.hp<=0) leaveFight();
+        if (monster.hp<=0) leaveFight();
     }
 }
 

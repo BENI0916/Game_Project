@@ -19,7 +19,7 @@ void player_atk(int val)
 				// 若敵人在玩家攻擊範圍  
 				if(is_middle(enemy[0].x + enemy[0].width * 0.90, player.x + player.width * 0.9, enemy[0].x + enemy[0].width * 0.1))
 				{
-					enemy[0].hp -= player.damage;
+					enemy[0].hp-player.damage<=0 ? enemy[0].hp=0 : enemy[0].hp-=player.damage;
 					enemy[0].x += player.power;// 敵人會被玩家擊退  
 					player.atked = 1;// 若有造成傷害則會記錄 避免一次攻擊有多次傷害  
 				}
@@ -28,7 +28,7 @@ void player_atk(int val)
 			{
 				if(is_middle(enemy[0].x + enemy[0].width * 0.90, player.x * 1.1, enemy[0].x + enemy[0].width * 0.1))
 				{
-					enemy[0].hp -= player.damage;
+					enemy[0].hp-player.damage<=0 ? enemy[0].hp=0 : enemy[0].hp-=player.damage;
 					enemy[0].x -= player.power;	
 					player.atked = 1;
 				}
@@ -42,7 +42,7 @@ void player_atk(int val)
 				|| is_middle(enemy[1].x + enemy[1].width * 0.64, player.x + player.width * 0.6, enemy[1].x + enemy[1].width * 0.36))
 				&& is_middle(enemy[1].y + enemy[1].high, player.y + player.high / 2, enemy[1].y + enemy[1].high * 0.17))
 				{
-					enemy[1].hp -= player.damage;
+					enemy[1].hp-player.damage<=0 ? enemy[1].hp=0 : enemy[1].hp-=player.damage;
 					enemy[1].x += player.power;	
 					player.atked = 1;
 				}
@@ -53,7 +53,7 @@ void player_atk(int val)
 				||  is_middle(enemy[1].x + enemy[1].width * 0.64, player.x + player.width * 0.4, enemy[1].x + enemy[1].width * 0.36))
 				&& is_middle(enemy[1].y + enemy[1].high, player.y + player.high / 2, enemy[1].y + enemy[1].high * 0.17))
 				{
-					enemy[1].hp -= player.damage;
+					enemy[1].hp-player.damage<=0 ? enemy[1].hp=0 : enemy[1].hp-=player.damage;
 					enemy[1].x -= player.power;	
 					player.atked = 1;
 				}
@@ -67,13 +67,13 @@ void player_atk(int val)
 	else {
 		if (player.dir=='d') {
 			if (player.x+player.width>monster.x) {
-				monster.hp -= player.damage;
+				monster.hp-player.damage<=0 ? monster.hp = 0 : monster.hp-=player.damage;
 				player.atked = 1;
 			}
 		}
 		else {
 			if (player.x<monster.x+monster.width) {
-				monster.hp -= player.damage;
+				monster.hp-player.damage<=0 ? monster.hp = 0 : monster.hp-=player.damage;
 				player.atked = 1;
 			}
 		}

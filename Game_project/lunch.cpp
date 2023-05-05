@@ -19,9 +19,7 @@ extern Animate loading_animate;
 extern double end;
 
 int esc,fade,metEvent;
-PIMAGE escBG;
-PIMAGE screen;
-PIMAGE pauseImg;
+PIMAGE escBG,screen,pauseImg,bgF;
 
 void lunch()
 {
@@ -72,11 +70,13 @@ void lunch()
 			if (metEvent) {
 				if (metEvent<10) {
 					move(5);
-					putimage(0,0,bg);
+					putimage(0,0,bgF);
 					putEnemy(metEvent);
-					putimage(player.x, player.y, player.player_msk[player.output_idx], NOTSRCERASE);
-					putimage(player.x, player.y, player.player_img[player.output_idx], SRCINVERT);
-					playerBlood(player.hp,player.fhp);
+					if (metEvent) {
+						putimage(player.x, player.y, player.player_msk[player.output_idx], NOTSRCERASE);
+						putimage(player.x, player.y, player.player_img[player.output_idx], SRCINVERT);
+						playerBlood(player.hp,player.fhp);
+					}
 				}
 			}
 			getimage(screen,0,0,wid,hih);

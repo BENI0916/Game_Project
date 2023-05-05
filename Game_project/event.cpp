@@ -4,13 +4,13 @@
 #include "lib/effect.h"
 
 Monster monster;
-extern int fade,cnt;
+extern int fade,cnt,metEvent;
 extern Human player;
-extern char BgName[];
+extern PIMAGE bgF;
 
 int event() {
-    int r = random(100);
-    if (r<100) {
+    int r = random(400);
+    if (r<1) {
         PlaySound(TEXT("audio\\bgm\\battle.wav"),NULL,SND_LOOP|SND_ASYNC);
         return choMon();
     }
@@ -25,8 +25,11 @@ int choMon() {
     player.output_idx = 0;
 	player.high = 66;
 	player.width = 76;
-    sprintf(BgName,"%s","images\\bg\\back_ground_01.png");
-    loadBG(BgName);
+    bgF = newimage(wid,hih);
+    PIMAGE oriBG = newimage();
+	getimage(oriBG, "images\\bg\\back_ground_01.png");
+	putimage(bgF, 0, 0, wid, hih, oriBG, 0, 0, getwidth(oriBG), getheight(oriBG));
+	delimage(oriBG);
     flashOut();
     fade = 1;
     cnt = 0;
@@ -46,7 +49,16 @@ int choMon() {
         monster.high = 66;
         return 1;
     }
-
-
     return 0;
+}
+
+void leaveFight() {
+    player.x = (wid-28*3.5) / 2;
+	player.y = (hih-33*3.5) / 2 + 80;
+    player.output_idx = 33;// 輸出圖片編號 
+	player.high = 28*3.5;   // 人物圖片的高 
+	player.width = 33*3.5;  // 人物圖片的寬
+    PlaySound(NULL,NULL,0);
+    delimage(bgF);
+    metEvent = 0;
 }

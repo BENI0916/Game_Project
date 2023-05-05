@@ -17,7 +17,7 @@ int speed = 10;
 int fps = 5;
 int table[] = {0,-1,0,1};
 unsigned int treasurePlace = random(6);
-int open = 1;
+int open = 1, inMaz = 0;
 
 void itemwall(int xl, int xr, int yu, int yd) {
     if(bgX <= xl && bgX >= xr && bgY <= yu &bgY >= yd) {
@@ -49,21 +49,25 @@ void keyListener() {
 			player.output_idx = 30 + table[player_walk_cnt3D++/fps];
 		    bgX += speed;
             if (player_walk_cnt3D/fps==4) player_walk_cnt3D = 0; 
+            if (inMaz) metEvent = event();
 			break;
         case 100:  // 輸入 d
 			player.output_idx = 36 + table[player_walk_cnt3D++/fps];
 		    bgX -= speed;
-            if (player_walk_cnt3D/fps==4) player_walk_cnt3D = 0; 
+            if (player_walk_cnt3D/fps==4) player_walk_cnt3D = 0;
+            if (inMaz) metEvent = event();
 			break;
         case 115:  // 輸入 s
 			player.output_idx = 33 + table[player_walk_cnt3D++/fps];
 		    bgY -= speed;
-            if (player_walk_cnt3D/fps==4) player_walk_cnt3D = 0; 
+            if (player_walk_cnt3D/fps==4) player_walk_cnt3D = 0;
+            if (inMaz) metEvent = event();
 			break;
         case 119:  // 輸入 w
 			player.output_idx = 27 + table[player_walk_cnt3D++/fps];
 		    bgY += speed;
-            if (player_walk_cnt3D/fps==4) player_walk_cnt3D = 0; 
+            if (player_walk_cnt3D/fps==4) player_walk_cnt3D = 0;
+            if (inMaz) metEvent = event();
 			break;
         case key_esc:
             esc = 1;
@@ -92,7 +96,7 @@ void keyListener() {
         }
     }
     //home1樓設定
-    if (strcmp(BgName, "images\\bg\\home1.png")==0) {
+    else if (strcmp(BgName, "images\\bg\\home1.png")==0) {
         //地圖牆
         if(bgX  <-360) bgX = -360;
         if(bgX > 375) bgX = 375;
@@ -123,7 +127,7 @@ void keyListener() {
         }
     }
     //村莊設定
-    if (strcmp(BgName, "images\\bg\\village.png")==0) {
+    else if (strcmp(BgName, "images\\bg\\village.png")==0) {
         //地圖牆
         if(bgX < -2028) bgX = -2028;
         if(bgX > -126) bgX = -126;
@@ -252,9 +256,13 @@ void keyListener() {
             delimage(treasure);
             delimage(img);
             delimage(msk);
+
+            inMaz = 1;
+            fadeOut();
+            fade = 1;
         }
     }
-    if (strcmp(BgName, "images\\bg\\cave01.png")==0) {
+    else if (strcmp(BgName, "images\\bg\\cave01.png")==0) {
         //地圖牆
         if(bgX < -1443) bgX = -1443;
         if(bgX > 237) bgX = 237;
@@ -366,9 +374,12 @@ void keyListener() {
             delimage(treasure);
             delimage(img);
             delimage(msk);
+
+            fadeOut();
+            fade = 1;
         }
     }
-    if (strcmp(BgName, "images\\bg\\cave02.png")==0) {
+    else if (strcmp(BgName, "images\\bg\\cave02.png")==0) {
         //地圖牆
         if(bgX < -1473) bgX = -1473;
         if(bgX > 217) bgX = 217;
@@ -473,9 +484,12 @@ void keyListener() {
             delimage(treasure);
             delimage(img);
             delimage(msk);
+
+            fadeOut();
+            fade = 1;
         }
     }
-    if (strcmp(BgName, "images\\bg\\cave03.png")==0) {
+    else if (strcmp(BgName, "images\\bg\\cave03.png")==0) {
         //地圖牆
         if(bgX < -2403) bgX = -2403;
         if(bgX > -33) bgX = -33;
@@ -588,6 +602,9 @@ void keyListener() {
             delimage(treasure);
             delimage(img);
             delimage(msk);
+
+            fadeOut();
+            fade = 1;
         }
     }
     cout << bgX << " " << bgY << "       \r";
