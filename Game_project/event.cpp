@@ -11,7 +11,9 @@ extern PIMAGE bgF;
 int event() {
     int r = random(400);
     if (r<1) {
-        PlaySound(TEXT("audio\\bgm\\battle.wav"),NULL,SND_LOOP|SND_ASYNC);
+        //PlaySound(TEXT("audio\\bgm\\battle.wav"),NULL,SND_LOOP|SND_ASYNC);
+        mciSendString (TEXT("open audio\\bgm\\battle.mp3 alias battlemusic"), NULL,0,NULL);
+	    mciSendString (TEXT("play battlemusic"), NULL,0,NULL);
         return choMon();
     }
     return 0;
@@ -58,7 +60,9 @@ void leaveFight() {
     player.output_idx = 33;// 輸出圖片編號 
 	player.high = 28*3.5;   // 人物圖片的高 
 	player.width = 33*3.5;  // 人物圖片的寬
-    PlaySound(NULL,NULL,0);
+    //PlaySound(NULL,NULL,0);
+    mciSendString (TEXT("stop battlemusic"), NULL,0,NULL);
+    mciSendString (TEXT("close battlemusic"), NULL,0,NULL);
     delimage(bgF);
     metEvent = 0;
 }

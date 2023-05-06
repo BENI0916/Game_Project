@@ -121,7 +121,11 @@ void keyListener() {
             loadBG(BgName, 1859*1.2, 1542*1.3);
             bgX = -483;
             bgY = -1077;
-            PlaySound(TEXT("audio\\bgm\\village.wav"),NULL,SND_LOOP | SND_ASYNC);
+            //PlaySound(TEXT("audio\\bgm\\village.wav"),NULL,SND_LOOP | SND_ASYNC);
+            mciSendString (TEXT("stop homemusic"), NULL,0,NULL);
+            mciSendString (TEXT("close homemusic"), NULL,0,NULL);
+            mciSendString (TEXT("open audio\\bgm\\village.mp3 alias villagemusic"), NULL,0,NULL);
+	    	mciSendString (TEXT("play villagemusic repeat"), NULL,0,NULL);
             fadeOut();
             fade = 1;
         }
@@ -154,7 +158,11 @@ void keyListener() {
             bgY=-171;
             sprintf(BgName,"%s","images\\bg\\home1.png");
             loadBG(BgName,1587/2,1300/2);
-            PlaySound(TEXT("audio\\bgm\\home.wav"),NULL,SND_LOOP | SND_ASYNC);
+            //PlaySound(TEXT("audio\\bgm\\home.wav"),NULL,SND_LOOP | SND_ASYNC);
+            mciSendString (TEXT("stop villagemusic"), NULL,0,NULL);
+            mciSendString (TEXT("close villagemusic"), NULL,0,NULL);
+            mciSendString (TEXT("open audio\\bgm\\home.mp3 alias homemusic"), NULL,0,NULL);
+	    	mciSendString (TEXT("play homemusic repeat"), NULL,0,NULL);
             fadeOut();
             fade = 1;
         }
@@ -164,7 +172,11 @@ void keyListener() {
             bgY=-171;
             sprintf(BgName,"%s","images\\bg\\home1.png");
             loadBG(BgName,1587/2,1300/2);
-            PlaySound(TEXT("audio\\bgm\\shop.wav"),NULL,SND_LOOP | SND_ASYNC);
+            //PlaySound(TEXT("audio\\bgm\\shop.wav"),NULL,SND_LOOP | SND_ASYNC);
+            mciSendString (TEXT("stop villagemusic"), NULL,0,NULL);
+            mciSendString (TEXT("close villagemusic"), NULL,0,NULL);
+            mciSendString (TEXT("open audio\\bgm\\shop.mp3 alias shopmusic"), NULL,0,NULL);
+	    	mciSendString (TEXT("play shopmusic repeat"), NULL,0,NULL);
             fadeOut();
             fade = 1;
         }
@@ -174,7 +186,11 @@ void keyListener() {
             bgY=-171;
             sprintf(BgName,"%s","images\\bg\\home1.png");
             loadBG(BgName,1587/2,1300/2);
-            PlaySound(TEXT("audio\\bgm\\shop.wav"),NULL,SND_LOOP | SND_ASYNC);
+            //PlaySound(TEXT("audio\\bgm\\shop.wav"),NULL,SND_LOOP | SND_ASYNC);
+            mciSendString (TEXT("stop villagemusic"), NULL,0,NULL);
+            mciSendString (TEXT("close villagemusic"), NULL,0,NULL);
+            mciSendString (TEXT("open audio\\bgm\\shop.mp3 alias shopmusic"), NULL,0,NULL);
+	    	mciSendString (TEXT("play shopmusic repeat"), NULL,0,NULL);
             fadeOut();
             fade = 1;
         }
@@ -190,11 +206,15 @@ void keyListener() {
             bgX = -1940;
             sprintf(BgName,"%s","images\\bg\\back_ground_01.png");
             loadBG(BgName);
-            PlaySound(NULL,NULL,0);
+            //PlaySound(NULL,NULL,0);
+            mciSendString (TEXT("stop villagemusic"), NULL,0,NULL);
+            mciSendString (TEXT("close villagemusic"), NULL,0,NULL);
         }
         //村子上方刷怪副本
         if(bgY > -300 && bgX > -1103 && bgX < -1003) {
-            PlaySound(NULL,NULL,0);
+            //PlaySound(NULL,NULL,0);
+            mciSendString (TEXT("stop villagemusic"), NULL,0,NULL);
+            mciSendString (TEXT("close villagemusic"), NULL,0,NULL);
             //還沒做完
             open = 1;//寶箱未開
             unsigned int cavenum = random(3);

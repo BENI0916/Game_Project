@@ -41,7 +41,9 @@ void output_image()
 				player.width = 33*3.5;  // 人物圖片的寬
 				sprintf(BgName,"%s","images\\bg\\village.png");
             	loadBG(BgName, 1859*1.2, 1542*1.3);
-            	PlaySound(TEXT("audio\\bgm\\village.wav"),NULL,SND_LOOP | SND_ASYNC);
+            	//PlaySound(TEXT("audio\\bgm\\village.wav"),NULL,SND_LOOP | SND_ASYNC);
+				mciSendString (TEXT("open audio\\bgm\\village.mp3 alias villagemusic"), NULL,0,NULL);
+	    		mciSendString (TEXT("play villagemusic repeat"), NULL,0,NULL);
 			}
 			
 		}

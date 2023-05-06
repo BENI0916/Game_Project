@@ -36,8 +36,9 @@ void lunch()
 	getimage(escBG,"images\\bg\\black.png",0,0);
 	getimage(pauseImg,"images\\menu\\pause.png",0,0);
 	
-	PlaySound(TEXT("audio\\bgm\\home.wav"),NULL,SND_LOOP | SND_ASYNC);
-
+	//PlaySound(TEXT("audio\\bgm\\home.wav"),NULL,SND_LOOP | SND_ASYNC);
+	mciSendString (TEXT("open audio\\bgm\\home.mp3 alias homemusic"), NULL,0,NULL);
+	mciSendString (TEXT("play homemusic repeat"), NULL,0,NULL);
 	flushkey();
 	// is_run 檢視程序是否收到關閉消息, 收到的話會返回false, 即退出程序 
 	// delay_fps 控制幀率, 60 表示"平均延時"為1000/60毫秒 

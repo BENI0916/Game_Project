@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include <windows.h>
 #include <graphics.h>
+#pragma comment(lib, "Winmm.lib")
 
 const int hih = 720; //������
 const int wid = 1280; //�����e
