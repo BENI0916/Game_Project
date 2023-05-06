@@ -66,13 +66,13 @@ void player_atk(int val)
 	}}
 	else {
 		if (player.dir=='d') {
-			if (player.x+player.width>monster.x) {
+			if (player.x+player.width>monster.x&&player.x+player.width<monster.x+monster.width) {
 				monster.hp-player.damage<=0 ? monster.hp = 0 : monster.hp-=player.damage;
 				player.atked = 1;
 			}
 		}
 		else {
-			if (player.x<monster.x+monster.width) {
+			if (player.x<monster.x+monster.width&&player.x>monster.x) {
 				monster.hp-player.damage<=0 ? monster.hp = 0 : monster.hp-=player.damage;
 				player.atked = 1;
 			}
