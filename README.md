@@ -1,15 +1,10 @@
 # Game_Project
-1.新增副本區小怪
+1.audio bgm wav 轉 mp3
 
 更動檔案
-images/3D/obj/
-images/3D/monster/rabbit/
-images/bg
+audio/bgm
 
-新增enemy_move3D.cpp enemy_move3D.h
-
-event.cpp
-player_atk.cpp
-player_move3D.cpp
-lunch.cpp
-output_img.cpp output_img.h
+更動
+var.h 增加#pragma comment(lib, "Winmm.lib")
+event.cpp game_start.cpp lunch.cpp output_img.cpp player_move3D.cpp中
+PlaySound() 改為 mciSendString()
