@@ -1,15 +1,11 @@
 # Game_Project
-1.audio bgm wav 轉 mp3
+1.完成勝利UI
+2.調整遇敵率及雜燴兔參數
 
 更動檔案
-audio/bgm
+images/menu
 
-更動
-
-var.h 增加#pragma comment(lib, "Winmm.lib")
-
-event.cpp game_start.cpp lunch.cpp output_img.cpp player_move3D.cpp中
-
-PlaySound() 改為 mciSendString()
-
-因為商店還沒做好所以出商店音樂會有問題
+enemy_move3D.cpp
+esc.cpp esc.h
+event.cpp
+lunch.cpp
