@@ -2,9 +2,10 @@
 #include "lib/esc.h"
 #include "lib/setting.h"
 #include "lib/status.h"
+#include "lib/event.h"
 
 extern int key;
-extern int esc;
+extern int esc,victory;
 extern PIMAGE screen,escBG;
 extern LOGFONT title,text;
 extern Human player;
@@ -37,5 +38,15 @@ void escListener() {
     if((mX >= 1177 && mX <= 1229) && (mY >= 46 && mY <= 86) && keystate(key_mouse_l)) {
 		//點擊設定
 		setting();
+	}
+}
+
+void vicListener() {
+    mousepos(&mX,&mY);
+	if((mX >= 1000 && mX <= 1187) && (mY >= 649 && mY <= 702) && keystate(key_mouse_l)) {
+        //結束勝利UI
+        flushmouse();
+        victory = 0;
+        leaveFight();
 	}
 }

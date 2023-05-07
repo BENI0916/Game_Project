@@ -3,6 +3,7 @@
 #include "lib/status.h"
 #include "lib/event.h"
 
+extern int victory;
 extern Monster monster;
 extern Human player;
 int cnt;
@@ -11,22 +12,22 @@ void enemyMove(int idx) {
     if (idx==1) {   //雜燴兔
         if (monster.x>player.x&&monster.x-player.x<=176&&player.dir=='d') {
             monster.dir='a';
-            monster.x -= 20;
+            monster.x -= 8;
         } 
         else if (monster.x>player.x) {
             monster.dir='d';
             if (monster.x<1179) {
-                monster.x += 10;
+                monster.x += 5;
             }
         }
         else if (monster.x<=player.x&&player.x-monster.x<=201&&player.dir=='a') {
             monster.dir='d';
-            monster.x += 20;
+            monster.x += 8;
         } 
         else if (monster.x<=player.x) {
             monster.dir='a';
             if (monster.x>0) {
-                monster.x -= 10;
+                monster.x -= 5;
             }
         }
         cnt++;
@@ -48,12 +49,19 @@ void enemyMove(int idx) {
                 monster.output_idx = 1;
             }
         }
-        if (monster.hp<=0) leaveFight();
     }
 }
 
 void putEnemy(int idx) {
     enemyMove(idx);
-    putimage_withalpha(NULL,monster.enemy_img[monster.output_idx],monster.x,monster.y);
-    monBlood(monster.hp,monster.fhp);
+    if (monster.hp>0) {
+        putimage_withalpha(NULL,monster.enemy_img[monster.output_idx],monster.x,monster.y);
+        monBlood(monster.hp,monster.fhp);
+    }
+    else {
+        mciSendString (TEXT("stop battlemusic"), NULL,0,NULL);
+        mciSendString (TEXT("close battlemusic"), NULL,0,NULL);
+        victory = 1;
+        flushkey();
+    }
 }

@@ -18,8 +18,8 @@ extern Monster enemy[3];
 extern Animate loading_animate;
 extern double end;
 
-int esc,fade,metEvent;
-PIMAGE escBG,screen,pauseImg,bgF;
+int esc,fade,metEvent,victory;
+PIMAGE escBG,screen,pauseImg,bgF,victoryUI;
 
 void lunch()
 {
@@ -30,11 +30,14 @@ void lunch()
 	esc = 0;
 	fade = 1;
 	metEvent = 0;
+	victory = 0;
 	escBG = newimage();
 	screen = newimage();
 	pauseImg = newimage();
+	victoryUI = newimage();
 	getimage(escBG,"images\\bg\\black.png",0,0);
 	getimage(pauseImg,"images\\menu\\pause.png",0,0);
+	getimage(victoryUI,"images\\menu\\victoryUI.png",0,0);
 	
 	mciSendString (TEXT("open audio\\bgm\\home.mp3 alias homemusic"), NULL,0,NULL);
 	mciSendString (TEXT("play homemusic repeat"), NULL,0,NULL);
@@ -45,7 +48,14 @@ void lunch()
 	{
 		cleardevice(); // 把輸出的窗口清空 
 
-		if (esc) {
+		if (victory) {
+			if (victory==1) {
+				putimage(0,0,screen);
+				putimage_withalpha(NULL,victoryUI,0,0);
+				vicListener();
+			}
+		}
+		else if (esc) {
 			escListener();
 			escScreen();
 		}
@@ -72,7 +82,7 @@ void lunch()
 					move(5);
 					putimage(0,0,bgF);
 					putEnemy(metEvent);
-					if (metEvent) {
+					if (victory==0) {
 						putimage(player.x, player.y, player.player_msk[player.output_idx], NOTSRCERASE);
 						putimage(player.x, player.y, player.player_img[player.output_idx], SRCINVERT);
 						playerBlood(player.hp,player.fhp);

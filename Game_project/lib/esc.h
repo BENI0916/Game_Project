@@ -5,4 +5,6 @@ void escScreen();
 
 void escListener();
 
+void vicListener();
+
 #endif
