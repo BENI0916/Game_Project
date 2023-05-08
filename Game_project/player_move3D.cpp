@@ -425,7 +425,7 @@ void keyListener() {
             delimage(msk);
         }
         //背景轉換
-        if(bgX<loc[5-treasurePlace][0] && bgX>loc[5-treasurePlace][1] && bgY<loc[5-treasurePlace][2] && bgY>loc[5-treasurePlace][3]) {
+        if(bgX<loc[5-treasurePlace][0]+3 && bgX>loc[5-treasurePlace][1]-3 && bgY<loc[5-treasurePlace][2]+3 && bgY>loc[5-treasurePlace][3]-3) {
             nextOrback();
         }
     }
@@ -456,7 +456,7 @@ void keyListener() {
         itemwall(-63,-173,-1557,-1607);
         itemwall(-1313,-1473,-1497,-1607);//地洞
         //寶箱牆
-        int loc[6][4]={{187,117,-337,-377},{-1403,-1473,-397,-437},{-1123,-1193,-717,-757},{-583,-653,-1107,-1147},{-3,-73,-1497,-1527},{-1233,-1293,-1517,-1547}};
+        int loc[6][4]={{187,117,-337,-377},{-1403,-1473,-397,-437},{-1123,-1193,-717,-757},{-583,-653,-1107,-1147},{-3,-73,-1497,-1527},{-1233,-1293,-1507,-1547}};
         if(open) itemwall(loc[treasurePlace][0],loc[treasurePlace][1],loc[treasurePlace][2],loc[treasurePlace][3]);
         if(open && bgX<loc[treasurePlace][0]+20 && bgX>loc[treasurePlace][1]-20 && bgY<loc[treasurePlace][2]+20 && bgY>loc[treasurePlace][3]-20 && key == 102) {
             //獎勵畫面 未做
@@ -473,7 +473,7 @@ void keyListener() {
             delimage(msk);
         }
         //背景轉換
-        if(bgX<loc[5-treasurePlace][0] && bgX>loc[5-treasurePlace][1] && bgY<loc[5-treasurePlace][2] && bgY>loc[5-treasurePlace][3]) {
+        if(bgX<loc[5-treasurePlace][0]+3 && bgX>loc[5-treasurePlace][1]-3 && bgY<loc[5-treasurePlace][2]+3 && bgY>loc[5-treasurePlace][3]-3) {
             nextOrback();
         }
     }
@@ -529,7 +529,7 @@ void keyListener() {
             delimage(msk);
         }
         //背景轉換
-        if(bgX<loc[5-treasurePlace][0] && bgX>loc[5-treasurePlace][1] && bgY<loc[5-treasurePlace][2] && bgY>loc[5-treasurePlace][3]) {
+        if(bgX<loc[5-treasurePlace][0]+3 && bgX>loc[5-treasurePlace][1]-3 && bgY<loc[5-treasurePlace][2]+3 && bgY>loc[5-treasurePlace][3]-3) {
             nextOrback();
         }
     }
