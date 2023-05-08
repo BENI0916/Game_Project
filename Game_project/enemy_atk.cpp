@@ -38,15 +38,19 @@ void enemy_atk()
 				break;
 			
 			case 3 :
-				enemy_atk_cnt = 149;
+				enemy_atk_cnt = 99;
 				break;
 			
 			case 4 :
-				enemy_atk_cnt = 120;
+				enemy_atk_cnt = 80;
 				break;
 
 			case 5 :
 				enemy_atk_cnt = 56;
+				break;
+
+			case 6:
+				enemy_atk_cnt = 30;
 				break;
 
 			default :
@@ -124,6 +128,16 @@ void enemy_atk()
 	{
 		enemy_05_atk(0);
 
+		if(enemy_atk_cnt <= -1)
+			enemy_atk_type = -1;
+	}
+	else if(enemy_atk_type == 6)
+	{
+		if(enemy[enemy_num].dir == 'd')
+			enemy_06_atk(0);
+		else
+			enemy_06_atk(1);
+		
 		if(enemy_atk_cnt <= -1)
 			enemy_atk_type = -1;
 	}
@@ -241,7 +255,7 @@ void enemy_03_atk(int val)
 {
 	int table[5] = {6, 6, 4};
 	
-	enemy[enemy_num].output_idx = table[enemy_atk_cnt / 50] + val;
+	enemy[enemy_num].output_idx = table[enemy_atk_cnt / 34] + val;
 	enemy_atk_cnt -= 1;
 	
 	if(enemy_atk_cnt == -1)
@@ -250,19 +264,19 @@ void enemy_03_atk(int val)
 	skill[3].status = 1;
 	skill[3].y = enemy[enemy_num].y + skill[3].high * 0.2;
 	
-	if(enemy_atk_cnt > 99)
+	if(enemy_atk_cnt > 66)
 	{
 		switch(enemy_atk_cnt)
 		{
-			case 149:
+			case 99:
 				skill[3].output_idx = 0;
 				break;
 				
-			case 132:
+			case 88:
 				skill[3].output_idx = 1;
 				break;
 			
-			case 115:
+			case 76:
 				skill[3].output_idx = 2;
 				break;
 			
@@ -283,32 +297,24 @@ void enemy_03_atk(int val)
 	{
 		if(enemy[enemy_num].dir == 'a')
 		{
-			skill[3].x = enemy[enemy_num].x - ((99 - enemy_atk_cnt) * 10) - skill[3].width;
+			skill[3].x = enemy[enemy_num].x - ((66 - enemy_atk_cnt) * 10) - skill[3].width;
 		}
 		else
 		{
-			skill[3].x = enemy[enemy_num].x + enemy[enemy_num].width * 0.6 + ((99 - enemy_atk_cnt) * 10);
+			skill[3].x = enemy[enemy_num].x + enemy[enemy_num].width * 0.6 + ((66 - enemy_atk_cnt) * 10);
 		}
 		
 		switch(enemy_atk_cnt)
 		{
-			case 90:
+			case 60:
 				skill[3].output_idx = 4 - val;
 				break;
 				
-			case 88:
+			case 58:
 				skill[3].output_idx = 6 - val;
 				break;
 			
-			case 70:
-				skill[3].output_idx = 4 - val;
-				break;
-				
-			case 60:
-				skill[3].output_idx = 6 - val;
-				break;
-				
-			case 50:
+			case 46:
 				skill[3].output_idx = 4 - val;
 				break;
 				
@@ -316,15 +322,23 @@ void enemy_03_atk(int val)
 				skill[3].output_idx = 6 - val;
 				break;
 				
-			case 30:
+			case 33:
 				skill[3].output_idx = 4 - val;
 				break;
 				
+			case 26:
+				skill[3].output_idx = 6 - val;
+				break;
+				
 			case 20:
+				skill[3].output_idx = 4 - val;
+				break;
+				
+			case 13:
 				skill[3].output_idx = 6 - val;
 				break;
 			
-			case 10:
+			case 6:
 				skill[3].output_idx = 4 - val;
 				break;
 			
@@ -343,17 +357,17 @@ void enemy_04_atk(int val)
 	int table[9] = {10, 8, 6, 4, 4, 2, 2, 0, 0};
 	enemy_atk_cnt--;
 
-	if(enemy_atk_cnt % 30 == 0)
+	if(enemy_atk_cnt % 20 == 0)
 		get_dmg_cnt = 0;
 
-	if(enemy_atk_cnt < 70)
+	if(enemy_atk_cnt < 47)
 		enemy[enemy_num].output_idx = 12 + val;
-	else if(enemy_atk_cnt < 90)
+	else if(enemy_atk_cnt < 60)
 		enemy[enemy_num].output_idx = 10 + val;
-	else if(enemy_atk_cnt < 120)
+	else if(enemy_atk_cnt < 80)
 		enemy[enemy_num].output_idx = 8 + val;
 
-	if(enemy_atk_cnt < 90)
+	if(enemy_atk_cnt < 60)
 	{
 		if(enemy_atk_cnt > -1)
 		{
@@ -429,3 +443,12 @@ void enemy_05_atk(int val)
 
 }
 
+
+void enemy_06_atk(int val)
+{
+	enemy_atk_cnt--;
+
+	int table[3] = {16, 14, 12};
+
+	enemy[enemy_num].output_idx = table[enemy_atk_cnt / 10] + val;
+}

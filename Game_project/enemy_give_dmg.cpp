@@ -38,6 +38,10 @@ void enemy_give_dmg()
 			case_5();
 			break;
 
+		case 6:
+			case_6();
+			break;
+
 		default :
 			break;
 	}
@@ -205,7 +209,7 @@ void case_3()
 void case_4()
 {
 	if(is_middle(skill[4].x + skill[4].width * 0.9, player.x + player.width / 2, skill[4].x + skill[4].width * 0.1)
-	&& enemy_atk_cnt < 55)
+	&& enemy_atk_cnt < 37)
 	{
 		player.hp -= enemy[enemy_num].damage;
 		get_dmg_cnt = 1;
@@ -236,4 +240,45 @@ void case_5()
 		else if(enemy[enemy_num].dir == 'd' && player.x + 10 < wid)
 			player.x -= skill[5].power;
 	} 
+}
+
+void case_6()
+{
+	if(enemy_atk_cnt <= 10)
+	{
+		if(enemy[enemy_num].dir == 'd')
+		{
+			if((is_middle(enemy[enemy_num].x + enemy[enemy_num].width * 0.95, player.x + player.width * 0.3, enemy[enemy_num].x + enemy[enemy_num].width * 0.35)
+			|| is_middle(enemy[enemy_num].x + enemy[enemy_num].width * 0.95, player.x + player.width * 0.7, enemy[enemy_num].x + enemy[enemy_num].width * 0.35))
+			&& (is_middle(enemy[enemy_num].y + enemy[enemy_num].high, player.y + player.high * 0.3, enemy[enemy_num].y + enemy[enemy_num].high * 0.7)
+			||  is_middle(enemy[enemy_num].y + enemy[enemy_num].high, player.y + player.high, enemy[enemy_num].y + enemy[enemy_num].high * 0.7)))
+			{
+				if(player_jump_cnt == -1)
+					player_jump_cnt = 15;
+				jump();
+				get_dmg_cnt = 1;
+
+				if(enemy[enemy_num].dir == 'd' && player_move_check('d', enemy[enemy_num].power) == 1)
+					player.x += enemy[enemy_num].power;
+				//else if(enemy[enemy_num].dir == 'a' && player_move_check('a', enemy[enemy_num].power) == 1)
+					//player.x -= enemy[enemy_num].power;
+			}
+		}
+		else
+		{
+			if((is_middle(enemy[enemy_num].x + enemy[enemy_num].width * 0.35, player.x + player.width * 0.3, enemy[enemy_num].x + enemy[enemy_num].width * 0.05)
+			|| is_middle(enemy[enemy_num].x + enemy[enemy_num].width * 0.35, player.x + player.width * 0.7, enemy[enemy_num].x + enemy[enemy_num].width * 0.05))
+			&& (is_middle(enemy[enemy_num].y + enemy[enemy_num].high, player.y + player.high * 0.3, enemy[enemy_num].y + enemy[enemy_num].high * 0.7)
+			||  is_middle(enemy[enemy_num].y + enemy[enemy_num].high, player.y + player.high, enemy[enemy_num].y + enemy[enemy_num].high * 0.7)))
+			{
+				if(player_jump_cnt == -1)
+					player_jump_cnt = 15;
+				jump();
+				get_dmg_cnt = 1;
+
+				if(enemy[enemy_num].dir == 'a' && player_move_check('a', enemy[enemy_num].power) == 1)
+					player.x -= enemy[enemy_num].power;
+			}
+		}
+	}
 }
