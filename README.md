@@ -1,12 +1,4 @@
 # Game_Project
-1.完成勝利UI
-2.調整遇敵率及雜燴兔參數
-3.副本傳送門選擇回家或下一層
-
-更動檔案
-images/menu
-
-enemy_move3D.cpp
-esc.cpp esc.h
-event.cpp
-lunch.cpp
+1.新增敵人攻擊動畫
+2.閃耀魔眼可被擊敗
+3.已整合0508_back
