@@ -52,6 +52,14 @@ void enemy_atk()
 			case 6:
 				enemy_atk_cnt = 30;
 				break;
+			
+			case 7:
+				enemy_atk_cnt = 30;
+				break;
+			
+			case 8:
+				enemy_atk_cnt = 30;
+				break;
 
 			default :
 				enemy_atk_type = -1;
@@ -137,6 +145,26 @@ void enemy_atk()
 			enemy_06_atk(0);
 		else
 			enemy_06_atk(1);
+		
+		if(enemy_atk_cnt <= -1)
+			enemy_atk_type = -1;
+	}
+	else if(enemy_atk_type == 7)
+	{
+		if(enemy[enemy_num].dir == 'd')
+			enemy_07_atk(0);
+		else
+			enemy_07_atk(1);
+		
+		if(enemy_atk_cnt <= -1)
+			enemy_atk_type = -1;
+	}
+	else if(enemy_atk_type == 8)
+	{
+		if(enemy[enemy_num].dir == 'd')
+			enemy_08_atk(0);
+		else
+			enemy_08_atk(1);
 		
 		if(enemy_atk_cnt <= -1)
 			enemy_atk_type = -1;
@@ -448,7 +476,25 @@ void enemy_06_atk(int val)
 {
 	enemy_atk_cnt--;
 
-	int table[3] = {16, 14, 12};
+	int table[4] = {16, 14, 12, 12};
 
-	enemy[enemy_num].output_idx = table[enemy_atk_cnt / 10] + val;
+	enemy[enemy_num].output_idx = table[enemy_atk_cnt / 8] + val;
+}
+
+void enemy_07_atk(int val)
+{
+	enemy_atk_cnt--;
+
+	int table[4] = {22, 20, 18, 18};
+
+	enemy[enemy_num].output_idx = table[enemy_atk_cnt / 8] + val;
+}
+
+void enemy_08_atk(int val)
+{
+	enemy_atk_cnt--;
+
+	int table[4] = {28, 26, 24, 24};
+
+	enemy[enemy_num].output_idx = table[enemy_atk_cnt / 8] + val;
 }

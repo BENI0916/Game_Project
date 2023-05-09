@@ -4,7 +4,7 @@
 #include "lib/output_img.h"
 #include "lib/enemy_atk.h"
 
-extern int atk_cnt, player_walk_cnt, flag, enemy_atk_type, player_jump_cnt, atked, enemy_num,player_walk_cnt3D,bgX,bgY, inFight, get_dmg_cnt, dash_cnt; // player_walk_cnt : ?????p??? ?£[?p???????X?????
+extern int atk_cnt, player_walk_cnt, flag, enemy_atk_type, player_jump_cnt, atked, enemy_num,player_walk_cnt3D,bgX,bgY, inFight, get_dmg_cnt, dash_cnt; // player_walk_cnt : ?????p??? ?ï¿½[?p???????X?????
 extern double start;
 extern Human player;
 extern Monster enemy[3];
@@ -16,33 +16,33 @@ extern PIMAGE bloodLine, blood[21];
 void initialization()
 {
 	sprintf(BgName,"%s","images\\bg\\home2.png");
-	loadBG(BgName,1587/2,1300/2); //Åª¨ú­I´º
+	loadBG(BgName,1587/2,1300/2); //Åªï¿½ï¿½ï¿½Iï¿½ï¿½
 	
 	printf("load background succes\n");
 	char s[50];
 	player.player_img = NULL;
 	player.player_msk = NULL;
-	sprintf(s,"%s","images\\main_char"); //C++µLªk±N¦r¦ê±`¼Æª½±µÂà¦¨char pointer¡A¬G¦³¦¹¦æ
-	loadCHAR(s,&player.player_img,&player.player_msk,76,66, 0); //Åª¨ú¥D¨¤¹Ï¤ù
+	sprintf(s,"%s","images\\main_char"); //C++ï¿½Lï¿½kï¿½Nï¿½rï¿½ï¿½`ï¿½Æªï¿½ï¿½ï¿½ï¿½à¦¨char pointerï¿½Aï¿½Gï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	loadCHAR(s,&player.player_img,&player.player_msk,76,66, 0); //Åªï¿½ï¿½ï¿½Dï¿½ï¿½ï¿½Ï¤ï¿½
 	sprintf(s,"%s","images\\3D\\player");
 	loadCHAR(s,&player.player_img,&player.player_msk,38*3.5,33*3.5,26);
 	printf("load player image succes\n");
 	
-	// ³]©wªì©l­È 
+	// ï¿½]ï¿½wï¿½ï¿½lï¿½ï¿½ 
 	player.x = (wid-28*3.5) / 2;
 	player.y = (hih-33*3.5) / 2 + 80;
 	player.hp = 10;
 	player.fhp = 10;
-	player.damage = 25; // ¹ï¼Ä¤H³y¦¨ªº¶Ë®` 
-	player.atked = 0;   // §P©w¬O§_¦³³y¦¨¶Ë®`  
-	player.dir = 'd';   // ¤è¦V 
-	player.output_idx = 27;// ¿é¥X¹Ï¤ù½s¸¹ 
-	player.high = 28*3.5;   // ¤Hª«¹Ï¤ùªº°ª 
-	player.width = 33*3.5;  // ¤Hª«¹Ï¤ùªº¼e 
-	player.power = 30;  // À»°h¼Ä¤Hªº¶ZÂ÷ 
+	player.damage = 25; // ï¿½ï¿½Ä¤Hï¿½yï¿½ï¿½ï¿½ï¿½ï¿½Ë®` 
+	player.atked = 0;   // ï¿½Pï¿½wï¿½Oï¿½_ï¿½ï¿½ï¿½yï¿½ï¿½ï¿½Ë®`  
+	player.dir = 'd';   // ï¿½ï¿½V 
+	player.output_idx = 27;// ï¿½ï¿½Xï¿½Ï¤ï¿½ï¿½sï¿½ï¿½ 
+	player.high = 28*3.5;   // ï¿½Hï¿½ï¿½ï¿½Ï¤ï¿½ï¿½ï¿½ï¿½ï¿½ 
+	player.width = 33*3.5;  // ï¿½Hï¿½ï¿½ï¿½Ï¤ï¿½ï¿½ï¿½ï¿½e 
+	player.power = 30;  // ï¿½ï¿½ï¿½hï¿½Ä¤Hï¿½ï¿½ï¿½Zï¿½ï¿½ 
 	player.atk_type = 0;
 	
-	player_walk_cnt = 11; // ¨«¸ô­p®É¾¹ 
+	player_walk_cnt = 11; // ï¿½ï¿½ï¿½ï¿½ï¿½pï¿½É¾ï¿½ 
 	player_walk_cnt3D = 0,bgX=20,bgY=-20;
 	
 	printf("player setting succes\n");
@@ -50,7 +50,7 @@ void initialization()
 	blood_ini();
 	printf("blood ini succes\n");
 	
-	enemy_ini(); // ªì©l¤Æ¼Ä¤H 
+	enemy_ini(); // ï¿½ï¿½lï¿½Æ¼Ä¤H 
 	
 	printf("enemy ini succes\n");
 	flag = 10;
@@ -64,7 +64,7 @@ void initialization()
 	skill_ini_00();
 	printf("skill_ini_00 succes\n");
 	
-	skill_ini_01(); // ªì©l¤Æ¼Ä¤Hªº§Þ¯à 
+	skill_ini_01(); // ï¿½ï¿½lï¿½Æ¼Ä¤Hï¿½ï¿½ï¿½Þ¯ï¿½ 
 	printf("skill_ini_01 succes\n");
 	
 	skill_ini_02();
@@ -82,9 +82,9 @@ void initialization()
 	tp_door_ini();
 	printf("tp_door_ini succes\n");
 
-	start = fclock(); // ¥Î©ó­p®É¼Ä¤Hªº§ðÀ»®É¶¡¶¡¹j 
-	enemy_atk_type = -1; // ¼Ä¤H¨Ï¥Îªº§Þ¯à½s¸¹ 
-	player_jump_cnt = -1;// ¤Hª«¸õÅD­p®É¾¹
+	start = fclock(); // ï¿½Î©ï¿½pï¿½É¼Ä¤Hï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¶ï¿½ï¿½ï¿½ï¿½j 
+	enemy_atk_type = -1; // ï¿½Ä¤Hï¿½Ï¥Îªï¿½ï¿½Þ¯ï¿½sï¿½ï¿½ 
+	player_jump_cnt = -1;// ï¿½Hï¿½ï¿½ï¿½ï¿½ï¿½Dï¿½pï¿½É¾ï¿½
 	
 	enemy_num = -1;
 	
@@ -111,13 +111,13 @@ void enemy_ini()
 	enemy[0].dir = 'a';
 	enemy[0].hp = 100;
 	enemy[0].fhp = 100;
-	enemy[0].damage = 0; // ¼Ä¤H³y¦¨ªº¶Ë®` 
+	enemy[0].damage = 0; // ï¿½Ä¤Hï¿½yï¿½ï¿½ï¿½ï¿½ï¿½Ë®` 
 	enemy[0].output_idx = 1;
 	enemy[0].high = 165;
 	enemy[0].width = 165;
-	enemy[0].power = 100; // ¼Ä¤HÀ»°hª±®aªº¶ZÂ÷ 
+	enemy[0].power = 100; // ï¿½Ä¤Hï¿½ï¿½ï¿½hï¿½ï¿½ï¿½aï¿½ï¿½ï¿½Zï¿½ï¿½ 
 	enemy[0].speed = 5;    
-	enemy[0].atk_0_cnt = 199; // ¼Ä¤Hªº§Þ¯à­p¼Æ¾¹ 
+	enemy[0].atk_0_cnt = 199; // ï¿½Ä¤Hï¿½ï¿½ï¿½Þ¯ï¿½pï¿½Æ¾ï¿½ 
 	enemy[0].atk_1_cnt = 99;  
 }
 
@@ -136,13 +136,13 @@ void enemy_ini_01()
 	enemy[1].dir = 'a';
 	enemy[1].hp = 100;
 	enemy[1].fhp = 100;
-	enemy[1].damage = 0; // ¼Ä¤H³y¦¨ªº¶Ë®` 
+	enemy[1].damage = 0; // ï¿½Ä¤Hï¿½yï¿½ï¿½ï¿½ï¿½ï¿½Ë®` 
 	enemy[1].output_idx = 1;
 	enemy[1].high = 150;
 	enemy[1].width = 136;
-	enemy[1].power = 100; // ¼Ä¤HÀ»°hª±®aªº¶ZÂ÷ 
+	enemy[1].power = 100; // ï¿½Ä¤Hï¿½ï¿½ï¿½hï¿½ï¿½ï¿½aï¿½ï¿½ï¿½Zï¿½ï¿½ 
 	enemy[1].speed = 5;    
-	enemy[1].atk_0_cnt = -1; // ¼Ä¤Hªº§Þ¯à­p¼Æ¾¹ 
+	enemy[1].atk_0_cnt = -1; // ï¿½Ä¤Hï¿½ï¿½ï¿½Þ¯ï¿½pï¿½Æ¾ï¿½ 
 	enemy[1].atk_1_cnt = -1;  
 }
 
@@ -161,17 +161,17 @@ void enemy_ini_02()
 	enemy[2].dir = 'a';
 	enemy[2].hp = 100;
 	enemy[2].fhp = 100;
-	enemy[2].damage = 0; // ¼Ä¤H³y¦¨ªº¶Ë®` 
+	enemy[2].damage = 0; // ï¿½Ä¤Hï¿½yï¿½ï¿½ï¿½ï¿½ï¿½Ë®` 
 	enemy[2].output_idx = 1;
 	enemy[2].high = 400;
 	enemy[2].width = 500;
-	enemy[2].power = 100; // ¼Ä¤HÀ»°hª±®aªº¶ZÂ÷ 
+	enemy[2].power = 100; // ï¿½Ä¤Hï¿½ï¿½ï¿½hï¿½ï¿½ï¿½aï¿½ï¿½ï¿½Zï¿½ï¿½ 
 	enemy[2].speed = 4;    
-	enemy[2].atk_0_cnt = -1; // ¼Ä¤Hªº§Þ¯à­p¼Æ¾¹ 
+	enemy[2].atk_0_cnt = -1; // ï¿½Ä¤Hï¿½ï¿½ï¿½Þ¯ï¿½pï¿½Æ¾ï¿½ 
 	enemy[2].atk_1_cnt = -1;  
 }
 
-// §Þ¯à1 
+// ï¿½Þ¯ï¿½1 
 void skill_ini_00()
 {
 	char s[100];
@@ -191,7 +191,7 @@ void skill_ini_00()
 	skill[0].power = 200;
 }
 
-// §Þ¯à2 
+// ï¿½Þ¯ï¿½2 
 void skill_ini_01()
 {
 	char s[100];
@@ -298,8 +298,8 @@ void skill_ini_05()
 	skill[5].power = 60;
 }
 
-// ¥Î¨Ó¦s©ñ¶Ç°eªù
-// .power·í§@¿é¥Xªº­p¼Æ¾¹
+// ï¿½Î¨Ó¦sï¿½ï¿½Ç°eï¿½ï¿½
+// .powerï¿½ï¿½ï¿½@ï¿½ï¿½Xï¿½ï¿½ï¿½pï¿½Æ¾ï¿½
 void tp_door_ini()
 {
 	char s[100];

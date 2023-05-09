@@ -19,4 +19,6 @@ void case_5();
 
 void case_6();
 
+void case_7();
+
 #endif

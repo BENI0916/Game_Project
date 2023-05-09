@@ -42,6 +42,10 @@ void enemy_give_dmg()
 			case_6();
 			break;
 
+		case 7:
+			case_7();
+			break;
+
 		default :
 			break;
 	}
@@ -63,7 +67,7 @@ void case_0()
 		if(is_middle(enemy[enemy_num].x + enemy[enemy_num].width * 1.1, player.x + player.width / 2, enemy[enemy_num].x - enemy[enemy_num].width / 10)
 		&& (enemy[enemy_num].output_idx == 4 || enemy[enemy_num].output_idx == 5))
 		{
-			player.hp -= enemy[enemy_num].damage;
+			player.hp = (player.hp - enemy[enemy_num].damage) > 0 ? player.hp - enemy[enemy_num].damage : 0;
 			player.x -= enemy[enemy_num].power;
 			get_dmg_cnt = 1;
 		}
@@ -71,7 +75,7 @@ void case_0()
 		// �P�w���a�O�_�b�ĤH���ޯ�d�� 
 		if(skill[0].status && is_middle(skill[0].x + skill[0].width, player.x + player.width / 2, skill[0].x))
 		{
-			player.hp -= enemy[enemy_num].damage;
+			player.hp = (player.hp - enemy[enemy_num].damage) > 0 ? player.hp - enemy[enemy_num].damage : 0;
 			player.x -= skill[0].power;
 			//skill[0].status = 0;
 			get_dmg_cnt = 1;
@@ -87,14 +91,14 @@ void case_0()
 		if(is_middle(enemy[enemy_num].x + enemy[enemy_num].width, player.x + player.width / 2, enemy[enemy_num].x)
 		&& (enemy[enemy_num].output_idx == 4 || enemy[enemy_num].output_idx == 5))
 		{
-			player.hp -= enemy[enemy_num].damage;
+			player.hp = (player.hp - enemy[enemy_num].damage) > 0 ? player.hp - enemy[enemy_num].damage : 0;
 			player.x += enemy[enemy_num].power;
 			get_dmg_cnt = 1;
 		}
 		
 		if(skill[0].status && is_middle(skill[0].x + skill[0].width, player.x + player.width / 2, skill[0].x))
 		{
-			player.hp -= enemy[enemy_num].damage;
+			player.hp = (player.hp - enemy[enemy_num].damage) > 0 ? player.hp - enemy[enemy_num].damage : 0;
 			player.x += skill[0].power;
 			//skill[0].status = 0;
 			get_dmg_cnt = 1;
@@ -116,7 +120,7 @@ void case_1()
 			//player.y - 10 > enemy.y - 165
 			if(is_middle(enemy[enemy_num].y + enemy[enemy_num].high * 1.5, player.y + player.high / 2, enemy[enemy_num].y))
 			{
-				player.hp -= enemy[enemy_num].damage;
+				player.hp = (player.hp - enemy[enemy_num].damage) > 0 ? player.hp - enemy[enemy_num].damage : 0;
 				get_dmg_cnt = 1;
 
 				if(enemy[enemy_num].dir == 'a')
@@ -141,7 +145,7 @@ void case_1()
 			if(player_jump_cnt == -1)
 				player_jump_cnt = 15;
 			jump();
-			player.hp -= enemy[enemy_num].damage;
+			player.hp = (player.hp - enemy[enemy_num].damage) > 0 ? player.hp - enemy[enemy_num].damage : 0;
 			player.x -= skill[1].power;
 			skill[1].status = 0;
 			get_dmg_cnt = 1;
@@ -153,7 +157,7 @@ void case_1()
 			if(player_jump_cnt == -1)
 				player_jump_cnt = 15;
 			jump();
-			player.hp -= enemy[enemy_num].damage;
+			player.hp = (player.hp - enemy[enemy_num].damage) > 0 ? player.hp - enemy[enemy_num].damage : 0;
 			player.x += skill[1].power;
 			skill[1].status = 0;
 			get_dmg_cnt = 1;
@@ -167,7 +171,7 @@ void case_2()
 	if(is_middle(skill[2].y + 90, player.y + player.high / 2, skill[2].y + 40)
 	&& is_middle(skill[2].x + 150, player.x + player.width / 2, skill[2].x + 85))
 	{
-		player.hp -= enemy[enemy_num].damage;
+		player.hp = (player.hp - enemy[enemy_num].damage) > 0 ? player.hp - enemy[enemy_num].damage : 0;
 		get_dmg_cnt = 1;
 
 		if(player_jump_cnt == -1)
@@ -188,7 +192,7 @@ void case_3()
 	if(is_middle(skill[3].x + skill[3].width * 0.8, player.x + player.width / 2, skill[3].x + skill[3].width * 0.2)
 	&& is_middle(skill[3].y + skill[3].high * 0.8, player.y + player.high / 3, skill[3].y + skill[3].high * 0.1))
 	{
-		player.hp -= enemy[enemy_num].damage;
+		player.hp = (player.hp - enemy[enemy_num].damage) > 0 ? player.hp - enemy[enemy_num].damage : 0;
 		get_dmg_cnt = 1;
 
 		if(player_jump_cnt == -1)
@@ -211,7 +215,7 @@ void case_4()
 	if(is_middle(skill[4].x + skill[4].width * 0.9, player.x + player.width / 2, skill[4].x + skill[4].width * 0.1)
 	&& enemy_atk_cnt < 37)
 	{
-		player.hp -= enemy[enemy_num].damage;
+		player.hp = (player.hp - enemy[enemy_num].damage) > 0 ? player.hp - enemy[enemy_num].damage : 0;
 		get_dmg_cnt = 1;
 		
 		if(player_jump_cnt == -1)
@@ -232,7 +236,7 @@ void case_5()
 	if(is_middle(skill[5].x + skill[5].width , player.x + player.width / 2, skill[5].x)
 	&& (player.y + player.high * 0.2 < skill[5].y + skill[5].high * 0.9))
 	{
-		player.hp -= enemy[enemy_num].damage;
+		player.hp = (player.hp - enemy[enemy_num].damage) > 0 ? player.hp - enemy[enemy_num].damage : 0;
 		get_dmg_cnt = 1;
 
 		if(enemy[enemy_num].dir == 'a' && (player.x > 10))
@@ -258,6 +262,8 @@ void case_6()
 				jump();
 				get_dmg_cnt = 1;
 
+				player.hp = (player.hp - enemy[enemy_num].damage) > 0 ? player.hp - enemy[enemy_num].damage : 0;
+
 				if(enemy[enemy_num].dir == 'd' && player_move_check('d', enemy[enemy_num].power) == 1)
 					player.x += enemy[enemy_num].power;
 				//else if(enemy[enemy_num].dir == 'a' && player_move_check('a', enemy[enemy_num].power) == 1)
@@ -276,8 +282,77 @@ void case_6()
 				jump();
 				get_dmg_cnt = 1;
 
+				player.hp = (player.hp - enemy[enemy_num].damage) > 0 ? player.hp - enemy[enemy_num].damage : 0;
+
 				if(enemy[enemy_num].dir == 'a' && player_move_check('a', enemy[enemy_num].power) == 1)
 					player.x -= enemy[enemy_num].power;
+			}
+		}
+	}
+}
+
+void case_7()
+{
+	if(enemy_atk_cnt < 16)
+	{
+		if(enemy[enemy_num].dir == 'd')
+		{
+			if(is_middle(enemy[enemy_num].x + enemy[enemy_num].width * 0.6, player.x + player.width / 2, enemy[enemy_num].x + enemy[enemy_num].width * 0.1)
+			&& is_middle(enemy[enemy_num].y + enemy[enemy_num].high * 0.4, player.y + player.high / 2, enemy[enemy_num].y + enemy[enemy_num].high * 0.1))
+			{
+				get_dmg_cnt = 1;
+
+				player.hp = (player.hp - enemy[enemy_num].damage) > 0 ? player.hp - enemy[enemy_num].damage : 0;
+
+				if(enemy[enemy_num].dir == 'd' && player_move_check('d', enemy[enemy_num].power) == 1)
+					player.x += enemy[enemy_num].power;
+			}
+		}
+		else
+		{
+			if(is_middle(enemy[enemy_num].x + enemy[enemy_num].width * 0.9, player.x + player.width / 2, enemy[enemy_num].x + enemy[enemy_num].width * 0.4)
+			&& is_middle(enemy[enemy_num].y + enemy[enemy_num].high * 0.4, player.y + player.high / 2, enemy[enemy_num].y + enemy[enemy_num].high * 0.1))
+			{
+				get_dmg_cnt = 1;
+
+				player.hp = (player.hp - enemy[enemy_num].damage) > 0 ? player.hp - enemy[enemy_num].damage : 0;
+
+				if(enemy[enemy_num].dir == 'a' && player_move_check('a', enemy[enemy_num].power) == 1)
+					player.x -= enemy[enemy_num].power;
+			}
+		}
+	}
+	
+	if(enemy_atk_cnt < 8)
+	{
+		if(enemy[enemy_num].dir == 'd')
+		{
+			if((is_middle(enemy[enemy_num].x + enemy[enemy_num].width * 0.95, player.x + player.width / 2, enemy[enemy_num].x + enemy[enemy_num].width * 0.75)
+			&&(is_middle(enemy[enemy_num].y + enemy[enemy_num].high, player.y + player.high / 4, enemy[enemy_num].y + enemy[enemy_num].high * 0.3)))
+			|| (is_middle(enemy[enemy_num].x + enemy[enemy_num].width * 0.75, player.x + player.width / 2, enemy[enemy_num].x + enemy[enemy_num].width * 0.6)
+			&&(is_middle(enemy[enemy_num].y + enemy[enemy_num].high * 0.7, player.y + player.high / 4, enemy[enemy_num].y + enemy[enemy_num].high * 0.5))))
+			{
+				get_dmg_cnt = 1;
+			
+				player.hp = (player.hp - enemy[enemy_num].damage) > 0 ? player.hp - enemy[enemy_num].damage : 0;
+
+				if(player_move_check('d', enemy[enemy_num].power * 2) == 1)
+					player.x += enemy[enemy_num].power * 2;
+			}
+		}
+		else
+		{
+			if((is_middle(enemy[enemy_num].x + enemy[enemy_num].width * 0.25, player.x + player.width / 2, enemy[enemy_num].x + enemy[enemy_num].width * 0.05)
+			&&(is_middle(enemy[enemy_num].y + enemy[enemy_num].high, player.y + player.high / 4, enemy[enemy_num].y + enemy[enemy_num].high * 0.3)))
+			|| (is_middle(enemy[enemy_num].x + enemy[enemy_num].width * 0.4, player.x + player.width / 2, enemy[enemy_num].x + enemy[enemy_num].width * 0.25)
+			&&(is_middle(enemy[enemy_num].y + enemy[enemy_num].high * 0.7, player.y + player.high / 4, enemy[enemy_num].y + enemy[enemy_num].high * 0.5))))
+			{
+				get_dmg_cnt = 1;
+
+				player.hp = (player.hp - enemy[enemy_num].damage) > 0 ? player.hp - enemy[enemy_num].damage : 0;
+
+				if(player_move_check('a', enemy[enemy_num].power * 2) == 1)
+					player.x -= enemy[enemy_num].power * 2;
 			}
 		}
 	}
