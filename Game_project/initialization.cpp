@@ -4,7 +4,7 @@
 #include "lib/output_img.h"
 #include "lib/enemy_atk.h"
 
-extern int atk_cnt, player_walk_cnt, flag, enemy_atk_type, player_jump_cnt, atked, enemy_num,player_walk_cnt3D,bgX,bgY, inFight, get_dmg_cnt, dash_cnt; // player_walk_cnt : ?????p??? ?�[?p???????X?????
+extern int atk_cnt, player_walk_cnt, flag, enemy_atk_type, player_jump_cnt, atked, enemy_num,player_walk_cnt3D,bgX,bgY, inFight, get_dmg_cnt, dash_cnt, combine_cnt, atk_cd; 
 extern double start;
 extern Human player;
 extern Monster enemy[3];
@@ -33,7 +33,7 @@ void initialization()
 	player.y = (hih-33*3.5) / 2 + 80;
 	player.hp = 10;
 	player.fhp = 10;
-	player.damage = 25; // ��ĤH�y�����ˮ` 
+	player.damage = 5; // ��ĤH�y�����ˮ` 
 	player.atked = 0;   // �P�w�O�_���y���ˮ`  
 	player.dir = 'd';   // ��V 
 	player.output_idx = 27;// ��X�Ϥ��s�� 
@@ -94,6 +94,8 @@ void initialization()
 	inFight = 0;
 	get_dmg_cnt = 0;
 	dash_cnt = 0;
+	combine_cnt = 0;
+	atk_cd = 4;
 }
 
 void enemy_ini()
@@ -111,7 +113,7 @@ void enemy_ini()
 	enemy[0].dir = 'a';
 	enemy[0].hp = 100;
 	enemy[0].fhp = 100;
-	enemy[0].damage = 0; // �ĤH�y�����ˮ` 
+	enemy[0].damage = 1; // �ĤH�y�����ˮ` 
 	enemy[0].output_idx = 1;
 	enemy[0].high = 165;
 	enemy[0].width = 165;
@@ -136,7 +138,7 @@ void enemy_ini_01()
 	enemy[1].dir = 'a';
 	enemy[1].hp = 100;
 	enemy[1].fhp = 100;
-	enemy[1].damage = 0; // �ĤH�y�����ˮ` 
+	enemy[1].damage = 1; // �ĤH�y�����ˮ` 
 	enemy[1].output_idx = 1;
 	enemy[1].high = 150;
 	enemy[1].width = 136;
@@ -161,7 +163,7 @@ void enemy_ini_02()
 	enemy[2].dir = 'a';
 	enemy[2].hp = 100;
 	enemy[2].fhp = 100;
-	enemy[2].damage = 0; // �ĤH�y�����ˮ` 
+	enemy[2].damage = 1; // �ĤH�y�����ˮ` 
 	enemy[2].output_idx = 1;
 	enemy[2].high = 400;
 	enemy[2].width = 500;
