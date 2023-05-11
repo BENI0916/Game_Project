@@ -27,4 +27,5 @@ void tp_door_ini();
 
 void blood_ini();
 
+void drop_ini();
 #endif

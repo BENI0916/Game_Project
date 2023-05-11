@@ -4,12 +4,10 @@
 #include "lib/status.h"
 #include "lib/event.h"
 
-extern int key;
-extern int esc,victory;
-extern PIMAGE screen,escBG;
+extern int key,esc,victory;
+extern PIMAGE screen,escBG,pauseImg,SetImg;
 extern LOGFONT title,text;
 extern Human player;
-extern PIMAGE pauseImg,SetImg;
 
 int mX,mY;
 
@@ -19,6 +17,7 @@ void escScreen() {
     putimage_withalpha(NULL,pauseImg,593,300);
     putimage_withalpha(NULL,SetImg,1170,35);
     playerBlood(player.hp,player.fhp);
+    putMoney();
 }
 
 void escListener() {

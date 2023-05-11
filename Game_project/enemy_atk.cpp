@@ -3,7 +3,7 @@
 #include "lib/enemy_give_dmg.h"
 #include "lib/initialization.h"
 
-extern int enemy_atk_cnt, enemy_atk_type, enemy_num, get_dmg_cnt, skill_dir, combine_cnt, atk_cd;
+extern int enemy_atk_cnt, enemy_atk_type, enemy_num, get_dmg_cnt, skill_dir;
 extern double start, end;
 extern Human player;
 extern Monster enemy[3];
@@ -14,30 +14,12 @@ void enemy_atk()
 {
 	end = fclock(); // 攻擊間隔計時器 
 	
-	if(enemy[enemy_num].hp <= 50)
-		atk_cd = 2.5;
-	else if(enemy[enemy_num].hp <= 25)
-		atk_cd = 1.5;
-
 	// 若距離上次攻擊已超過5秒 且 敵人與玩家的距離 靠近 且 敵人未進行攻擊移動 
-	if(((end - start) > atk_cd) && abs(enemy[enemy_num].x - player.x) < enemy[enemy_num].width * 3 && enemy_atk_type <= -1)
+	if(((end - start) > 4) && abs(enemy[enemy_num].x - player.x) < enemy[enemy_num].width * 3 && enemy_atk_type <= -1)
 	{
-		if(enemy_num == 2)
-		{
-			enemy_atk_type = random(5) + 6; //random(5) + 6
-
-			if(combine_cnt <= 0)
-			{
-				if(enemy[enemy_num].hp <= 25)
-					combine_cnt = 4;
-				else if(enemy[enemy_num].hp <= 50)
-					combine_cnt = 3;
-				else
-					combine_cnt = 2;
-			}
-		}
-		else
-			enemy_atk_type = random(3) + enemy_num * 3; // 敵人使用技能的選擇為隨機 
+		enemy_atk_type = random(3) + enemy_num * 3; // 敵人使用技能的選擇為隨機 
+		//if(enemy_num == 1)
+		//	enemy_atk_type = -1;
 		get_dmg_cnt = 0;
 		
 		// 將對應編號的技能賦予計時器 
@@ -79,21 +61,11 @@ void enemy_atk()
 				enemy_atk_cnt = 30;
 				break;
 
-			case 9:
-				enemy_atk_cnt = 30;
-				break;
-
-			case 10:
-				enemy_atk_cnt = 20;
-				break;
-
 			default :
 				enemy_atk_type = -1;
 				break;
 		}
-
 		start = fclock(); // 刷新攻擊間隔的時間起點 
-
 		if(player.x + player.width / 2 > enemy[enemy_num].x + enemy[enemy_num].width / 2)
 			skill_dir = 0;
 		else	
@@ -173,17 +145,9 @@ void enemy_atk()
 			enemy_06_atk(0);
 		else
 			enemy_06_atk(1);
-
+		
 		if(enemy_atk_cnt <= -1)
-		{
 			enemy_atk_type = -1;
-
-			combine_cnt--;
-			if(combine_cnt > 0)
-				start = -5;
-			else
-				start = fclock();
-		}
 	}
 	else if(enemy_atk_type == 7)
 	{
@@ -193,15 +157,7 @@ void enemy_atk()
 			enemy_07_atk(1);
 		
 		if(enemy_atk_cnt <= -1)
-		{
 			enemy_atk_type = -1;
-
-			combine_cnt--;
-			if(combine_cnt > 0)
-				start = -5;
-			else
-				start = fclock();
-		}
 	}
 	else if(enemy_atk_type == 8)
 	{
@@ -211,51 +167,7 @@ void enemy_atk()
 			enemy_08_atk(1);
 		
 		if(enemy_atk_cnt <= -1)
-		{
 			enemy_atk_type = -1;
-
-			combine_cnt--;
-			if(combine_cnt > 0)
-				start = -5;
-			else
-				start = fclock();
-		}
-	}
-	else if(enemy_atk_type == 9)
-	{
-		if(enemy[enemy_num].dir == 'd')
-			enemy_09_atk(0);
-		else
-			enemy_09_atk(1);
-		
-		if(enemy_atk_cnt <= -1)
-		{
-			enemy_atk_type = -1;
-
-			combine_cnt--;
-			if(combine_cnt > 0)
-				start = -5;
-			else
-				start = fclock();
-		}
-	}
-	else if(enemy_atk_type == 10)
-	{
-		if(enemy[enemy_num].dir == 'd')
-			enemy_10_atk(0);
-		else
-			enemy_10_atk(1);
-		
-		if(enemy_atk_cnt <= -1)
-		{
-			enemy_atk_type = -1;
-
-			combine_cnt--;
-			if(combine_cnt > 0)
-				start = -5;
-			else
-				start = fclock();
-		}
 	}
 	
 	// 此函式為造成傷害 
@@ -583,23 +495,6 @@ void enemy_08_atk(int val)
 	enemy_atk_cnt--;
 
 	int table[4] = {28, 26, 24, 24};
-
-	enemy[enemy_num].output_idx = table[enemy_atk_cnt / 8] + val;
-}
-
-void enemy_09_atk(int val)
-{
-	enemy_atk_cnt--;
-
-	int table[4] = {34, 32, 30, 30};
-
-	enemy[enemy_num].output_idx = table[enemy_atk_cnt / 8] + val;
-}
-
-void enemy_10_atk(int val)
-{
-	enemy_atk_cnt--;
-	int table[3] = {38, 36, 36};
 
 	enemy[enemy_num].output_idx = table[enemy_atk_cnt / 8] + val;
 }

@@ -21,13 +21,4 @@ void case_6();
 
 void case_7();
 
-void case_8();
-
-void case_9();
-
-void case_10();
-
-void judge_dmg(double player_x, double player_y, double fir_up_x, double fir_dw_x, double fir_up_y, double fir_dw_y, int sec, double sec_up_x
-, double sec_dw_x, double sec_up_y, double sec_dw_y, char dir, int jum);
-
 #endif

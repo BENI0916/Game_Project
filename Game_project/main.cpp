@@ -3,7 +3,7 @@
 
 PIMAGE bg = newimage(); //bg:儲存背景圖片之變數
 PIMAGE bloodLine, blood[21];
-int key, atk_cnt, player_walk_cnt, player_jump_cnt, last_key, flag, enemy_atk_cnt, enemy_atk_type, player_enemy_dir, enemy_num = -1, get_dmg_cnt, skill_dir, isNext, dash_cnt, combine_cnt, atk_cd;
+int key, atk_cnt, player_walk_cnt, player_jump_cnt, last_key, flag, enemy_atk_cnt, enemy_atk_type, player_enemy_dir, enemy_num = -1, get_dmg_cnt, skill_dir, isNext, dash_cnt;
 double start, end;
 int inFight = 0;
 int player_walk_cnt3D,bgX,bgY;

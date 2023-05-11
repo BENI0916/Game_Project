@@ -12,22 +12,22 @@ void enemyMove(int idx) {
     if (idx==1) {   //雜燴兔
         if (monster.x>player.x&&monster.x-player.x<=176&&player.dir=='d') {
             monster.dir='a';
-            monster.x -= 8;
+            monster.x -= 20;
         } 
         else if (monster.x>player.x) {
             monster.dir='d';
             if (monster.x<1179) {
-                monster.x += 5;
+                monster.x += 10;
             }
         }
         else if (monster.x<=player.x&&player.x-monster.x<=201&&player.dir=='a') {
             monster.dir='d';
-            monster.x += 8;
+            monster.x += 20;
         } 
         else if (monster.x<=player.x) {
             monster.dir='a';
             if (monster.x>0) {
-                monster.x -= 5;
+                monster.x -= 10;
             }
         }
         cnt++;
@@ -63,5 +63,6 @@ void putEnemy(int idx) {
         mciSendString (TEXT("close battlemusic"), NULL,0,NULL);
         victory = 1;
         flushkey();
+        drop(idx);
     }
 }

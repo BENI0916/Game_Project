@@ -4,7 +4,7 @@
 #include "lib/status.h"
 
 extern PIMAGE bg;
-extern int enemy_num, isNext, inFight, atk_cd;
+extern int enemy_num, isNext, inFight;
 extern Human player;
 extern Monster enemy[3];
 extern Bullet skill[6], tp_door[2];
@@ -27,7 +27,6 @@ void output_image()
 			loading_animate.printed = 0;
 			if (isNext) {
 				enemy_num++;
-				atk_cd = 4;
 				printf("enemy_num = %d\n", enemy_num);
 				player.x = wid / 4;
 			}

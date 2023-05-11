@@ -4,9 +4,10 @@
 #include "lib/effect.h"
 
 Monster monster;
-extern int fade,cnt,metEvent;
+extern int fade,cnt,metEvent,bp[bpL];
 extern Human player;
-extern PIMAGE bgF;
+extern PIMAGE bgF,dropImg[];
+int type,dropIdx[bpL],dropAmount[bpL];
 
 int event() {
     int r = random(250);
@@ -34,6 +35,11 @@ int choMon() {
     flashOut();
     fade = 1;
     cnt = 0;
+    type = 0;
+    for (int i = 0;i<bpL;i++) {
+		dropAmount[i] = 0;
+        dropIdx[i] = 0;
+	}
     //雜燴兔
     if (r<100) {
         char s[100];
@@ -63,4 +69,25 @@ void leaveFight() {
     metEvent = 0;
     fadeOut();
     fade = 1;
+}
+
+void drop(int idx) {
+    if (idx==1) {
+        dropAmount[0] = random(10)*100+100;
+        dropAmount[1] = random(3);
+    }
+}
+
+void putDrop() {
+    if (type==0) {
+        for (int i = 0;i<bpL;i++) {
+            if (dropAmount[i]) dropIdx[type++] = i;
+        }
+    }
+    for (int i = 0;i<type;i++) {
+        int y = 100*i;
+        putimage_withalpha(NULL,dropImg[dropIdx[i]],0,y);
+        xyprintf(70,y,"%s",dropName[dropIdx[i]]);
+        xyprintf(200,y,"%d",dropAmount[dropIdx[i]]);
+    }
 }

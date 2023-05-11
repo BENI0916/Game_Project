@@ -10,8 +10,9 @@
 #include "lib/effect.h"
 #include "lib/status.h"
 #include "lib/enemy_move3D.h"
+#include "lib/event.h"
 
-extern PIMAGE bg;
+extern PIMAGE bg, dropImg[bpL];
 extern int enemy_atk_type, enemy_num, inFight, bgX, bgY;
 extern Human player;
 extern Monster enemy[3];
@@ -19,13 +20,19 @@ extern Animate loading_animate;
 extern double end;
 
 int esc,fade,metEvent,victory;
-PIMAGE escBG,screen,pauseImg,bgF,victoryUI;
+PIMAGE escBG,screen,pauseImg,bgF,victoryUI,dropImg[bpL];
+int bp[bpL];
 
 void lunch()
 {
 	initialization();
 	printf("initialization succes\n"); 
 	randomize();
+	setbkmode(TRANSPARENT);
+	setcolor(WHITE);
+	setfont(16,0,"number");
+	settextjustify(0,1);
+
 	inFight = 0;
 	esc = 0;
 	fade = 1;
@@ -52,6 +59,7 @@ void lunch()
 			if (victory==1) {
 				putimage(0,0,screen);
 				putimage_withalpha(NULL,victoryUI,0,0);
+				putDrop();
 				vicListener();
 			}
 		}

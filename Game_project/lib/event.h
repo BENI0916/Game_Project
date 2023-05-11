@@ -7,4 +7,8 @@ int choMon();
 
 void leaveFight();
 
+void drop(int idx);
+
+void putDrop();
+
 #endif
