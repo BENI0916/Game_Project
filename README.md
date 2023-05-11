@@ -1,6 +1,14 @@
 # Game_Project
-1.魔眼技能暫定完成
+半成品 別載
+-----------------
+預計完成副本掉落物
 
-2.魔眼會隨著血量降低而增加攻擊次數
+更動檔案
+images/3D/drop
 
-3.所有敵人皆會因為血量降低到一定值時，縮短技能施放間隔
+enemy_move3D.cpp
+esc.cpp
+event.cpp event.h
+initialization.cpp initialization.h
+lunch.cpp
+status.cpp status.h
