@@ -6,11 +6,11 @@
 Monster monster;
 extern int fade,cnt,metEvent,bp[bpL];
 extern Human player;
-extern PIMAGE bgF,dropImg[];
+extern PIMAGE bgF,dropImg[],gray;
 int type,dropIdx[bpL],dropAmount[bpL];
 
 int event() {
-    int r = random(250);
+    int r = random(150);
     if (r<1) {
         mciSendString (TEXT("open audio\\bgm\\battle.mp3 alias battlemusic"), NULL,0,NULL);
 	    mciSendString (TEXT("play battlemusic"), NULL,0,NULL);
@@ -75,6 +75,8 @@ void drop(int idx) {
     if (idx==1) {
         dropAmount[0] = random(10)*100+100;
         dropAmount[1] = random(3);
+        bp[0] += dropAmount[0];
+        bp[1] += dropAmount[1];
     }
 }
 
@@ -85,9 +87,10 @@ void putDrop() {
         }
     }
     for (int i = 0;i<type;i++) {
-        int y = 100*i;
-        putimage_withalpha(NULL,dropImg[dropIdx[i]],0,y);
-        xyprintf(70,y,"%s",dropName[dropIdx[i]]);
-        xyprintf(200,y,"%d",dropAmount[dropIdx[i]]);
+        int y = 60*i+300;
+        putimage_alphablend(NULL,gray,190,y-6,0x70,0,0,442,45);
+        putimage_withalpha(NULL,dropImg[dropIdx[i]],226-getwidth(dropImg[dropIdx[i]])/2,y);
+        xyprintf(411,y+getheight(dropImg[dropIdx[i]])/2,"%s",dropName[dropIdx[i]]);
+        xyprintf(596,y+getheight(dropImg[dropIdx[i]])/2,"%d",dropAmount[dropIdx[i]]);
     }
 }

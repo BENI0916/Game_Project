@@ -20,7 +20,7 @@ extern Animate loading_animate;
 extern double end;
 
 int esc,fade,metEvent,victory;
-PIMAGE escBG,screen,pauseImg,bgF,victoryUI,dropImg[bpL];
+PIMAGE escBG,screen,pauseImg,bgF,victoryUI,dropImg[bpL],gray;
 int bp[bpL];
 
 void lunch()
@@ -31,7 +31,7 @@ void lunch()
 	setbkmode(TRANSPARENT);
 	setcolor(WHITE);
 	setfont(16,0,"number");
-	settextjustify(0,1);
+	settextjustify(1,1);
 
 	inFight = 0;
 	esc = 0;
@@ -42,9 +42,11 @@ void lunch()
 	screen = newimage();
 	pauseImg = newimage();
 	victoryUI = newimage();
+	gray = newimage();
 	getimage(escBG,"images\\bg\\black.png",0,0);
 	getimage(pauseImg,"images\\menu\\pause.png",0,0);
 	getimage(victoryUI,"images\\menu\\victoryUI.png",0,0);
+	getimage(gray,"images\\menu\\bk.png",0,0);
 	
 	mciSendString (TEXT("open audio\\bgm\\home.mp3 alias homemusic"), NULL,0,NULL);
 	mciSendString (TEXT("play homemusic repeat"), NULL,0,NULL);
