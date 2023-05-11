@@ -48,8 +48,8 @@ int choMon() {
 	    loadCHAR(s, &monster.enemy_img, 101, 66, 0);
         monster.x = 960;
         monster.y = 425;
-        monster.hp = 100;
-        monster.fhp = 100;
+        monster.hp = 20;
+        monster.fhp = 20;
         monster.dir = 'd';
         monster.output_idx = 2;
         monster.width = 101;
