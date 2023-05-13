@@ -4,6 +4,7 @@
 更動檔案
 images/3D/drop
 
+var.h
 enemy_move3D.cpp
 esc.cpp
 event.cpp event.h
