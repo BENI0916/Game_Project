@@ -1,12 +1,15 @@
 # Game_Project
-完成副本掉落物
+完成背包 E
 
 更動檔案
-images/3D/drop
+images/menu
 
-enemy_move3D.cpp
+新增 bebao.cpp / .h
+
+var.h
 esc.cpp
-event.cpp event.h
-initialization.cpp initialization.h
+event.cpp
+initialization.cpp
 lunch.cpp
-status.cpp status.h
+player_move3D.cpp
+status.cpp
