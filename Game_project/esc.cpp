@@ -6,7 +6,6 @@
 
 extern int key,esc,victory;
 extern PIMAGE screen,escBG,pauseImg,SetImg;
-extern LOGFONT title,text;
 extern Human player;
 
 int mX,mY;

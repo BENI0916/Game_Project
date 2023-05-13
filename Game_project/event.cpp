@@ -2,9 +2,10 @@
 #include "lib/event.h"
 #include "lib/output_img.h"
 #include "lib/effect.h"
+#include "lib/bebao.h"
 
 Monster monster;
-extern int fade,cnt,metEvent,bp[bpL];
+extern int fade,cnt,metEvent,bp[3][bpL];
 extern Human player;
 extern PIMAGE bgF,dropImg[],gray;
 int type,dropIdx[bpL],dropAmount[bpL];
@@ -75,8 +76,9 @@ void drop(int idx) {
     if (idx==1) {
         dropAmount[0] = random(10)*100+100;
         dropAmount[1] = random(3);
-        bp[0] += dropAmount[0];
-        bp[1] += dropAmount[1];
+        bp[0][0] += dropAmount[0];
+        bp[0][1] += dropAmount[1];
+        if (bp[0][1]-dropAmount[1]==0) updateBp(0,1);
     }
 }
 

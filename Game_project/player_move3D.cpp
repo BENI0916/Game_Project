@@ -10,7 +10,7 @@
 using namespace std;
 
 extern PIMAGE bg,screen;
-extern int player_walk_cnt3D,bgX,bgY, inFight, isNext,key,esc,fade,metEvent;
+extern int player_walk_cnt3D,bgX,bgY, inFight, isNext,key,esc,fade,metEvent,inBp;
 extern Human player;
 extern char BgName[50];
 int speed = 10;
@@ -167,6 +167,9 @@ void keyListener() {
             if (player_walk_cnt3D/fps==4) player_walk_cnt3D = 0;
             if (inMaz) metEvent = event();
 			break;
+        case 101:
+            inBp = 1;
+            break;
         case key_esc:
             esc = 1;
             break; 

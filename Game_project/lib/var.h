@@ -12,7 +12,7 @@
 
 const int hih = 720; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 const int wid = 1280; //ï¿½ï¿½ï¿½ï¿½ï¿½e
-const int bpL = 2;
+const int bpL = 10;
 const char dropName[][50] {
 	"·s¥x¹ô",
 	"S¯Å­¹§÷-¨ß¦×"

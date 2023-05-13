@@ -11,6 +11,7 @@
 #include "lib/status.h"
 #include "lib/enemy_move3D.h"
 #include "lib/event.h"
+#include "lib/bebao.h"
 
 extern PIMAGE bg, dropImg[bpL];
 extern int enemy_atk_type, enemy_num, inFight, bgX, bgY;
@@ -19,9 +20,8 @@ extern Monster enemy[3];
 extern Animate loading_animate;
 extern double end;
 
-int esc,fade,metEvent,victory;
-PIMAGE escBG,screen,pauseImg,bgF,victoryUI,dropImg[bpL],gray;
-int bp[bpL];
+int esc,fade,metEvent,victory,inBp;
+PIMAGE escBG,screen,pauseImg,bgF,victoryUI,dropImg[bpL],gray,bpImg[3];
 
 void lunch()
 {
@@ -33,6 +33,7 @@ void lunch()
 	setfont(16,0,"number");
 	settextjustify(1,1);
 
+	inBp = 0;
 	inFight = 0;
 	esc = 0;
 	fade = 1;
@@ -57,7 +58,11 @@ void lunch()
 	{
 		cleardevice(); // 把輸出的窗口清空 
 
-		if (victory) {
+		if (inBp) {
+			bpScreen();
+			bpListener();
+		}
+		else if (victory) {
 			if (victory==1) {
 				putimage(0,0,screen);
 				putimage_withalpha(NULL,victoryUI,0,0);

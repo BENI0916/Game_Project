@@ -4,14 +4,14 @@
 #include "lib/output_img.h"
 #include "lib/enemy_atk.h"
 
-extern int atk_cnt, player_walk_cnt, flag, enemy_atk_type, player_jump_cnt, atked, enemy_num,player_walk_cnt3D,bgX,bgY, inFight, get_dmg_cnt, dash_cnt, bp[], combine_cnt, atk_cd; // player_walk_cnt : ?????p??? ?�[?p???????X?????
+extern int atk_cnt, player_walk_cnt, flag, enemy_atk_type, player_jump_cnt, atked, enemy_num,player_walk_cnt3D,bgX,bgY, inFight, get_dmg_cnt, dash_cnt, bp[3][bpL], bpIdx[3][bpL], bpAmount[3], combine_cnt, atk_cd;
 extern double start;
 extern Human player;
 extern Monster enemy[3];
 extern Bullet skill[6], tp_door[2];
 extern Animate loading_animate;
 extern char BgName[50];
-extern PIMAGE bloodLine, blood[21], dropImg[];
+extern PIMAGE bloodLine, blood[21], dropImg[],bpImg[];
 
 void initialization()
 {
@@ -47,8 +47,16 @@ void initialization()
 	
 	printf("player setting succes\n");
 
+	bpAmount[0] = 0;
+	bpAmount[1] = 0;
+	bpAmount[2] = 0;
 	for (int i = 0;i<bpL;i++) {//清空背包
-		bp[i] = 0;
+		bp[0][i] = 0;
+		bp[1][i] = 0;
+		bp[2][i] = 0;
+		bpIdx[0][i] = 0;
+		bpIdx[1][i] = 0;
+		bpIdx[2][i] = 0;
 	}
 	drop_ini();
 	printf("drop ini succes\n");
@@ -356,5 +364,10 @@ void drop_ini() {
 		dropImg[i] = newimage();
 		sprintf(s, "images\\3D\\drop\\%d.png", i);
 		getimage(dropImg[i],s,0,0);
+	}
+	for (int i = 0;i<3;i++) {
+		bpImg[i] = newimage();
+		sprintf(s, "images\\menu\\bp%d.png", i+1);
+		getimage(bpImg[i],s,0,0);
 	}
 }

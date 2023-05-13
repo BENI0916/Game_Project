@@ -2,7 +2,7 @@
 #include "lib/status.h"
 
 extern PIMAGE bloodLine, blood[], dropImg[];
-extern int bp[bpL];
+extern int bp[3][bpL];
 
 void playerBlood(int hp,int fhp) {
     putimage_withalpha(NULL,blood[hp*20/fhp],20,680);
@@ -18,5 +18,5 @@ void monBlood(int hp,int fhp) {
 
 void putMoney() {
     putimage_withalpha(NULL,dropImg[0],30,640);
-    xyprintf(100,664," x %d",bp[0]);
+    xyprintf(100,664," x %d",bp[0][0]);
 }
