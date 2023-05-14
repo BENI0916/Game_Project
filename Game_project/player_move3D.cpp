@@ -10,7 +10,7 @@
 using namespace std;
 
 extern PIMAGE bg,screen;
-extern int player_walk_cnt3D,bgX,bgY, inFight, isNext,key,esc,fade,metEvent,inBp;
+extern int player_walk_cnt3D,bgX,bgY, inFight, isNext,key,esc,fade,metEvent,inBp,bp[3][bpL];
 extern Human player;
 extern char BgName[50];
 int speed = 10;
@@ -117,6 +117,40 @@ void nextOrback() {
     delimage(buttom);
     delimage(blk);
 }
+
+void openbox() {
+    int mX, mY;
+    PIMAGE UI = newimage();
+    PIMAGE blk = newimage();
+    PIMAGE gray = newimage();
+    PIMAGE money = newimage();
+    getimage(money,"images\\3D\\drop\\0.png",0,0);
+    getimage(gray,"images\\menu\\bk.png",0,0);
+    getimage(blk,"images\\bg\\black.png",0,0);
+    getimage(UI, "images\\menu\\openboxUI.png",0,0);
+    int dropmoney = random(20)*100+100;
+    bp[0][0]+= dropmoney;
+    for(;is_run();delay_fps(60)) {
+        cleardevice();
+        putimage(0, 0, screen);
+        putimage_alphablend(NULL,blk,0,0,0xC0,0,0,wid,hih);
+        putimage_withalpha(NULL,UI,0,0);
+        putimage_alphablend(NULL,gray,190,300-6,0x70,0,0,442,45);
+        putimage_withalpha(NULL,money,226-getwidth(money)/2,300);
+        xyprintf(411,300+getheight(money)/2,"%s",dropName[0]);
+        xyprintf(596,300+getheight(money)/2,"%d",dropmoney);
+        mousepos(&mX,&mY);
+        if((mX >= 1000 && mX <= 1187) && (mY >= 649 && mY <= 702) && keystate(key_mouse_l)) {
+            flushmouse();
+            break;
+        }
+    }
+    delimage(UI);
+    delimage(blk);
+    delimage(gray);
+    delimage(money);
+}
+
 void itemwall(int xl, int xr, int yu, int yd) {
     if(bgX <= xl && bgX >= xr && bgY <= yu &bgY >= yd) {
     switch (key) {
@@ -266,10 +300,10 @@ void keyListener() {
             fade = 1;
         }
         //雜貨店
-        if(bgX >= -1311 && bgX <=-1269 && bgY >=-1041 && bgY <=-1023) {
-            bgX=219;
+        if(bgX >= -1323 && bgX <=-1263 && bgY >=-1041 && bgY <=-1023) {
+            bgX=269;
             bgY=-171;
-            sprintf(BgName,"%s","images\\bg\\home1.png");
+            sprintf(BgName,"%s","images\\bg\\shop.png");
             loadBG(BgName,1587/2,1300/2);
             mciSendString (TEXT("stop villagemusic"), NULL,0,NULL);
             mciSendString (TEXT("close villagemusic"), NULL,0,NULL);
@@ -377,6 +411,37 @@ void keyListener() {
             fade = 1;
         }
     }
+    //雜貨店
+    else if (strcmp(BgName, "images\\bg\\shop.png")==0) {
+        //地圖牆
+        if(bgX  <-360) bgX = -360;
+        if(bgX > 375) bgX = 375;
+        if(bgY  <-192) bgY = -192;
+        if(bgY > 285) bgY = 285;
+        //物件牆
+        itemwall(375,115,285,149);
+        itemwall(115,55,285,245);
+        itemwall(-5,-360,285,85);
+        itemwall(-230,-360,-52,-192);
+        //買東西
+        if (bgX<-170 && bgX>-230 && bgY<85 && bgY>28 && key==102) {
+            
+        }
+        //出門
+        if(bgX > 189 && bgX < 339 && bgY <= -186) {
+            sprintf(BgName,"%s","images\\bg\\village.png");
+            loadBG(BgName, 1859*1.2, 1542*1.3);
+            bgX = -1293;
+            bgY = -1077;
+            mciSendString (TEXT("stop shopmusic"), NULL,0,NULL);
+            mciSendString (TEXT("close shopmusic"), NULL,0,NULL);
+            mciSendString (TEXT("open audio\\bgm\\village.mp3 alias villagemusic"), NULL,0,NULL);
+	    	mciSendString (TEXT("play villagemusic repeat"), NULL,0,NULL);
+            fadeOut();
+            fade = 1;
+        }
+    }
+    //副本
     else if (strcmp(BgName, "images\\bg\\cave01.png")==0) {
         //地圖牆
         if(bgX < -1443) bgX = -1443;
@@ -408,13 +473,8 @@ void keyListener() {
         int loc[6][4]={{-583,-643,-707,-747},{-1343,-1413,-1087,-1127},{27,-23,-1897,-1947},{-1343,-1413,-1887,-1927},{227,157,-2657,-2697},{-1093,-1153,-2657,-2697}};
         if(open) itemwall(loc[treasurePlace][0],loc[treasurePlace][1],loc[treasurePlace][2],loc[treasurePlace][3]);
         if(open && bgX<loc[treasurePlace][0]+20 && bgX>loc[treasurePlace][1]-20 && bgY<loc[treasurePlace][2]+20 && bgY>loc[treasurePlace][3]-20 && key == 102) {
-            //獎勵畫面 未做
-            /*mouse_msg msg = {0};
-            while (1) {
-                msg.x = msg.y = 0;
-                while(mousemsg()) msg = getmouse();
-                
-            }*/
+            //獎勵畫面
+            openbox();
             open = 0;//寶箱已開
             loadBG(BgName, 1463*1.3, 1957*1.3);
             int place[6][2]={{720,217},{1308,514},{251,1137},{1309,1129},{100,1723},{1112,1722}};
@@ -462,7 +522,8 @@ void keyListener() {
         int loc[6][4]={{187,117,-337,-377},{-1403,-1473,-397,-437},{-1123,-1193,-717,-757},{-583,-653,-1107,-1147},{-3,-73,-1497,-1527},{-1233,-1293,-1507,-1547}};
         if(open) itemwall(loc[treasurePlace][0],loc[treasurePlace][1],loc[treasurePlace][2],loc[treasurePlace][3]);
         if(open && bgX<loc[treasurePlace][0]+20 && bgX>loc[treasurePlace][1]-20 && bgY<loc[treasurePlace][2]+20 && bgY>loc[treasurePlace][3]-20 && key == 102) {
-            //獎勵畫面 未做
+            //獎勵畫面
+            openbox();
             open = 0;//寶箱已開
             loadBG(BgName, 1480*1.3, 1374*1.3);
             int place[6][2]={{122,226},{1347,271},{1130,520},{713,818},{270,1114},{1210,1130}};
@@ -518,7 +579,8 @@ void keyListener() {
         int loc[6][4]={{-73,-143,-507,-547},{-1523,-1593,-917,-947},{-1873,-1943,-1637,-1677},{-53,-123,-1637,-1667},{-1753,-1823,-2397,-2437},{-2273,-2343,-2387,-2427}};
         if(open) itemwall(loc[treasurePlace][0],loc[treasurePlace][1],loc[treasurePlace][2],loc[treasurePlace][3]);
         if(open && bgX<loc[treasurePlace][0]+20 && bgX>loc[treasurePlace][1]-20 && bgY<loc[treasurePlace][2]+20 && bgY>loc[treasurePlace][3]-20 && key == 102) {
-            //獎勵畫面 未做
+            //獎勵畫面
+            openbox();
             open = 0;//寶箱已開
             loadBG(BgName, 1935*1.3, 1744*1.3);
             int place[6][2]={{97,174},{1213,485},{1480,1041},{83,1039},{1389,1628},{1788,1618}};
