@@ -21,4 +21,8 @@ status.cpp
 新增打贏魔眼後的場面
 
 -------------
+三更 修bug
 images/3D/monster/stone
+
+bebao.cpp
+event.cpp
