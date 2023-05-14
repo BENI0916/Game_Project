@@ -2,9 +2,10 @@
 #include "lib/var.h" 
 #include "lib/output_img.h"
 #include "lib/status.h"
+#include "lib/effect.h"
 
-extern PIMAGE bg;
-extern int enemy_num, isNext, inFight, atk_cd;
+extern PIMAGE bg, win_screen;
+extern int enemy_num, isNext, inFight, atk_cd, win_screen_cnt;
 extern Human player;
 extern Monster enemy[3];
 extern Bullet skill[6], tp_door[2];
@@ -79,6 +80,23 @@ void output_image()
 		putimage(player.x, player.y, player.player_img[player.output_idx], SRCINVERT);
 		playerBlood(player.hp,player.fhp);
 		monBlood(enemy[enemy_num].hp,enemy[enemy_num].fhp);
+
+		if(enemy[2].hp <= 0 && win_screen_cnt == 0)
+		{
+			fadeIn();
+			win_screen_cnt++;
+		}
+		else if(enemy[2].hp <= 0 && win_screen_cnt < 100)
+		{
+			win_screen_cnt++;
+			putimage(0, 0, wid, hih, win_screen, 0, 0, 1920, 1080);
+			printf("%d\n", win_screen_cnt);
+		}
+		else if(enemy[2].hp <= 0 && win_screen_cnt == 100)
+		{
+			fadeOut();
+			win_screen_cnt++;
+		}
 	}
 }	
 

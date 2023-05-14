@@ -13,8 +13,8 @@
 #include "lib/event.h"
 #include "lib/bebao.h"
 
-extern PIMAGE bg, dropImg[bpL];
-extern int enemy_atk_type, enemy_num, inFight, bgX, bgY;
+extern PIMAGE bg, dropImg[bpL], win_screen;
+extern int enemy_atk_type, enemy_num, inFight, bgX, bgY, win_screen_cnt;
 extern Human player;
 extern Monster enemy[3];
 extern Animate loading_animate;
@@ -75,7 +75,8 @@ void lunch()
 			escScreen();
 		}
 		else {
-			if (inFight) {//判斷是否在戰鬥中
+			if (inFight) 
+			{//判斷是否在戰鬥中
 				if(enemy[enemy_num].hp > 0) // 若敵人血量不為 0 則會行動 
 				{
 					if(enemy_atk_type == -1) // -1 代表 敵人未開始攻擊  
@@ -85,6 +86,12 @@ void lunch()
 		
 				move(5);
 				output_image();
+
+				if (enemy_num >= 3)
+				{
+					inFight = 0;
+				}
+				
 			}
 			else if (!metEvent){
 				keyListener();
