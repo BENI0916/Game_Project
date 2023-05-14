@@ -19,3 +19,6 @@ status.cpp
 二更
 
 新增打贏魔眼後的場面
+
+-------------
+images/3D/monster/stone
