@@ -13,3 +13,9 @@ initialization.cpp
 lunch.cpp
 player_move3D.cpp
 status.cpp
+
+-------------
+
+二更
+
+新增打贏魔眼後的場面
