@@ -45,9 +45,7 @@ void bpListener() {
 }
 
 void updateBp(int type,int idx) {
-    printf("%d ",bpAmount[type]);
     bpIdx[type][bpAmount[type]++] = idx;
-    printf("%d ",bpAmount[type]);
     for (int i = 0;i<bpAmount[type]-1;i++) {
         for (int j = 0;j<bpAmount[type]-1-i;j++) {
             if (bpIdx[type][j]>bpIdx[type][j+1]) {
@@ -57,7 +55,6 @@ void updateBp(int type,int idx) {
             }
         }
     }
-    printf("%d\n",bpAmount[type]);
 }
 
 void putBpItem(int idx) {

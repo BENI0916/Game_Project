@@ -78,7 +78,7 @@ void drop(int idx) {
         dropAmount[1] = random(3);
         bp[0][0] += dropAmount[0];
         bp[0][1] += dropAmount[1];
-        if (bp[0][1]-dropAmount[1]==0) updateBp(0,1);
+        if ((dropAmount[1])&&(!bp[0][1]-dropAmount[1])) updateBp(0,1);
     }
 }
 
