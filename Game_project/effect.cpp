@@ -3,6 +3,28 @@
 
 extern PIMAGE screen;
 
+int putLogo() {
+    PIMAGE logo = newimage();
+    getimage(logo,"images\\bg\\logo.png",0,0);
+    for (int i = 0;i<32;delay_fps(30)) {i++;}
+    for (int i = 0;i<32;delay_fps(30)) {
+		putimage_alphablend(NULL,logo,0,0,0x18,0,0,wid,hih);
+		i++;
+	}
+    for (int i = 0;i<16;delay_fps(30)) {i++;}
+    PIMAGE blk = newimage();
+    getimage(blk,"images\\bg\\black.png",0,0);
+    for (int i = 0;i<32;delay_fps(30)) {
+		putimage_alphablend(NULL,blk,0,0,0x18,0,0,wid,hih);
+		i++;
+	}
+    delimage(logo);
+    delimage(blk);
+    flushkey();
+    flushmouse();
+    return 0;
+}
+
 int fadeIn() {
     cleardevice();
     for (int i = 0;i<16;delay_fps(30)) {

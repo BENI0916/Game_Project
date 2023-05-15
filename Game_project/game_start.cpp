@@ -3,18 +3,23 @@
 #include "lib/lunch.h"
 #include "lib/save_load.h"
 #include "lib/setting.h"
+#include "lib/effect.h"
 
 PIMAGE SetImg;
 
 //遊戲開始執行會先跳來這邊 
 void gameStart() 
 {
-	mciSendString (TEXT("open audio\\bgm\\title.mp3 alias titlemusic"), NULL,0,NULL);
-	mciSendString (TEXT("play titlemusic repeat"), NULL,0,NULL);
     initgraph(wid, hih);	// 初始化窗口 
 	printf("inigraph succes\n");
+
+	putLogo(); //播放LOGO
+	
+	mciSendString (TEXT("open audio\\bgm\\title.mp3 alias titlemusic"), NULL,0,NULL);
+	mciSendString (TEXT("play titlemusic repeat"), NULL,0,NULL);
 	
 	PIMAGE MenubgImg = newimage(wid,hih);
+	
     //創建臨時圖像
     PIMAGE tmp = newimage();
     getimage(tmp,"images\\menu\\menubg.png");
@@ -27,7 +32,7 @@ void gameStart()
     delimage(tmp);
     tmp = NULL;
     //繪製背景圖像
-    putimage(0,0,MenubgImg);
+	putimage(0,0,MenubgImg);
 
     //battle beast logo
     PIMAGE BattleImg = newimage();
@@ -65,6 +70,7 @@ void gameStart()
 		if((msg.x >= 299 && msg.x <= 515) && (msg.y >= 555 && msg.y <= 603) && msg.is_left())
 		{
 			//點擊開始
+			fadeOut();
 			mciSendString(TEXT("stop titlemusic"),NULL,0,NULL);
 			mciSendString(TEXT("close titlemusic"),NULL,0,NULL);
 			lunch();
@@ -72,6 +78,7 @@ void gameStart()
 		else if((msg.x >= 825 && msg.x <= 991) && (msg.y >= 552 && msg.y <= 603) && msg.is_left())
 		{
 			//點擊結束
+			fadeOut();
 			mciSendString(TEXT("stop titlemusic"),NULL,0,NULL);
 			mciSendString(TEXT("close titlemusic"),NULL,0,NULL);
 			delimage(MenubgImg);
