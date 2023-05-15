@@ -1,9 +1,12 @@
 # Game_Project
-1.增加開頭logo
-2.增加開頭淡出效果
+1.死亡畫面
+2.修bug
 
 更動檔案
 images/bg/
+audio/bgm/
 
 game_start.cpp
-effect.cpp / .h
+lunch.cpp
+event.cpp
+esc.cpp / .h
