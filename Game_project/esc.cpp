@@ -3,8 +3,9 @@
 #include "lib/setting.h"
 #include "lib/status.h"
 #include "lib/event.h"
+#include "lib/effect.h"
 
-extern int key,esc,victory;
+extern int key,esc,victory,fade;
 extern PIMAGE screen,escBG,pauseImg,SetImg;
 extern Human player;
 
@@ -46,5 +47,21 @@ void vicListener() {
         flushmouse();
         victory = 0;
         leaveFight();
+	}
+}
+
+void goListener() {
+    mousepos(&mX,&mY);
+	if((mX >= 511 && mX <= 767) && (mY >= 432 && mY <= 478) && keystate(key_mouse_l)) {
+        //結束勝利UI
+        flushmouse();
+        victory = 0;
+        mciSendString (TEXT("stop gameover"), NULL,0,NULL);
+        mciSendString (TEXT("close gameover"), NULL,0,NULL);
+        getimage(screen,0,0,wid,hih);
+        fadeOut();
+        fade = 1;
+        mciSendString (TEXT("open audio\\bgm\\home.mp3 alias homemusic"), NULL,0,NULL);
+	    mciSendString (TEXT("play homemusic repeat"), NULL,0,NULL);
 	}
 }

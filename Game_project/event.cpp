@@ -5,7 +5,7 @@
 #include "lib/bebao.h"
 
 Monster monster;
-extern int fade,cnt,metEvent,bp[3][bpL];
+extern int fade,cnt,metEvent,bp[3][bpL],player_walk_cnt,player_jump_cnt,dash_cnt;
 extern Human player;
 extern PIMAGE bgF,dropImg[],gray;
 int type,dropIdx[bpL],dropAmount[bpL];
@@ -66,6 +66,10 @@ void leaveFight() {
     player.output_idx = 33;// 輸出圖片編號 
 	player.high = 28*3.5;   // 人物圖片的高 
 	player.width = 33*3.5;  // 人物圖片的寬
+    player.atk_type = 0;
+	player_walk_cnt = 11;
+	player_jump_cnt = -1;
+	dash_cnt = 0;
     delimage(bgF);
     metEvent = 0;
     fadeOut();

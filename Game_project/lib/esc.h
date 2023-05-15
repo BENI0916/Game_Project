@@ -7,4 +7,6 @@ void escListener();
 
 void vicListener();
 
+void goListener();
+
 #endif

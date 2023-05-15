@@ -70,6 +70,8 @@ void gameStart()
 		if((msg.x >= 299 && msg.x <= 515) && (msg.y >= 555 && msg.y <= 603) && msg.is_left())
 		{
 			//點擊開始
+			flushkey();
+			flushmouse();
 			fadeOut();
 			mciSendString(TEXT("stop titlemusic"),NULL,0,NULL);
 			mciSendString(TEXT("close titlemusic"),NULL,0,NULL);
@@ -78,6 +80,8 @@ void gameStart()
 		else if((msg.x >= 825 && msg.x <= 991) && (msg.y >= 552 && msg.y <= 603) && msg.is_left())
 		{
 			//點擊結束
+			flushkey();
+			flushmouse();
 			fadeOut();
 			mciSendString(TEXT("stop titlemusic"),NULL,0,NULL);
 			mciSendString(TEXT("close titlemusic"),NULL,0,NULL);
@@ -91,6 +95,8 @@ void gameStart()
 		else if((msg.x >= 1177 && msg.x <= 1229) && (msg.y >= 46 && msg.y <= 86) && msg.is_left())
 		{
 			//點擊設定
+			flushkey();
+			flushmouse();
 			setting();
 		}
 	}
