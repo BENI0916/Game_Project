@@ -33,7 +33,7 @@ void initialization()
 	player.y = (hih-33*3.5) / 2 + 80;
 	player.hp = 10;
 	player.fhp = 10;
-	player.damage = 50; // ��ĤH�y�����ˮ` 
+	player.damage = 25; // ��ĤH�y�����ˮ` 
 	player.atked = 0;   // �P�w�O�_���y���ˮ`  
 	player.dir = 'd';   // ��V 
 	player.output_idx = 27;// ��X�Ϥ��s�� 

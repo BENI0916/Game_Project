@@ -564,7 +564,7 @@ void enemy_06_atk(int val)
 {
 	enemy_atk_cnt--;
 
-	int table[4] = {16, 14, 12, 12};
+	int table[4] = {16, 40, 14, 12};
 
 	enemy[enemy_num].output_idx = table[enemy_atk_cnt / 8] + val;
 }
@@ -573,7 +573,7 @@ void enemy_07_atk(int val)
 {
 	enemy_atk_cnt--;
 
-	int table[4] = {22, 20, 18, 18};
+	int table[4] = {22, 42, 20, 18};
 
 	enemy[enemy_num].output_idx = table[enemy_atk_cnt / 8] + val;
 }
@@ -582,7 +582,7 @@ void enemy_08_atk(int val)
 {
 	enemy_atk_cnt--;
 
-	int table[4] = {28, 26, 24, 24};
+	int table[4] = {28, 44, 26, 24};
 
 	enemy[enemy_num].output_idx = table[enemy_atk_cnt / 8] + val;
 }
@@ -591,7 +591,7 @@ void enemy_09_atk(int val)
 {
 	enemy_atk_cnt--;
 
-	int table[4] = {34, 32, 30, 30};
+	int table[4] = {34, 46, 32, 30};
 
 	enemy[enemy_num].output_idx = table[enemy_atk_cnt / 8] + val;
 }
