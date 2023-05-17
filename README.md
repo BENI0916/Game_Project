@@ -1,12 +1,9 @@
 # Game_Project
-1.死亡畫面
-2.修bug
+1.完成石頭人
 
 更動檔案
-images/bg/
-audio/bgm/
+images/3D/monster/stone/
 
-game_start.cpp
 lunch.cpp
 event.cpp
-esc.cpp / .h
+enemy_move3D.cpp
