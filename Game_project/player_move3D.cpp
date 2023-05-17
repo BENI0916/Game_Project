@@ -4,13 +4,15 @@
 #include "lib/initialization.h"
 #include "lib/effect.h"
 #include "lib/event.h"
+#include "lib/bebao.h"
+#include "lib/status.h"
 
 #include <iostream>
 #include <string>
 using namespace std;
 
-extern PIMAGE bg,screen;
-extern int player_walk_cnt3D,bgX,bgY, inFight, isNext,key,esc,fade,metEvent,inBp,bp[3][bpL];
+extern PIMAGE bg,screen,escBG;
+extern int player_walk_cnt3D,bgX,bgY, inFight, isNext,key,esc,fade,metEvent,inBp,bp[3][bpL],fOn,bpAmount[0],bpIdx[3][bpL];
 extern Human player;
 extern char BgName[50];
 int speed = 10;
@@ -18,6 +20,8 @@ int fps = 5;
 int table[] = {0,-1,0,1};
 unsigned int treasurePlace = random(6);
 int open = 1, inMaz = 0;
+int swordPrice[3] = {1000, 10000, 1};
+int potionPrice[2] = {10000, 50000};
 
 void nextOrback() {
     int mX, mY;
@@ -172,6 +176,7 @@ void itemwall(int xl, int xr, int yu, int yd) {
 }
 
 void keyListener() {
+    fOn=0;
     if (kbhit()) { // 檢測是否有鍵盤輸入 
 		key = getch();
         //printf("%d\n",key);
@@ -251,7 +256,7 @@ void keyListener() {
             loadBG(BgName,1587/2,1300/2);
         }
         //出門
-        if(bgX > 189 && bgX < 270 && bgY <= -186) {
+        if(bgX >= 190 && bgX <= 270 && bgY <= -186) {
             sprintf(BgName,"%s","images\\bg\\village.png");
             loadBG(BgName, 1859*1.2, 1542*1.3);
             bgX = -483;
@@ -341,7 +346,7 @@ void keyListener() {
             mciSendString (TEXT("close villagemusic"), NULL,0,NULL);
         }
         //村子上方刷怪副本
-        if(bgY > -300 && bgX > -1103 && bgX < -1003) {
+        if(bgY > -300 && bgX > -1123 && bgX < -1003) {
             mciSendString (TEXT("stop villagemusic"), NULL,0,NULL);
             mciSendString (TEXT("close villagemusic"), NULL,0,NULL);
             //還沒做完
@@ -424,8 +429,131 @@ void keyListener() {
         itemwall(-5,-360,285,85);
         itemwall(-230,-360,-52,-192);
         //買東西
-        if (bgX<-170 && bgX>-230 && bgY<85 && bgY>28 && key==102) {
-            
+        if (bgX<-170 && bgX>-230 && bgY<85 && bgY>28) {
+            fOn = 1;
+            if(key==102){
+                int mX, mY;
+                PIMAGE Agil = newimage();
+                PIMAGE money = newimage();
+                PIMAGE shopbuy1 = newimage();
+                PIMAGE shopbuy2 = newimage();
+                PIMAGE shopsell = newimage();
+                PIMAGE confirm = newimage();
+                PIMAGE cancel = newimage();
+                PIMAGE quantity = newimage();
+                PIMAGE choose = newimage();
+                getimage(money,"images\\3D\\drop\\0.png",0,0);
+                getimage(Agil, "images\\menu\\Agil2.png",0,0);
+                getimage(shopbuy1, "images\\menu\\shopbuy1.png",0,0);
+                getimage(shopbuy2, "images\\menu\\shopbuy2.png",0,0);
+                getimage(shopsell, "images\\menu\\shopsell.png",0,0);
+                getimage(confirm, "images\\menu\\confirm.png",0,0);
+                getimage(cancel, "images\\menu\\cancel.png",0,0);
+                getimage(quantity, "images\\menu\\quantity.png",0,0);
+                getimage(choose, "images\\menu\\choose.png",0,0);
+                for(;is_run();delay_fps(60)) {
+                    cleardevice();
+                    putimage(0, 0, screen);
+                    putimage_withalpha(NULL,Agil,0,0);
+                    mousepos(&mX,&mY);
+                    //買
+                    if((mX >= 1003 && mX <= 1261) && (mY >= 463 && mY <= 536) && keystate(key_mouse_l)) {
+                        flushmouse();
+                        for(;is_run();delay_fps(60)) {
+                            cleardevice();
+                            putimage(0, 0, screen);
+                            putimage_withalpha(NULL,shopbuy1,0,0);
+                            mousepos(&mX,&mY);
+                        }
+                        break;
+                    }
+                    //賣
+                    if((mX >= 1003 && mX <= 1261) && (mY >= 541 && mY <= 614) && keystate(key_mouse_l)) {
+                        for(;is_run();delay_fps(60)) {
+                            flushmouse();
+                            cleardevice();
+                            putimage(0, 0, screen);
+                            putimage_alphablend(NULL,escBG,0,0,0xC0,0,0,wid,hih);
+                            putimage_withalpha(NULL,shopsell,0,0);
+                            putBpItem(0);
+                            putMoney();
+                            putimage_withalpha(NULL,cancel,1156,624);
+                            mousepos(&mX,&mY);
+                            if((mX >= 1156 && mX <= 1265) && (mY >= 624 && mY <= 712) && keystate(key_mouse_l)) break; //按取消
+                            for(int i=0;i<bpAmount[0];i++){
+                                int x,y;
+                                i > 4 ? x = 477 : x = 0;
+                                i > 4 ? y = 60*(i-5)+320 : y = 60*i+320;
+                                if((mX >= 180+x && mX <= 180+x+442) && (mY >= y-6 && mY <= y-6+45) && keystate(key_mouse_l)) {
+                                    //按素材
+                                    int num = 0;
+                                    for(;is_run();delay_fps(60)) {
+                                        flushmouse();
+                                        cleardevice();
+                                        putimage(0, 0, screen);
+                                        putimage_alphablend(NULL,escBG,0,0,0xC0,0,0,wid,hih);
+                                        putimage_withalpha(NULL,shopsell,0,0);
+                                        putBpItem(0);
+                                        putMoney();
+                                        putimage_withalpha(NULL,cancel,1156,624);
+                                        putimage_withalpha(NULL,choose,180+x,y-6);
+                                        putimage_withalpha(NULL,quantity,861,636);
+                                        putimage_withalpha(NULL,confirm,1156,532);
+                                        mousepos(&mX,&mY);
+                                        xyprintf(994,677,"%d",num);
+                                        //按+
+                                        if((mX >= 1094 && mX <= 1128) && (mY >= 636 && mY <= 719) && keystate(key_mouse_l)) {
+                                            for(;is_run();delay_fps(60)) {
+                                                if(keystate(key_mouse_l)==0) break;
+                                            }
+                                            if(num<bp[0][bpIdx[0][i]]) num++;
+                                        }
+                                        //按-
+                                        if((mX >= 861 && mX <= 896) && (mY >= 636 && mY <= 719) && keystate(key_mouse_l)) {
+                                            for(;is_run();delay_fps(60)) {
+                                                if(keystate(key_mouse_l)==0) break;
+                                            }
+                                            if(num>0) num--;
+                                        }
+                                        //確認
+                                        if((mX >= 1156 && mX <= 1265) && (mY >= 532 && mY <= 619) && keystate(key_mouse_l)) {
+                                            for(;is_run();delay_fps(60)) {
+                                                if(keystate(key_mouse_l)==0) break;
+                                            }
+                                            bp[0][0]+=num*1000;
+                                            bp[0][bpIdx[0][i]]-=num;
+                                            if(bp[0][bpIdx[0][i]]==0) updateBp(0,bpIdx[0][i]);
+                                            break;
+                                        }
+                                        //按取消
+                                        if((mX >= 1156 && mX <= 1265) && (mY >= 624 && mY <= 712) && keystate(key_mouse_l)) {
+                                            for(;is_run();delay_fps(60)) {
+                                                if(keystate(key_mouse_l)==0) break;
+                                            }
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                            
+                        }
+                        break;
+                    }
+                    //算了
+                    if((mX >= 1003 && mX <= 1261) && (mY >= 619 && mY <= 692) && keystate(key_mouse_l)) {
+                        flushmouse();
+                        break;
+                    }
+                }
+                delimage(Agil);
+                delimage(money);
+                delimage(shopbuy1);
+                delimage(shopbuy2);
+                delimage(shopsell);
+                delimage(confirm);
+                delimage(cancel);
+                delimage(quantity);
+            }
         }
         //出門
         if(bgX > 189 && bgX < 339 && bgY <= -186) {
@@ -472,20 +600,23 @@ void keyListener() {
         //寶箱牆
         int loc[6][4]={{-583,-643,-707,-747},{-1343,-1413,-1087,-1127},{27,-23,-1897,-1947},{-1343,-1413,-1887,-1927},{227,157,-2657,-2697},{-1093,-1153,-2657,-2697}};
         if(open) itemwall(loc[treasurePlace][0],loc[treasurePlace][1],loc[treasurePlace][2],loc[treasurePlace][3]);
-        if(open && bgX<loc[treasurePlace][0]+20 && bgX>loc[treasurePlace][1]-20 && bgY<loc[treasurePlace][2]+20 && bgY>loc[treasurePlace][3]-20 && key == 102) {
-            //獎勵畫面
-            openbox();
-            open = 0;//寶箱已開
-            loadBG(BgName, 1463*1.3, 1957*1.3);
-            int place[6][2]={{720,217},{1308,514},{251,1137},{1309,1129},{100,1723},{1112,1722}};
-            PIMAGE img = newimage();
-            PIMAGE msk = newimage();
-            getimage(img,"images\\3D\\obj\\door_img.png");
-            getimage(msk,"images\\3D\\obj\\door_msk.png");
-            putimage(bg, place[5-treasurePlace][0]*1.3, place[5-treasurePlace][1]*1.3, msk, NOTSRCERASE);
-            putimage(bg, place[5-treasurePlace][0]*1.3, place[5-treasurePlace][1]*1.3, img, SRCINVERT);
-            delimage(img);
-            delimage(msk);
+        if(open && bgX<loc[treasurePlace][0]+20 && bgX>loc[treasurePlace][1]-20 && bgY<loc[treasurePlace][2]+20 && bgY>loc[treasurePlace][3]-20) {
+            fOn = 1;
+            if(key == 102){
+                //獎勵畫面
+                openbox();
+                open = 0;//寶箱已開
+                loadBG(BgName, 1463*1.3, 1957*1.3);
+                int place[6][2]={{720,217},{1308,514},{251,1137},{1309,1129},{100,1723},{1112,1722}};
+                PIMAGE img = newimage();
+                PIMAGE msk = newimage();
+                getimage(img,"images\\3D\\obj\\door_img.png");
+                getimage(msk,"images\\3D\\obj\\door_msk.png");
+                putimage(bg, place[5-treasurePlace][0]*1.3, place[5-treasurePlace][1]*1.3, msk, NOTSRCERASE);
+                putimage(bg, place[5-treasurePlace][0]*1.3, place[5-treasurePlace][1]*1.3, img, SRCINVERT);
+                delimage(img);
+                delimage(msk);
+            }
         }
         //背景轉換
         if(bgX<loc[5-treasurePlace][0]+3 && bgX>loc[5-treasurePlace][1]-3 && bgY<loc[5-treasurePlace][2]+3 && bgY>loc[5-treasurePlace][3]-3) {
@@ -521,20 +652,23 @@ void keyListener() {
         //寶箱牆
         int loc[6][4]={{187,117,-337,-377},{-1403,-1473,-397,-437},{-1123,-1193,-717,-757},{-583,-653,-1107,-1147},{-3,-73,-1497,-1527},{-1233,-1293,-1507,-1547}};
         if(open) itemwall(loc[treasurePlace][0],loc[treasurePlace][1],loc[treasurePlace][2],loc[treasurePlace][3]);
-        if(open && bgX<loc[treasurePlace][0]+20 && bgX>loc[treasurePlace][1]-20 && bgY<loc[treasurePlace][2]+20 && bgY>loc[treasurePlace][3]-20 && key == 102) {
-            //獎勵畫面
-            openbox();
-            open = 0;//寶箱已開
-            loadBG(BgName, 1480*1.3, 1374*1.3);
-            int place[6][2]={{122,226},{1347,271},{1130,520},{713,818},{270,1114},{1210,1130}};
-            PIMAGE img = newimage();
-            PIMAGE msk = newimage();
-            getimage(img,"images\\3D\\obj\\door_img.png");
-            getimage(msk,"images\\3D\\obj\\door_msk.png");
-            putimage(bg, place[5-treasurePlace][0]*1.3, place[5-treasurePlace][1]*1.3, msk, NOTSRCERASE);
-            putimage(bg, place[5-treasurePlace][0]*1.3, place[5-treasurePlace][1]*1.3, img, SRCINVERT);
-            delimage(img);
-            delimage(msk);
+        if(open && bgX<loc[treasurePlace][0]+20 && bgX>loc[treasurePlace][1]-20 && bgY<loc[treasurePlace][2]+20 && bgY>loc[treasurePlace][3]-20) {
+            fOn = 1;
+            if(key == 102) {
+                //獎勵畫面
+                openbox();
+                open = 0;//寶箱已開
+                loadBG(BgName, 1480*1.3, 1374*1.3);
+                int place[6][2]={{122,226},{1347,271},{1130,520},{713,818},{270,1114},{1210,1130}};
+                PIMAGE img = newimage();
+                PIMAGE msk = newimage();
+                getimage(img,"images\\3D\\obj\\door_img.png");
+                getimage(msk,"images\\3D\\obj\\door_msk.png");
+                putimage(bg, place[5-treasurePlace][0]*1.3, place[5-treasurePlace][1]*1.3, msk, NOTSRCERASE);
+                putimage(bg, place[5-treasurePlace][0]*1.3, place[5-treasurePlace][1]*1.3, img, SRCINVERT);
+                delimage(img);
+                delimage(msk);
+            }
         }
         //背景轉換
         if(bgX<loc[5-treasurePlace][0]+3 && bgX>loc[5-treasurePlace][1]-3 && bgY<loc[5-treasurePlace][2]+3 && bgY>loc[5-treasurePlace][3]-3) {
@@ -578,20 +712,23 @@ void keyListener() {
         //寶箱牆
         int loc[6][4]={{-73,-143,-507,-547},{-1523,-1593,-917,-947},{-1873,-1943,-1637,-1677},{-53,-123,-1637,-1667},{-1753,-1823,-2397,-2437},{-2273,-2343,-2387,-2427}};
         if(open) itemwall(loc[treasurePlace][0],loc[treasurePlace][1],loc[treasurePlace][2],loc[treasurePlace][3]);
-        if(open && bgX<loc[treasurePlace][0]+20 && bgX>loc[treasurePlace][1]-20 && bgY<loc[treasurePlace][2]+20 && bgY>loc[treasurePlace][3]-20 && key == 102) {
-            //獎勵畫面
-            openbox();
-            open = 0;//寶箱已開
-            loadBG(BgName, 1935*1.3, 1744*1.3);
-            int place[6][2]={{97,174},{1213,485},{1480,1041},{83,1039},{1389,1628},{1788,1618}};
-            PIMAGE img = newimage();
-            PIMAGE msk = newimage();
-            getimage(img,"images\\3D\\obj\\door_img.png");
-            getimage(msk,"images\\3D\\obj\\door_msk.png");
-            putimage(bg, place[5-treasurePlace][0]*1.3, place[5-treasurePlace][1]*1.3, msk, NOTSRCERASE);
-            putimage(bg, place[5-treasurePlace][0]*1.3, place[5-treasurePlace][1]*1.3, img, SRCINVERT);
-            delimage(img);
-            delimage(msk);
+        if(open && bgX<loc[treasurePlace][0]+20 && bgX>loc[treasurePlace][1]-20 && bgY<loc[treasurePlace][2]+20 && bgY>loc[treasurePlace][3]-20) {
+            fOn = 1;
+            if(key == 102){
+                //獎勵畫面
+                openbox();
+                open = 0;//寶箱已開
+                loadBG(BgName, 1935*1.3, 1744*1.3);
+                int place[6][2]={{97,174},{1213,485},{1480,1041},{83,1039},{1389,1628},{1788,1618}};
+                PIMAGE img = newimage();
+                PIMAGE msk = newimage();
+                getimage(img,"images\\3D\\obj\\door_img.png");
+                getimage(msk,"images\\3D\\obj\\door_msk.png");
+                putimage(bg, place[5-treasurePlace][0]*1.3, place[5-treasurePlace][1]*1.3, msk, NOTSRCERASE);
+                putimage(bg, place[5-treasurePlace][0]*1.3, place[5-treasurePlace][1]*1.3, img, SRCINVERT);
+                delimage(img);
+                delimage(msk);
+            }
         }
         //背景轉換
         if(bgX<loc[5-treasurePlace][0]+3 && bgX>loc[5-treasurePlace][1]-3 && bgY<loc[5-treasurePlace][2]+3 && bgY>loc[5-treasurePlace][3]-3) {
