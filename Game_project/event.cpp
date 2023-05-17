@@ -12,7 +12,7 @@ int type,dropIdx[bpL],dropAmount[bpL];
 
 int event() {
     int r = random(150);
-    if (r<150) {
+    if (r<1) {
         mciSendString (TEXT("open audio\\bgm\\battle.mp3 alias battlemusic"), NULL,0,NULL);
 	    mciSendString (TEXT("play battlemusic"), NULL,0,NULL);
         return choMon();
@@ -102,6 +102,16 @@ void drop(int idx) {
         bp[0][0] += dropAmount[0];
         bp[0][1] += dropAmount[1];
         if ((dropAmount[1])&&!(bp[0][1]-dropAmount[1])) updateBp(0,1);
+    }
+    else if (idx==2) {
+        dropAmount[0] = random(10)*100+100;
+        dropAmount[2] = random(5)+5;
+        dropAmount[3] = random(10)+1;
+        bp[0][0] += dropAmount[0];
+        bp[0][2] += dropAmount[2];
+        bp[0][3] += dropAmount[3];
+        if ((dropAmount[2])&&!(bp[0][2]-dropAmount[2])) updateBp(0,2);
+        if ((dropAmount[3])&&!(bp[0][3]-dropAmount[3])) updateBp(0,3);
     }
 }
 
