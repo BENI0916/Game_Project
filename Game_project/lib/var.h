@@ -15,10 +15,10 @@ const int wid = 1280; //ï¿½ï¿½ï¿½ï¿½ï¿½e
 const int bpL = 10;
 const char dropName[][50] {
 	"·s¥x¹ô",
-	"S¯Å­¹§÷-¨ß¦×",
-	"ÃZ§Z¥Û",
-	"¶ÂÂ`¥Û"
+	"S¯Å­¹§÷-¨ß¦×"
 };
+const char swordName[][20] = {"¥Û¼C", "ÅK¼C", "³½"};
+const char potionName[][20] = {"¦^´_ÃÄ¤ô", "¤j¦^´_ÃÄ¤ô"};
 
 // ï¿½ï¿½ï¿½aï¿½ï¿½ï¿½ï¿½ï¿½c 
 typedef struct 
