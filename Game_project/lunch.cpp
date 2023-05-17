@@ -21,8 +21,8 @@ extern Animate loading_animate;
 extern double end;
 extern char BgName[];
 
-int esc,fade,metEvent,victory,inBp;
-PIMAGE escBG,screen,pauseImg,bgF,victoryUI,dropImg[bpL],gray,bpImg[3],gameover;
+int esc,fade,metEvent,victory,inBp,fOn;
+PIMAGE escBG,screen,pauseImg,bgF,victoryUI,dropImg[bpL],gray,bpImg[3],gameover,fbt;
 
 void lunch()
 {
@@ -46,12 +46,14 @@ void lunch()
 	victoryUI = newimage();
 	gray = newimage();
 	gameover = newimage();
+	fbt = newimage();
 	getimage(escBG,"images\\bg\\black.png",0,0);
 	getimage(pauseImg,"images\\menu\\pause.png",0,0);
 	getimage(victoryUI,"images\\menu\\victoryUI.png",0,0);
 	getimage(gray,"images\\menu\\bk.png",0,0);
 	getimage(gameover,"images\\bg\\gameover.png",0,0);
-	
+	getimage(fbt,"images\\menu\\F.png",0,0);
+
 	mciSendString (TEXT("open audio\\bgm\\home.mp3 alias homemusic"), NULL,0,NULL);
 	mciSendString (TEXT("play homemusic repeat"), NULL,0,NULL);
 	flushkey();
@@ -147,10 +149,11 @@ void lunch()
 				
 			}
 			else if (!metEvent){
-				keyListener();
 				putimage(abs(wid-getwidth(bg))/2 + bgX, abs(hih-getheight(bg))/2 + bgY, bg);
 				putimage(player.x, player.y, player.player_msk[player.output_idx], NOTSRCERASE);
 				putimage(player.x, player.y, player.player_img[player.output_idx], SRCINVERT);
+				keyListener();
+				if(fOn) putimage(720,430,fbt);
 			}
 			if (metEvent) {
 				if (metEvent<10) {
