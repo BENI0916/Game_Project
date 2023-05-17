@@ -1,20 +1,12 @@
 # Game_Project
-1.完成石頭人
+1.完成商店賣素材
 
 更動檔案
-images/3D/monster/stone/
-images/3D/drop/
+images/bg
+images/menu
 
 var.h
 lunch.cpp
-event.cpp
-enemy_move3D.cpp
+player_move3D.cpp
 
----------------------
-二更
 
-魔眼補畫面
-
-要直接打魔眼
-
-到initialization.cpp 103行，將enemy_num 改成1
