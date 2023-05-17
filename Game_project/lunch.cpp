@@ -14,7 +14,7 @@
 #include "lib/bebao.h"
 
 extern PIMAGE bg, dropImg[bpL], win_screen;
-extern int enemy_atk_type, enemy_num, inFight, bgX, bgY, win_screen_cnt,inMaz,atk_cd,player_walk_cnt,player_jump_cnt,dash_cnt;
+extern int enemy_atk_type, enemy_num, inFight, bgX, bgY, win_screen_cnt,inMaz,atk_cd,player_walk_cnt,player_jump_cnt,dash_cnt,atk_cnt;
 extern Human player;
 extern Monster enemy[3];
 extern Animate loading_animate;
@@ -96,6 +96,7 @@ void lunch()
 			player.atk_type = 0;
 			player_walk_cnt = 11;
 			player_jump_cnt = -1;
+			atk_cnt = -1;
 			dash_cnt = 0;
 			sprintf(BgName,"%s","images\\bg\\home2.png");
             bgX=20;

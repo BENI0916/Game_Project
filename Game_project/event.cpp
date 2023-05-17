@@ -5,14 +5,14 @@
 #include "lib/bebao.h"
 
 Monster monster;
-extern int fade,cnt,metEvent,bp[3][bpL],player_walk_cnt,player_jump_cnt,dash_cnt;
+extern int fade,cnt,metEvent,bp[3][bpL],player_walk_cnt,player_jump_cnt,dash_cnt,atk_cnt,atk;
 extern Human player;
 extern PIMAGE bgF,dropImg[],gray;
 int type,dropIdx[bpL],dropAmount[bpL];
 
 int event() {
     int r = random(150);
-    if (r<1) {
+    if (r<150) {
         mciSendString (TEXT("open audio\\bgm\\battle.mp3 alias battlemusic"), NULL,0,NULL);
 	    mciSendString (TEXT("play battlemusic"), NULL,0,NULL);
         return choMon();
@@ -37,12 +37,13 @@ int choMon() {
     fade = 1;
     cnt = 0;
     type = 0;
+    atk = 0;
     for (int i = 0;i<bpL;i++) {
 		dropAmount[i] = 0;
         dropIdx[i] = 0;
 	}
     //雜燴兔
-    if (r<100) {
+    if (r<50) {
         char s[100];
 	    monster.enemy_img = NULL;
 	    sprintf(s,"%s","images\\3D\\monster\\rabbit");
@@ -57,6 +58,23 @@ int choMon() {
         monster.high = 66;
         return 1;
     }
+    //石頭人
+    else if (r<100) {
+        char s[100];
+	    monster.enemy_img = NULL;
+	    sprintf(s,"%s","images\\3D\\monster\\stone");
+	    loadCHAR(s, &monster.enemy_img, 189, 132, 0);
+        monster.x = 872;
+        monster.y = 378;
+        monster.hp = 50;
+        monster.fhp = 50;
+        monster.damage = 5;
+        monster.dir = 'a';
+        monster.output_idx = 1;
+        monster.width = 189;
+        monster.high = 132;
+        return 2;
+    }
     return 0;
 }
 
@@ -69,6 +87,7 @@ void leaveFight() {
     player.atk_type = 0;
 	player_walk_cnt = 11;
 	player_jump_cnt = -1;
+    atk_cnt = -1;
 	dash_cnt = 0;
     delimage(bgF);
     metEvent = 0;
