@@ -522,7 +522,7 @@ void keyListener() {
                                             }
                                             bp[0][0]+=num*1000;
                                             bp[0][bpIdx[0][i]]-=num;
-                                            if(bp[0][bpIdx[0][i]]==0) updateBp(0,bpIdx[0][i]);
+                                            //if(bp[0][bpIdx[0][i]]==0) updateBp(0,bpIdx[0][i]);
                                             break;
                                         }
                                         //按取消
