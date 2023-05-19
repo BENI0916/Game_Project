@@ -3,7 +3,7 @@
 
 更動檔案
 
-images
+images/main_char_skill
 
 main.cpp
 
