@@ -1,12 +1,9 @@
 # Game_Project
-1.完成商店賣素材
+1.新增主角技能 按鍵 u
 
 更動檔案
-images/bg
-images/menu
+images
 
-var.h
-lunch.cpp
-player_move3D.cpp
-
-
+main.cpp
+initialization.cpp
+player_move.cpp/.h
