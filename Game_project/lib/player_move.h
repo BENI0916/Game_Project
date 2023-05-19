@@ -13,4 +13,6 @@ int player_move_check(char dir, int speed);
 
 void dash(int val);
 
+void player_skill_0(int val);
+
 #endif

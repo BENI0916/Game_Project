@@ -26,8 +26,10 @@ void initialization()
 	loadCHAR(s,&player.player_img,&player.player_msk,76,66, 0); //Ū���D���Ϥ�
 	sprintf(s,"%s","images\\3D\\player");
 	loadCHAR(s,&player.player_img,&player.player_msk,38*3.5,33*3.5,26);
+	printf("111 load player image succes\n");
+	sprintf(s,"%s","images\\main_char_skill"); //C++�L�k�N�r��`�ƪ����নchar pointer�A�G������
+	loadCHAR(s,&player.player_img,&player.player_msk,76,66, 38); //Ū���D���Ϥ�
 	printf("load player image succes\n");
-	
 	// �]�w��l�� 
 	player.x = (wid-28*3.5) / 2;
 	player.y = (hih-33*3.5) / 2 + 80;

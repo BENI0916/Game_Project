@@ -2,7 +2,7 @@
 #include "lib/player_move.h"
 #include "lib/player_atk.h"
 
-extern int key, atk_cnt, player_walk_cnt, player_jump_cnt, last_key, enemy_num, isNext, dash_cnt;
+extern int key, atk_cnt, player_walk_cnt, player_jump_cnt, last_key, enemy_num, isNext, dash_cnt, player_skill_type;
 extern double dash_cd_start, dash_cd_end;
 extern Human player;
 extern Monster enemy[3];
@@ -26,20 +26,36 @@ void move(int speed)
 
 	if(atk_cnt > -1) // atk_cnt  < 0 代表未進行攻擊 , 其他正整數則代表正在攻擊 
 	{
-		if(player.dir == 'd')
+		/*if(player_skill_type == 0)
 		{
-			atk(0);
-			
-			if(!player.atked)
-				player_atk(1);
+			if(player.dir == 'd')
+				player_skill_0(0);
+			else
+				player_skill_0(1);
 		}
 		else
-		{
-			atk(1);
-			
-			if(!player.atked)
-				player_atk(-1);
-		}
+		{*/
+			if(player.dir == 'd')
+			{
+				if(player_skill_type == 0)
+					player_skill_0(0);
+				else
+					atk(0);
+				
+				if(!player.atked)
+					player_atk(1);
+			}
+			else
+			{
+				if(player_skill_type == 0)
+					player_skill_0(1);
+				else
+					atk(1);
+				
+				if(!player.atked)
+					player_atk(-1);
+			}
+		//}
 	}
 	else 
 	{
@@ -81,6 +97,16 @@ void move(int speed)
 			if((GetAsyncKeyState(0x4B)) || GetAsyncKeyState('k'))
 				if(dash_cnt < 0)
 					dash_cnt = 3;
+
+			if((GetAsyncKeyState(0x55)) || GetAsyncKeyState('u'))
+			{
+				if(player_skill_type < 0)
+				{
+					atk_cnt = 9;
+					player_skill_type = 0;
+					player.atked = 0;
+				}
+			}
 		}
 	
 	key = 0; // 執行動作後將 key歸 0, 避免一直重複動作 
@@ -178,4 +204,21 @@ int player_move_check(char dir, int speed)
 		else
 			return 0;
 	}
+}
+
+void player_skill_0(int val)
+{
+	int table[5] = {0, 44, 42, 40, 38};
+
+	player.output_idx = table[atk_cnt / 2] + val;
+	
+	if(val && player_move_check('a', 1))
+		player.x--;
+	else if(player_move_check('d', 1))
+		player.x++;
+
+	atk_cnt--;
+
+	if(atk_cnt < 0)
+		player_skill_type = -1;
 }
