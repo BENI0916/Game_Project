@@ -1,16 +1,13 @@
 # Game_Project
-1.新增組合技能 先按 k 再按 u (需在1秒內) 
+1.把商店的部分從player_move3D.cpp移到shop.cpp
+2.新增商店武器和藥水
 
-2.調整傷害判定
-
-3.更新封面
+新增 images/3D/shop
+shop.cpp/ .h
 
 更動檔案
 
-images/main_char_skill
-images/menu
-main.cpp
+images/3D
 initialization.cpp
-player_move.cpp/.h
-player_atk.cpp
-output_img.cpp
+player_move3D.cpp/.h
+lunch.cpp
