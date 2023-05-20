@@ -4,7 +4,7 @@
 
 int bp[3][bpL],bpIdx[3][bpL],bpAmount[3];
 extern int key,inBp;
-extern PIMAGE screen,bpImg[],escBG,gray,dropImg[];
+extern PIMAGE screen,bpImg[],escBG,gray,dropImg[],swordImg[],potionImg[];
 extern Human player;
 
 int extern mX,mY;
@@ -63,8 +63,18 @@ void putBpItem(int idx) {
         i > 4 ? x = 477 : x = 0;
         i > 4 ? y = 60*(i-5)+320 : y = 60*i+320;
         putimage_alphablend(NULL,gray,180+x,y-6,0x70,0,0,442,45);
-        putimage_withalpha(NULL,dropImg[bpIdx[idx][i]],216+x-getwidth(dropImg[bpIdx[idx][i]])/2,y);
+        if (idx == 0) {
+            putimage_withalpha(NULL,dropImg[bpIdx[idx][i]],216+x-getwidth(dropImg[bpIdx[idx][i]])/2,y);
         xyprintf(401+x,y+getheight(dropImg[bpIdx[idx][i]])/2,"%s",dropName[bpIdx[idx][i]]);
         xyprintf(586+x,y+getheight(dropImg[bpIdx[idx][i]])/2,"%d",bp[idx][bpIdx[idx][i]]);
+        }
+        else if (idx == 1){
+            putimage_withalpha(NULL,swordImg[bpIdx[idx][i]],216+x-getwidth(swordImg[bpIdx[idx][i]])/2,y);
+            xyprintf(401+x,y+getheight(swordImg[bpIdx[idx][i]])/2,"%s",swordName[bpIdx[idx][i]]);
+        }
+        else if (idx == 2){
+            putimage_withalpha(NULL,potionImg[bpIdx[idx][i]],216+x-getwidth(potionImg[bpIdx[idx][i]])/2,y);
+            xyprintf(401+x,y+getheight(potionImg[bpIdx[idx][i]])/2,"%s",potionName[bpIdx[idx][i]]);
+        }
     }
 }
