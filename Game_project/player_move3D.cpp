@@ -6,13 +6,14 @@
 #include "lib/event.h"
 #include "lib/bebao.h"
 #include "lib/status.h"
+#include "lib/shop.h"
 
 #include <iostream>
 #include <string>
 using namespace std;
 
-extern PIMAGE bg,screen,escBG;
-extern int player_walk_cnt3D,bgX,bgY, inFight, isNext,key,esc,fade,metEvent,inBp,bp[3][bpL],fOn,bpAmount[0],bpIdx[3][bpL];
+extern PIMAGE bg,screen;
+extern int player_walk_cnt3D,bgX,bgY, inFight, isNext,key,esc,fade,metEvent,inBp,bp[3][bpL],fOn;
 extern Human player;
 extern char BgName[50];
 int speed = 10;
@@ -20,8 +21,6 @@ int fps = 5;
 int table[] = {0,-1,0,1};
 unsigned int treasurePlace = random(6);
 int open = 1, inMaz = 0;
-int swordPrice[3] = {1000, 10000, 1};
-int potionPrice[2] = {10000, 50000};
 
 void nextOrback() {
     int mX, mY;
@@ -432,127 +431,7 @@ void keyListener() {
         if (bgX<-170 && bgX>-230 && bgY<85 && bgY>28) {
             fOn = 1;
             if(key==102){
-                int mX, mY;
-                PIMAGE Agil = newimage();
-                PIMAGE money = newimage();
-                PIMAGE shopbuy1 = newimage();
-                PIMAGE shopbuy2 = newimage();
-                PIMAGE shopsell = newimage();
-                PIMAGE confirm = newimage();
-                PIMAGE cancel = newimage();
-                PIMAGE quantity = newimage();
-                PIMAGE choose = newimage();
-                getimage(money,"images\\3D\\drop\\0.png",0,0);
-                getimage(Agil, "images\\menu\\Agil2.png",0,0);
-                getimage(shopbuy1, "images\\menu\\shopbuy1.png",0,0);
-                getimage(shopbuy2, "images\\menu\\shopbuy2.png",0,0);
-                getimage(shopsell, "images\\menu\\shopsell.png",0,0);
-                getimage(confirm, "images\\menu\\confirm.png",0,0);
-                getimage(cancel, "images\\menu\\cancel.png",0,0);
-                getimage(quantity, "images\\menu\\quantity.png",0,0);
-                getimage(choose, "images\\menu\\choose.png",0,0);
-                for(;is_run();delay_fps(60)) {
-                    cleardevice();
-                    putimage(0, 0, screen);
-                    putimage_withalpha(NULL,Agil,0,0);
-                    mousepos(&mX,&mY);
-                    //買
-                    if((mX >= 1003 && mX <= 1261) && (mY >= 463 && mY <= 536) && keystate(key_mouse_l)) {
-                        flushmouse();
-                        for(;is_run();delay_fps(60)) {
-                            cleardevice();
-                            putimage(0, 0, screen);
-                            putimage_withalpha(NULL,shopbuy1,0,0);
-                            mousepos(&mX,&mY);
-                        }
-                        break;
-                    }
-                    //賣
-                    if((mX >= 1003 && mX <= 1261) && (mY >= 541 && mY <= 614) && keystate(key_mouse_l)) {
-                        for(;is_run();delay_fps(60)) {
-                            flushmouse();
-                            cleardevice();
-                            putimage(0, 0, screen);
-                            putimage_alphablend(NULL,escBG,0,0,0xC0,0,0,wid,hih);
-                            putimage_withalpha(NULL,shopsell,0,0);
-                            putBpItem(0);
-                            putMoney();
-                            putimage_withalpha(NULL,cancel,1156,624);
-                            mousepos(&mX,&mY);
-                            if((mX >= 1156 && mX <= 1265) && (mY >= 624 && mY <= 712) && keystate(key_mouse_l)) break; //按取消
-                            for(int i=0;i<bpAmount[0];i++){
-                                int x,y;
-                                i > 4 ? x = 477 : x = 0;
-                                i > 4 ? y = 60*(i-5)+320 : y = 60*i+320;
-                                if((mX >= 180+x && mX <= 180+x+442) && (mY >= y-6 && mY <= y-6+45) && keystate(key_mouse_l)) {
-                                    //按素材
-                                    int num = 0;
-                                    for(;is_run();delay_fps(60)) {
-                                        flushmouse();
-                                        cleardevice();
-                                        putimage(0, 0, screen);
-                                        putimage_alphablend(NULL,escBG,0,0,0xC0,0,0,wid,hih);
-                                        putimage_withalpha(NULL,shopsell,0,0);
-                                        putBpItem(0);
-                                        putMoney();
-                                        putimage_withalpha(NULL,cancel,1156,624);
-                                        putimage_withalpha(NULL,choose,180+x,y-6);
-                                        putimage_withalpha(NULL,quantity,861,636);
-                                        putimage_withalpha(NULL,confirm,1156,532);
-                                        mousepos(&mX,&mY);
-                                        xyprintf(994,677,"%d",num);
-                                        //按+
-                                        if((mX >= 1094 && mX <= 1128) && (mY >= 636 && mY <= 719) && keystate(key_mouse_l)) {
-                                            for(;is_run();delay_fps(60)) {
-                                                if(keystate(key_mouse_l)==0) break;
-                                            }
-                                            if(num<bp[0][bpIdx[0][i]]) num++;
-                                        }
-                                        //按-
-                                        if((mX >= 861 && mX <= 896) && (mY >= 636 && mY <= 719) && keystate(key_mouse_l)) {
-                                            for(;is_run();delay_fps(60)) {
-                                                if(keystate(key_mouse_l)==0) break;
-                                            }
-                                            if(num>0) num--;
-                                        }
-                                        //確認
-                                        if((mX >= 1156 && mX <= 1265) && (mY >= 532 && mY <= 619) && keystate(key_mouse_l)) {
-                                            for(;is_run();delay_fps(60)) {
-                                                if(keystate(key_mouse_l)==0) break;
-                                            }
-                                            bp[0][0]+=num*1000;
-                                            bp[0][bpIdx[0][i]]-=num;
-                                            //if(bp[0][bpIdx[0][i]]==0) updateBp(0,bpIdx[0][i]);
-                                            break;
-                                        }
-                                        //按取消
-                                        if((mX >= 1156 && mX <= 1265) && (mY >= 624 && mY <= 712) && keystate(key_mouse_l)) {
-                                            for(;is_run();delay_fps(60)) {
-                                                if(keystate(key_mouse_l)==0) break;
-                                            }
-                                            break;
-                                        }
-                                    }
-                                }
-                            }
-                            
-                        }
-                        break;
-                    }
-                    //算了
-                    if((mX >= 1003 && mX <= 1261) && (mY >= 619 && mY <= 692) && keystate(key_mouse_l)) {
-                        flushmouse();
-                        break;
-                    }
-                }
-                delimage(Agil);
-                delimage(money);
-                delimage(shopbuy1);
-                delimage(shopbuy2);
-                delimage(shopsell);
-                delimage(confirm);
-                delimage(cancel);
-                delimage(quantity);
+                shop();
             }
         }
         //出門

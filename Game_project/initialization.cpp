@@ -11,7 +11,7 @@ extern Monster enemy[3];
 extern Bullet skill[6], tp_door[2];
 extern Animate loading_animate;
 extern char BgName[50];
-extern PIMAGE bloodLine, blood[21], dropImg[],bpImg[], win_screen;
+extern PIMAGE bloodLine, blood[21], dropImg[],bpImg[], win_screen, swordImg[], potionImg[];
 
 void initialization()
 {
@@ -97,6 +97,9 @@ void initialization()
 
 	tp_door_ini();
 	printf("tp_door_ini succes\n");
+
+	shop_ini();
+	printf("shop_ini succes\n");
 
 	start = fclock(); // �Ω�p�ɼĤH�������ɶ����j 
 	enemy_atk_type = -1; // �ĤH�ϥΪ��ޯ�s�� 
@@ -375,5 +378,19 @@ void drop_ini() {
 		bpImg[i] = newimage();
 		sprintf(s, "images\\menu\\bp%d.png", i+1);
 		getimage(bpImg[i],s,0,0);
+	}
+}
+
+void shop_ini() {
+	char s[50];
+	for (int i = 0;i<3;i++) {
+		swordImg[i] = newimage();
+		sprintf(s, "images\\3D\\shop\\sword%d.png", i);
+		getimage(swordImg[i],s,0,0);
+	}
+	for (int i = 0;i<2;i++) {
+		potionImg[i] = newimage();
+		sprintf(s, "images\\3D\\shop\\potion%d.png", i);
+		getimage(potionImg[i],s,0,0);
 	}
 }
