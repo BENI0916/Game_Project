@@ -28,4 +28,6 @@ void tp_door_ini();
 void blood_ini();
 
 void drop_ini();
+
+void shop_ini();
 #endif
