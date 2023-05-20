@@ -102,7 +102,7 @@ void initialization()
 	enemy_atk_type = -1; // �ĤH�ϥΪ��ޯ�s�� 
 	player_jump_cnt = -1;// �H�����D�p�ɾ�
 	
-	enemy_num = -1;
+	enemy_num = 1;
 	
 	loading_img_ini();
 	printf("loading_img_ini succes\n");

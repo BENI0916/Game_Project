@@ -15,4 +15,6 @@ void dash(int val);
 
 void player_skill_0(int val);
 
+void player_skill_1(int val);
+
 #endif

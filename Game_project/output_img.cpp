@@ -90,7 +90,7 @@ void output_image()
 		{
 			win_screen_cnt++;
 			putimage(0, 0, wid, hih, win_screen, 0, 0, 1920, 1080);
-			printf("%d\n", win_screen_cnt);
+			//printf("%d\n", win_screen_cnt);
 		}
 		else if(enemy[2].hp <= 0 && win_screen_cnt == 100)
 		{

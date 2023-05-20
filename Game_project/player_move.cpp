@@ -3,7 +3,7 @@
 #include "lib/player_atk.h"
 
 extern int key, atk_cnt, player_walk_cnt, player_jump_cnt, last_key, enemy_num, isNext, dash_cnt, player_skill_type;
-extern double dash_cd_start, dash_cd_end;
+extern double dash_cd_start, dash_cd_end, com_ski_sta, com_ski_end;
 extern Human player;
 extern Monster enemy[3];
 extern Animate loading_animate;
@@ -26,36 +26,30 @@ void move(int speed)
 
 	if(atk_cnt > -1) // atk_cnt  < 0 代表未進行攻擊 , 其他正整數則代表正在攻擊 
 	{
-		/*if(player_skill_type == 0)
+		if(player.dir == 'd')
 		{
-			if(player.dir == 'd')
+			if(player_skill_type == 0)
 				player_skill_0(0);
+			else if(player_skill_type == 1)
+				player_skill_1(0);
 			else
-				player_skill_0(1);
+				atk(0);
+			
+			if(!player.atked)
+				player_atk(1);
 		}
 		else
-		{*/
-			if(player.dir == 'd')
-			{
-				if(player_skill_type == 0)
-					player_skill_0(0);
-				else
-					atk(0);
-				
-				if(!player.atked)
-					player_atk(1);
-			}
+		{
+			if(player_skill_type == 0)
+				player_skill_0(1);
+			else if(player_skill_type == 1)
+				player_skill_1(1);
 			else
-			{
-				if(player_skill_type == 0)
-					player_skill_0(1);
-				else
-					atk(1);
-				
-				if(!player.atked)
-					player_atk(-1);
-			}
-		//}
+				atk(1);
+			
+			if(!player.atked)
+				player_atk(-1);
+		}
 	}
 	else 
 	{
@@ -95,15 +89,27 @@ void move(int speed)
 					player_jump_cnt = 15;
 			
 			if((GetAsyncKeyState(0x4B)) || GetAsyncKeyState('k'))
+			{
 				if(dash_cnt < 0)
+				{
 					dash_cnt = 3;
+					com_ski_sta = fclock();
+				}
+			}
 
 			if((GetAsyncKeyState(0x55)) || GetAsyncKeyState('u'))
 			{
 				if(player_skill_type < 0)
 				{
-					atk_cnt = 9;
-					player_skill_type = 0;
+					com_ski_end = fclock();
+
+					if(1 > (com_ski_end - com_ski_sta))
+						player_skill_type = 1;
+					else
+						player_skill_type = 0;
+
+					atk_cnt = 14;
+					//player_skill_type = 0;
 					player.atked = 0;
 				}
 			}
@@ -210,7 +216,7 @@ void player_skill_0(int val)
 {
 	int table[5] = {0, 44, 42, 40, 38};
 
-	player.output_idx = table[atk_cnt / 2] + val;
+	player.output_idx = table[atk_cnt / 3] + val;
 	
 	if(val && player_move_check('a', 1))
 		player.x--;
@@ -222,3 +228,21 @@ void player_skill_0(int val)
 	if(atk_cnt < 0)
 		player_skill_type = -1;
 }
+
+void player_skill_1(int val)
+{
+	int table[5] = {0, 50, 48, 46, 16};
+
+	player.output_idx = table[atk_cnt / 3] + val;
+
+	if(val && player_move_check('a', 1))
+		player.x--;
+	else if(player_move_check('d', 1))
+		player.x++;
+
+	atk_cnt--;
+
+	if(atk_cnt < 0)
+		player_skill_type = -1;
+}
+

@@ -2,7 +2,7 @@
 #include "lib/player_atk.h"
 #include "lib/enemy_give_dmg.h"
 
-extern int key, atk_cnt, player_walk_cnt, flag, enemy_atk_cnt, enemy_atk_type, player_enemy_dir, atked, enemy_num, inFight;
+extern int key, atk_cnt, player_walk_cnt, flag, enemy_atk_cnt, enemy_atk_type, player_enemy_dir, atked, enemy_num, inFight, player_skill_type;
 extern double start, end;
 extern Human player;
 extern Monster enemy[3],monster;
@@ -15,10 +15,26 @@ void player_atk(int val)
 		switch(enemy_num)
 		{
 			case 0:
-				if(player.dir == 'd')
+				if(player_skill_type == 1)
+				{
+					if((is_middle(enemy[0].x + enemy[0].width * 0.90, player.x + player.width * 0.5, enemy[0].x + enemy[0].width * 0.1)
+					||  is_middle(enemy[0].x + enemy[0].width * 0.90, player.x + player.width, enemy[0].x + enemy[0].width * 0.1)
+			    	||  is_middle(enemy[0].x + enemy[0].width * 0.90, player.x, enemy[0].x + enemy[0].width * 0.1)))
+					{
+						enemy[0].hp-player.damage<=0 ? enemy[0].hp=0 : enemy[0].hp-=player.damage;
+
+						if((player.x + player.width / 2) < (enemy[0].x + enemy[0].width / 2))
+							enemy[0].x += player.power;
+						else
+							enemy[0].x -= player.power;
+						player.atked = 1;
+					}
+				}
+				else if(player.dir == 'd')
 				{	
 					// 若敵人在玩家攻擊範圍  
-					if(is_middle(enemy[0].x + enemy[0].width * 0.90, player.x + player.width * 0.9, enemy[0].x + enemy[0].width * 0.1))
+					if(is_middle(enemy[0].x + enemy[0].width * 0.90, player.x + player.width * 0.9, enemy[0].x + enemy[0].width * 0.1)
+					|| is_middle(enemy[0].x + enemy[0].width * 0.90, player.x + player.width * 0.65, enemy[0].x + enemy[0].width * 0.1))
 					{
 						enemy[0].hp-player.damage<=0 ? enemy[0].hp=0 : enemy[0].hp-=player.damage;
 						enemy[0].x += player.power;// 敵人會被玩家擊退  
@@ -27,7 +43,8 @@ void player_atk(int val)
 				}
 				else
 				{
-					if(is_middle(enemy[0].x + enemy[0].width , player.x * 1.05, enemy[0].x + enemy[0].width * 0.1))
+					if(is_middle(enemy[0].x + enemy[0].width , player.x + player.width * 0.05, enemy[0].x + enemy[0].width * 0.1)
+					|| is_middle(enemy[0].x + enemy[0].width , player.x + player.width * 0.35, enemy[0].x + enemy[0].width * 0.1))
 					{
 						enemy[0].hp-player.damage<=0 ? enemy[0].hp=0 : enemy[0].hp-=player.damage;
 						enemy[0].x -= player.power;	
@@ -37,7 +54,22 @@ void player_atk(int val)
 				break;
 			
 			case 1:
-				if(player.dir == 'd')
+				if(player_skill_type == 1)
+				{
+					if((is_middle(enemy[enemy_num].x + enemy[enemy_num].width * 0.64, player.x + player.width * 0.5, enemy[enemy_num].x + enemy[enemy_num].width * 0.36)
+					||  is_middle(enemy[enemy_num].x + enemy[enemy_num].width * 0.64, player.x + player.width, enemy[enemy_num].x + enemy[enemy_num].width * 0.36)
+			    	||  is_middle(enemy[enemy_num].x + enemy[enemy_num].width * 0.64, player.x, enemy[enemy_num].x + enemy[enemy_num].width * 0.36)))
+					{
+						enemy[enemy_num].hp-player.damage<=0 ? enemy[enemy_num].hp=0 : enemy[enemy_num].hp-=player.damage;
+
+						if((player.x + player.width / 2) < (enemy[enemy_num].x + enemy[enemy_num].width / 2))
+							enemy[enemy_num].x += player.power;
+						else
+							enemy[enemy_num].x -= player.power;
+						player.atked = 1;
+					}
+				}
+				else if(player.dir == 'd')
 				{
 					if((is_middle(enemy[1].x + enemy[1].width * 0.64, player.x + player.width, enemy[1].x + enemy[1].width * 0.36)
 					|| is_middle(enemy[1].x + enemy[1].width * 0.64, player.x + player.width * 0.6, enemy[1].x + enemy[1].width * 0.36))
@@ -63,7 +95,22 @@ void player_atk(int val)
 				break;
 			
 			case 2:
-				if(player.dir == 'd')
+				if(player_skill_type == 1)
+				{
+					if((is_middle(enemy[enemy_num].x + enemy[enemy_num].width * 0.56, player.x + player.width * 0.5, enemy[enemy_num].x + enemy[enemy_num].width * 0.44)
+					||  is_middle(enemy[enemy_num].x + enemy[enemy_num].width * 0.56, player.x + player.width, enemy[enemy_num].x + enemy[enemy_num].width * 0.44)
+			    	||  is_middle(enemy[enemy_num].x + enemy[enemy_num].width * 0.56, player.x, enemy[enemy_num].x + enemy[enemy_num].width * 0.44)))
+					{
+						enemy[enemy_num].hp-player.damage<=0 ? enemy[enemy_num].hp=0 : enemy[enemy_num].hp-=player.damage;
+
+						if((player.x + player.width / 2) < (enemy[enemy_num].x + enemy[enemy_num].width / 2))
+							enemy[enemy_num].x += player.power;
+						else
+							enemy[enemy_num].x -= player.power;
+						player.atked = 1;
+					}
+				}
+				else if(player.dir == 'd')
 				{
 					if((is_middle(enemy[2].x + enemy[2].width * 0.56, player.x + player.width * 0.9, enemy[2].x + enemy[2].width * 0.44)
 					|| is_middle(enemy[2].x + enemy[2].width * 0.56, player.x + player.width *0.6, enemy[2].x + enemy[2].width * 0.44))
