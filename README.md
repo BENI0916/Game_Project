@@ -3,9 +3,12 @@
 
 2.調整傷害判定
 
+3.更新封面
+
 更動檔案
 
 images/main_char_skill
+images/menu
 main.cpp
 initialization.cpp
 player_move.cpp/.h
