@@ -9,5 +9,5 @@ shop.cpp/ .h
 
 images/3D
 initialization.cpp/ .h
-player_move3D.cpp/.h
+player_move3D.cpp
 lunch.cpp
