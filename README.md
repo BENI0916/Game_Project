@@ -11,3 +11,14 @@ images/3D
 initialization.cpp/ .h
 player_move3D.cpp
 lunch.cpp
+
+--------------------------
+
+二更
+
+背包裡武器藥水顯示
+
+更動檔案
+
+shop.cpp
+bebao.cpp
