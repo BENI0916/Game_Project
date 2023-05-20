@@ -8,6 +8,6 @@ shop.cpp/ .h
 更動檔案
 
 images/3D
-initialization.cpp
+initialization.cpp/ .h
 player_move3D.cpp/.h
 lunch.cpp
