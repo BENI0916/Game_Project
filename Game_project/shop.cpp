@@ -262,7 +262,7 @@ void shop(){
                                 }
                                 bp[0][0]+=num*1000;
                                 bp[0][bpIdx[0][i]]-=num;
-                                //if(bp[0][bpIdx[0][i]]==0) updateBp(0,bpIdx[0][i]);
+                                if(bp[0][bpIdx[0][i]]==0) updateBp(0,bpIdx[0][i]);
                                 break;
                             }
                             //按取消
@@ -281,6 +281,7 @@ void shop(){
         //按算了
         if((mX >= 1003 && mX <= 1261) && (mY >= 619 && mY <= 692) && keystate(key_mouse_l)) {
             flushmouse();
+            flushkey();
             break;
         }
     }

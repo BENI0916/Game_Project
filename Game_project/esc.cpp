@@ -22,11 +22,8 @@ void escScreen() {
 
 void escListener() {
     if (kbhit()) { // 檢測是否有鍵盤輸入 
-		key = getch();
-        if (key == key_esc) {
-            key = 0;
-            esc = 0;
-        }
+		key = 0;
+        esc = 0;
     }
     mousepos(&mX,&mY);
 	if((mX >= 600 && mX <= 710) && (mY >= 320 && mY <= 410) && keystate(key_mouse_l)) {

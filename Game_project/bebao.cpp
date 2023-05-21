@@ -20,11 +20,8 @@ void bpScreen() {
 
 void bpListener() {
     if (kbhit()) { // 檢測是否有鍵盤輸入 
-		key = getch();
-        if (key == 101||key_esc) {
-            key = 0;
-            inBp = 0;
-        }
+		key = 0;
+        inBp = 0;
     }
     mousepos(&mX,&mY);
 	if((mX >= 1144 && mX <= 1263) && (mY >= 141 && mY <= 250) && keystate(key_mouse_l)) {
@@ -45,15 +42,30 @@ void bpListener() {
 }
 
 void updateBp(int type,int idx) {
-    bpIdx[type][bpAmount[type]++] = idx;
-    for (int i = 0;i<bpAmount[type]-1;i++) {
-        for (int j = 0;j<bpAmount[type]-1-i;j++) {
-            if (bpIdx[type][j]>bpIdx[type][j+1]) {
-                int tem = bpIdx[type][j];
-                bpIdx[type][j] = bpIdx[type][j+1];
-                bpIdx[type][j+1] = tem;
+    int tf = -1;
+    for (int i = 0;i<bpAmount[type];i++) {
+        if (bpIdx[type][i]==idx) {
+            tf = i;
+            break;
+        }
+    }
+    if (tf==-1) {
+        bpIdx[type][bpAmount[type]++] = idx;
+        for (int i = 0;i<bpAmount[type]-1;i++) {
+            for (int j = 0;j<bpAmount[type]-1-i;j++) {
+                if (bpIdx[type][j]>bpIdx[type][j+1]) {
+                    int tem = bpIdx[type][j];
+                    bpIdx[type][j] = bpIdx[type][j+1];
+                    bpIdx[type][j+1] = tem;
+                }
             }
         }
+    }
+    else {
+        for (int i = tf;i<bpAmount[type]-1;i++) {
+            bpIdx[type][i] = bpIdx[type][i+1];
+        }
+        bpIdx[type][--bpAmount[type]]=0;
     }
 }
 
