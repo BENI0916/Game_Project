@@ -7,3 +7,11 @@ audio/boss_bgm
 initialization.cpp 
 player_atk .h/.cpp 
 output_img.cpp 
+----------------
+二更
+
+解決換場效果問題
+
+更動檔案
+
+lunch.cpp
