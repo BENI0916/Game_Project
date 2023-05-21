@@ -1,17 +1,10 @@
 # Game_Project
-1.新增戰鬥的bgm及勝利的bgm
+1.調整戰鬥bgm及勝利bgm音量
+2.修bug
 
 更動檔案
+audio/boss_bgm/
 
-audio/boss_bgm 
-initialization.cpp 
-player_atk .h/.cpp 
-output_img.cpp 
-----------------
-二更
-
-解決換場特效問題
-
-更動檔案
-
-lunch.cpp
+bebao.cpp
+esc.cpp
+shop.cpp
