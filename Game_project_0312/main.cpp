@@ -1,42 +1,70 @@
-#include <ege.h>
-#include <conio.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <windows.h>
-#include <graphics.h> 
-#define hih 480
-#define wid 640
-PIMAGE ori_bg = newimage(), new_bg = newimage(wid, hih);
-int k, left_walk_cnt, right_walk_cnt;
-struct human
-{
-	int x;
-	int y;
-	int hp;
-	char dir;
-	int output_idx;
-	PIMAGE player_origin_img[6], player_origin_mask[6];
-	PIMAGE player_new_img[6], player_new_mask[6];
-}player;
+#include "lib/var.h"
+#include "lib/game_start.h"
 
-void initialization();  // ªì©l¤Æ 
-void move(int speed);	// ª±®a²¾°Ê speed: ²¾°Ê¤@¦¸ªº¶ZÂ÷  
-void output_image();	// ¿é¥X¹Ï¤ù 
+PIMAGE bg = newimage(); //bg:å„²å­˜èƒŒæ™¯åœ–ç‰‡ä¹‹è®Šæ•¸
+PIMAGE bloodLine, blood[21], win_screen = newimage();
+int key, atk_cnt, player_walk_cnt, player_jump_cnt, last_key, flag, enemy_atk_cnt, enemy_atk_type, player_enemy_dir, enemy_num = -1, get_dmg_cnt, skill_dir, isNext, dash_cnt, combine_cnt, atk_cd, win_screen_cnt, player_skill_type;
+double start, end, com_ski_sta, com_ski_end;// com_ski çµ„åˆæŠ€èƒ½ ç”¨æ–¼è¨ˆç®—æ™‚é–“å·®
+int inFight = 0;
+int player_walk_cnt3D,bgX,bgY;
+char BgName[50];
+// key : éµç›¤è¼¸å…¥çš„å„²å­˜ä½ç½®
+// key : éµç›¤è¼¸å…¥çš„å„²å­˜ä½ç½®
+// left_walk_cnt, right_walk_cnt : èµ°è·¯è¨ˆæ•¸å™¨ ç”¨æ–¼è¨ˆç®—èµ°è·¯æ™‚è¼¸å‡ºçš„åœ–ç‰‡ 
 
+Human player,player3D;
+Monster enemy[3];
+Bullet skill[6], tp_door[2];
+Animate loading_animate;
 
 int main(void)
 {
-	initgraph(wid, hih);	// ªì©l¤Æ¿é¥Xµ¡¤f 
-	initialization();
-	
-	// is_run ÀËµøµ{§Ç¬O§_¦¬¨ìÃö³¬®ø®§, ¦¬¨ìªº¸Ü·|ªğ¦^false, §Y°h¥Xµ{§Ç 
-	// delay_fps ±±¨î´V²v, 60 ªí¥Ü"¥­§¡©µ®É"¬°1000/60²@¬í 
-	for (; is_run(); delay_fps(60))
-	{
-		cleardevice();
-		move(4);
-		output_image();
-	}
+	//é–‹å§‹é‹è¡Œ
+	gameStart();
 
 	return 0;
 }
+
+//                                 |~~~~~~~|
+//                                 |       |
+//                                 |       |
+//                                 |       |
+//                                 |       |
+//                                 |       |
+//      |~.\\\_\~~~~~~~~~~~~~~xx~~~         ~~~~~~~~~~~~~~~~~~~~~/_//;~|
+//      |  \  o \_         ,XXXXX),                         _..-~ o /  |
+//      |    ~~\  ~-.     XXXXX`)))),                 _.--~~   .-~~~   |
+//       ~~~~~~~`\   ~\~~~XXX' _/ ';))     |~~~~~~..-~     _.-~ ~~~~~~~
+//                `\   ~~--`_\~\, ;;;\)__.---.~~~      _.-~
+//                  ~-.       `:;;/;; \          _..-~~
+//                     ~-._      `''        /-~-~
+//                         `\              /  /
+//                           |         ,   | |
+//                            |  '        /  |
+//                             \/;          |
+//                              ;;          |
+//                              `;   .       |
+//                              |~~~-----.....|
+//                             | \             \
+//                            | /\~~--...__    |
+//                            (|  `\       __-\|
+//                            ||    \_   /~    |
+//                            |)     \~-'      |
+//                             |      | \      '
+//                             |      |  \    :
+//                              \     |  |    |
+//                               |    )  (    )
+//                                \  /;  /\  |
+//                                |    |/   |
+//                                |    |   |
+//                                 \  .'  ||
+//                                 |  |  | |
+//                                 (  | |  |
+//                                 |   \ \ |
+//                                 || o `.)|
+//                                 |`\\\\) |
+//                                 |       |
+//                                 |       |
+//    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//
+//                      è€¶ç©Œä¿ä½‘                æ°¸ç„¡ BUG
