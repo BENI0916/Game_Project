@@ -149,10 +149,10 @@ void lunch()
 				
 			}
 			else if (!metEvent){
+				keyListener();
 				putimage(abs(wid-getwidth(bg))/2 + bgX, abs(hih-getheight(bg))/2 + bgY, bg);
 				putimage(player.x, player.y, player.player_msk[player.output_idx], NOTSRCERASE);
 				putimage(player.x, player.y, player.player_img[player.output_idx], SRCINVERT);
-				keyListener();
 				if(fOn) putimage(720,430,fbt);
 			}
 			if (metEvent) {
