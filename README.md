@@ -17,3 +17,11 @@ shop.cpp
 
 player_atk .cpp/.h
 output_img.cpp
+
+-----------
+三更半夜
+1.修bug
+
+更動檔案
+esc.cpp
+bebao.cpp
