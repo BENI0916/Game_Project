@@ -4,7 +4,7 @@
 #include "lib/output_img.h"
 #include "lib/enemy_atk.h"
 
-extern int atk_cnt, player_walk_cnt, flag, enemy_atk_type, player_jump_cnt, atked, enemy_num,player_walk_cnt3D,bgX,bgY, inFight, get_dmg_cnt, dash_cnt, combine_cnt, atk_cd, win_screen_cnt;
+extern int atk_cnt, player_walk_cnt, flag, enemy_atk_type, player_jump_cnt, atked, enemy_num,player_walk_cnt3D,bgX,bgY, inFight, get_dmg_cnt, dash_cnt, bp[3][bpL], bpIdx[3][bpL], bpAmount[3], combine_cnt, atk_cd, win_screen_cnt;
 extern double start;
 extern Human player;
 extern Monster enemy[3];
@@ -15,6 +15,7 @@ extern PIMAGE bloodLine, blood[21], dropImg[],bpImg[], win_screen, swordImg[], p
 
 void initialization()
 {
+	sprintf(BgName,"%s","images\\bg\\home2.png");
 	loadBG(BgName,1587/2,1300/2); //Ū���I��
 	
 	printf("load background succes\n");
@@ -31,19 +32,34 @@ void initialization()
 	printf("load player image succes\n");
 	// �]�w��l�� 
 	player.x = (wid-28*3.5) / 2;
-	player.y = (hih-33*3.5) / 2 + 80; 
+	player.y = (hih-33*3.5) / 2 + 80;
+	player.hp = 10;
+	player.fhp = 10;
+	player.damage = 25; // ��ĤH�y�����ˮ` 
 	player.atked = 0;   // �P�w�O�_���y���ˮ`  
 	player.dir = 'd';   // ��V 
+	player.output_idx = 27;// ��X�Ϥ��s�� 
 	player.high = 28*3.5;   // �H���Ϥ����� 
 	player.width = 33*3.5;  // �H���Ϥ����e 
 	player.power = 30;  // ���h�ĤH���Z�� 
 	player.atk_type = 0;
 	
 	player_walk_cnt = 11; // �����p�ɾ� 
-	player_walk_cnt3D = 0;
+	player_walk_cnt3D = 0,bgX=20,bgY=-20;
 	
 	printf("player setting succes\n");
 
+	bpAmount[0] = 0;
+	bpAmount[1] = 0;
+	bpAmount[2] = 0;
+	for (int i = 0;i<bpL;i++) {//清空背包
+		bp[0][i] = 0;
+		bp[1][i] = 0;
+		bp[2][i] = 0;
+		bpIdx[0][i] = 0;
+		bpIdx[1][i] = 0;
+		bpIdx[2][i] = 0;
+	}
 	drop_ini();
 	printf("drop ini succes\n");
 
@@ -89,6 +105,7 @@ void initialization()
 	enemy_atk_type = -1; // �ĤH�ϥΪ��ޯ�s�� 
 	player_jump_cnt = -1;// �H�����D�p�ɾ�
 	
+	enemy_num = 1;
 	
 	loading_img_ini();
 	printf("loading_img_ini succes\n");

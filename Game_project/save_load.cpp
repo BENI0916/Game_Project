@@ -5,32 +5,8 @@
 #include <string.h>
 
 extern Human player;
-extern int bgX,bgY,enemy_num,bp[3][bpL],bpIdx[3][bpL],bpAmount[3],inMaz;
+extern int bgX,bgY,enemy_num,bp[3][bpL],bpIdx[3][bpL],bpAmount[3];
 extern char BgName[]; 
-
-//新遊戲 初始化數值
-void newGame() {
-	sprintf(BgName,"%s","images\\bg\\home2.png");//當前背景
-	inMaz = 0;//是否在迷宮內
-	bgX=20,bgY=-20;//背景位置
-	//背包相關
-	bpAmount[0] = 0;
-	bpAmount[1] = 0;
-	bpAmount[2] = 0;
-	for (int i = 0;i<bpL;i++) {//清空背包
-		bp[0][i] = 0;
-		bp[1][i] = 0;
-		bp[2][i] = 0;
-		bpIdx[0][i] = 0;
-		bpIdx[1][i] = 0;
-		bpIdx[2][i] = 0;
-	}
-	player.output_idx = 27;//玩家圖片編號
-	player.hp = 10;//血量
-	player.fhp = 10;//最大血量
-	player.damage = 25;//傷害
-	enemy_num = 1;//BOSS數
-}
 
 //存檔用函式 
 void save() 
