@@ -20,8 +20,11 @@ void bpScreen() {
 
 void bpListener() {
     if (kbhit()) { // 檢測是否有鍵盤輸入 
-		key = 0;
-        inBp = 0;
+		key = getch();
+        if (key == key_esc||key == 101) {
+            key = 0;
+            inBp = 0;
+        }
     }
     mousepos(&mX,&mY);
 	if((mX >= 1144 && mX <= 1263) && (mY >= 141 && mY <= 250) && keystate(key_mouse_l)) {
