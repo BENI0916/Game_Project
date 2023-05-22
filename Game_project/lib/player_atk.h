@@ -3,4 +3,6 @@
 
 void player_atk(int val);
 
+void win_music();
+
 #endif
