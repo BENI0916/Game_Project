@@ -138,6 +138,8 @@ void player_atk(int val)
 			default :
 				break;
 		}
+		// cur enemy die
+		win_music();
 	}
 	else 
 	{
@@ -157,5 +159,14 @@ void player_atk(int val)
 				player.atked = 1;
 			}
 		}
+	}
+}
+
+void win_music()
+{
+	if(enemy_num > -1 && enemy[enemy_num].hp <= 0)
+	{
+		mciSendString (TEXT("open audio\\boss_bgm\\win.mp3 alias win"), NULL,0,NULL);
+		mciSendString (TEXT("play win"), NULL,0,NULL);
 	}
 }

@@ -31,6 +31,18 @@ void output_image()
 				atk_cd = 4;
 				printf("enemy_num = %d\n", enemy_num);
 				player.x = wid / 4;
+
+				if(enemy_num < 3)
+				{
+					char str[100] = "open audio\\boss_bgm\\1.mp3 alias boss_bgm";
+					//sprintf(s, "%d", "open audio\\boss_bgm\\%d.mp3 alias boss_bgm") 
+					mciSendString (TEXT(str), NULL,0,NULL);
+					mciSendString (TEXT("play boss_bgm repeat"), NULL,0,NULL);
+				}
+				
+				//與player_atk的win_music合在一起
+				mciSendString (TEXT("stop win"), NULL,0,NULL);
+				mciSendString (TEXT("close win"), NULL,0,NULL);
 			}
 			else {
 				loading_animate.printed = 1;
@@ -73,6 +85,8 @@ void output_image()
 		{ // 若敵人血量歸0，但玩家還沒走到傳送門區域
 		  // 則持續印出傳送門
 			put_tp_door_img();
+			mciSendString (TEXT("stop boss_bgm"), NULL,0,NULL);
+			mciSendString (TEXT("close boss_bgm"), NULL,0,NULL);
 		}
 		
 		// 輸出玩家
