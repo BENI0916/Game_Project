@@ -75,7 +75,9 @@ void gameStart()
 			fadeOut();
 			mciSendString(TEXT("stop titlemusic"),NULL,0,NULL);
 			mciSendString(TEXT("close titlemusic"),NULL,0,NULL);
+			newGame();
 			lunch();
+			break;
 		}
 		else if((msg.x >= 825 && msg.x <= 991) && (msg.y >= 552 && msg.y <= 603) && msg.is_left())
 		{

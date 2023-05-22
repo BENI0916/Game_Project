@@ -13,14 +13,14 @@
 using namespace std;
 
 extern PIMAGE bg,screen;
-extern int player_walk_cnt3D,bgX,bgY, inFight, isNext,key,esc,fade,metEvent,inBp,bp[3][bpL],fOn;
+extern int player_walk_cnt3D,bgX,bgY, inFight, isNext,key,esc,fade,metEvent,inBp,bp[3][bpL],fOn,inMaz;
 extern Human player;
 extern char BgName[50];
 int speed = 10;
 int fps = 5;
 int table[] = {0,-1,0,1};
 unsigned int treasurePlace = random(6);
-int open = 1, inMaz = 0;
+int open = 1;
 
 void nextOrback() {
     int mX, mY;
