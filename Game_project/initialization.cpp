@@ -4,7 +4,7 @@
 #include "lib/output_img.h"
 #include "lib/enemy_atk.h"
 
-extern int atk_cnt, player_walk_cnt, flag, enemy_atk_type, player_jump_cnt, atked, enemy_num,player_walk_cnt3D,bgX,bgY, inFight, get_dmg_cnt, dash_cnt, combine_cnt, atk_cd, win_screen_cnt;
+extern int atk_cnt, player_walk_cnt, flag, enemy_atk_type, player_jump_cnt, atked, enemy_num,player_walk_cnt3D,bgX,bgY, inFight, get_dmg_cnt, dash_cnt, combine_cnt, atk_cd, win_screen_cnt, boss_bgm_play;
 extern double start;
 extern Human player;
 extern Monster enemy[3];
@@ -25,7 +25,6 @@ void initialization()
 	loadCHAR(s,&player.player_img,&player.player_msk,76,66, 0); //Ū���D���Ϥ�
 	sprintf(s,"%s","images\\3D\\player");
 	loadCHAR(s,&player.player_img,&player.player_msk,38*3.5,33*3.5,26);
-	printf("111 load player image succes\n");
 	sprintf(s,"%s","images\\main_char_skill"); //C++�L�k�N�r��`�ƪ����নchar pointer�A�G������
 	loadCHAR(s,&player.player_img,&player.player_msk,76,66, 38); //Ū���D���Ϥ�
 	printf("load player image succes\n");
@@ -102,6 +101,10 @@ void initialization()
 	// 勝利畫面
 	win_screen_cnt = 0;
 	getimage(win_screen, "images\\menu\\win_screen.png", wid, hih);
+
+	// 0 表示沒放boss bgm
+	// 1 代表有放
+	boss_bgm_play = 0;
 }
 
 void enemy_ini()
@@ -119,13 +122,13 @@ void enemy_ini()
 	enemy[0].dir = 'a';
 	enemy[0].hp = 100;
 	enemy[0].fhp = 100;
-	enemy[0].damage = 0; // �ĤH�y�����ˮ` 
+	enemy[0].damage = 1; // �ĤH�y�����ˮ` 
 	enemy[0].output_idx = 1;
 	enemy[0].high = 165;
 	enemy[0].width = 165;
 	enemy[0].power = 100; // �ĤH���h���a���Z�� 
 	enemy[0].speed = 5;    
-	enemy[0].atk_0_cnt = 199; // �ĤH���ޯ�p�ƾ� 
+	enemy[0].atk_0_cnt = 99; // �ĤH���ޯ�p�ƾ� 
 	enemy[0].atk_1_cnt = 99;  
 }
 
@@ -144,7 +147,7 @@ void enemy_ini_01()
 	enemy[1].dir = 'a';
 	enemy[1].hp = 100;
 	enemy[1].fhp = 100;
-	enemy[1].damage = 0; // �ĤH�y�����ˮ` 
+	enemy[1].damage = 1; // �ĤH�y�����ˮ` 
 	enemy[1].output_idx = 1;
 	enemy[1].high = 150;
 	enemy[1].width = 136;
@@ -169,7 +172,7 @@ void enemy_ini_02()
 	enemy[2].dir = 'a';
 	enemy[2].hp = 100;
 	enemy[2].fhp = 100;
-	enemy[2].damage = 0; // �ĤH�y�����ˮ` 
+	enemy[2].damage = 1; // �ĤH�y�����ˮ` 
 	enemy[2].output_idx = 1;
 	enemy[2].high = 400;
 	enemy[2].width = 500;

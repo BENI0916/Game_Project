@@ -52,7 +52,7 @@ void enemy_atk()
 				break;
 			
 			case 2 :
-				enemy_atk_cnt = 60;
+				enemy_atk_cnt = 74;
 				break;
 			
 			case 3 :
@@ -64,7 +64,7 @@ void enemy_atk()
 				break;
 
 			case 5 :
-				enemy_atk_cnt = 56;
+				enemy_atk_cnt = 50;
 				break;
 
 			case 6:
@@ -268,7 +268,7 @@ void enemy_00_atk(int val)
 	int table[5] = {0, 2, 4, 2};
 	
 	// �ھڭp�ɾ���X�ʧ@ 
-	enemy[enemy_num].output_idx = table[enemy_atk_cnt / 50] + val;
+	enemy[enemy_num].output_idx = table[enemy_atk_cnt / 25] + val;
 	
 	// �Y�b�p�ɾ����S�w�ɶ����j�� �|��X�������ޯ�S�� 
 	if(enemy[enemy_num].output_idx == 4 || enemy[enemy_num].output_idx == 5)
@@ -346,8 +346,12 @@ void enemy_01_atk(int val)
 
 void enemy_02_atk(int val)
 {
+
+	int table[5] = {0, 2, 4, 2, 2};
+	enemy[enemy_num].output_idx = table[enemy_atk_cnt / 15] + val;
+	
 	enemy_atk_cnt--;
-	if(enemy_atk_cnt > -1)
+	if(enemy_atk_cnt > -1 && 60 > enemy_atk_cnt)
 	{
 		skill[2].status = 1;
 		skill[2].output_idx = val;
@@ -512,38 +516,38 @@ void enemy_05_atk(int val)
 
 	switch(enemy_atk_cnt)
 	{
-		case 55:
+		case 49:
 			skill[5].output_idx = 0;
 			skill[5].y = hih * 0.6 + 66 - skill[5].high * 1.7;
 			break;
 		
-		case 50:
+		case 45:
 			skill[5].output_idx = 1;
 			skill[5].y = hih * 0.6 + 66 - skill[5].high * 1.7;
 			break;
 		
-		case 45:
+		case 40:
 			skill[5].output_idx = 2;
 			skill[5].y = hih * 0.6 + 66 - skill[5].high * 1.8;
 			break;
 		
-		case 40:
+		case 32:
 			skill[5].y = hih * 0.6 + 66 - skill[5].high * 1.7;
 			break;
 		
-		case 29:
+		case 26:
 			skill[5].y = hih * 0.6 + 66 - skill[5].high * 1.5;
 			break;
 
-		case 20:
+		case 18:
 			skill[5].y = hih * 0.6 + 66 - skill[5].high * 1.3;
 			break;
 		
-		case 13:
+		case 1:
 			skill[5].y = hih * 0.6 + 66 - skill[5].high * 1.1;
 			break;
 
-		case 8:
+		case 7:
 			skill[5].output_idx = 3;
 			skill[5].y = hih * 0.6 + 66 - skill[5].high * 0.9;
 			break;

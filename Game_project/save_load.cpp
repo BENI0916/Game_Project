@@ -28,8 +28,8 @@ void newGame() {
 	player.output_idx = 27;//玩家圖片編號
 	player.hp = 10;//血量
 	player.fhp = 10;//最大血量
-	player.damage = 25;//傷害
-	enemy_num = 1;//BOSS數
+	player.damage = 5;//傷害
+	enemy_num = -1;//BOSS數
 }
 
 //存檔用函式 

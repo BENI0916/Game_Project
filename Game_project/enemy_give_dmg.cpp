@@ -178,23 +178,25 @@ void case_1()
 
 void case_2()
 {
-	//printf("y up = %d y dw = %d pos = %d\n", )
-	if(is_middle(skill[2].y + 90, player.y + player.high / 2, skill[2].y + 40)
-	&& is_middle(skill[2].x + 150, player.x + player.width / 2, skill[2].x + 85))
+	if(enemy_atk_cnt < 60)
 	{
-		player.hp = (player.hp - enemy[enemy_num].damage) > 0 ? player.hp - enemy[enemy_num].damage : 0;
-		get_dmg_cnt = 1;
+		if(is_middle(skill[2].y + 80, player.y + player.high / 2, skill[2].y + 40)
+		&& is_middle(skill[2].x + 85, player.x + player.width / 2, skill[2].x + 70))
+		{
+			player.hp = (player.hp - enemy[enemy_num].damage) > 0 ? player.hp - enemy[enemy_num].damage : 0;
+			get_dmg_cnt = 1;
 
-		if(player_jump_cnt == -1)
-			player_jump_cnt = 15;
-		jump();
-		
-		if(enemy[0].dir == 'a')
-			player.x -= skill[2].power;
-		else
-			player.x += skill[2].power;
-		
-		skill[2].status = 0;
+			if(player_jump_cnt == -1)
+				player_jump_cnt = 15;
+			jump();
+			
+			if(enemy[0].dir == 'a')
+				player.x -= skill[2].power;
+			else
+				player.x += skill[2].power;
+			
+			skill[2].status = 0;
+		}
 	}
 }
 

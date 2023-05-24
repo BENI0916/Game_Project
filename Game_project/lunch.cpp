@@ -14,9 +14,10 @@
 #include "lib/bebao.h"
 
 extern PIMAGE bg, dropImg[bpL], win_screen;
-extern int enemy_atk_type, enemy_num, inFight, bgX, bgY, win_screen_cnt,inMaz,atk_cd,player_walk_cnt,player_jump_cnt,dash_cnt,atk_cnt;
+extern int enemy_atk_type, enemy_num, inFight, bgX, bgY, win_screen_cnt,inMaz,atk_cd,player_walk_cnt,player_jump_cnt,dash_cnt,atk_cnt, boss_bgm_play;
 extern Human player;
 extern Monster enemy[3];
+extern Bullet skill[6];
 extern Animate loading_animate;
 extern double end;
 extern char BgName[];
@@ -80,6 +81,9 @@ void lunch()
 				enemy[1].y = hih * 0.6 - 150 + 66;
 				enemy[2].y = hih * 0.6 - 400 + 66;
 				enemy_atk_type = -1;
+				boss_bgm_play = 0; // 當不在Boss戰時，下次進Boss戰會撥放Bgm
+				for(int i = 0; i < 6; i++)
+					skill[i].status = 0;
 			}
 			else {
 				mciSendString (TEXT("stop battlemusic"), NULL,0,NULL);
@@ -147,8 +151,23 @@ void lunch()
 					if(enemy_atk_type == -1) // -1 代表 敵人未開始攻擊  
 						enemy_move();		 // 則敵人會開始移動 
 					enemy_atk();			 // 否則會進行攻擊  
+
+					if(!boss_bgm_play)
+					{
+						boss_bgm_play = 1;
+						char str[100] = "open audio\\boss_bgm\\1.mp3 alias boss_bgm";
+						//sprintf(s, "%d", "open audio\\boss_bgm\\%d.mp3 alias boss_bgm") 
+						mciSendString (TEXT(str), NULL,0,NULL);
+						mciSendString (TEXT("play boss_bgm repeat"), NULL,0,NULL);
+					}
 				}
-		
+
+				if(player.hp <= 0)
+				{
+					mciSendString (TEXT("stop boss_bgm"), NULL,0,NULL);
+					mciSendString (TEXT("close boss_bgm"), NULL,0,NULL);
+				}
+
 				move(5);
 				output_image();
 
@@ -165,6 +184,7 @@ void lunch()
 				putimage(player.x, player.y, player.player_img[player.output_idx], SRCINVERT);
 				if(fOn) putimage(720,430,fbt);
 			}
+
 			if (metEvent) {
 				if (metEvent<10) {
 					move(5);
