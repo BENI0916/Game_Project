@@ -21,8 +21,8 @@ extern Animate loading_animate;
 extern double end;
 extern char BgName[];
 
-int esc,fade,metEvent,victory,inBp,fOn,inMaz;
-PIMAGE escBG,screen,pauseImg,bgF,victoryUI,dropImg[bpL],gray,bpImg[3],gameover,fbt,swordImg[3],potionImg[2];
+int esc,fade,metEvent,victory,inBp,fOn,inMaz,inHelp;
+PIMAGE escBG,screen,pauseImg,bgF,victoryUI,dropImg[bpL],gray,bpImg[3],gameover,fbt,swordImg[3],potionImg[2],helpImg,keyHelp;
 
 void lunch()
 {
@@ -34,6 +34,7 @@ void lunch()
 	setfont(16,0,"number");
 	settextjustify(1,1);
 
+	inHelp = 0;
 	inBp = 0;
 	inFight = 0;
 	esc = 0;
@@ -47,12 +48,16 @@ void lunch()
 	gray = newimage();
 	gameover = newimage();
 	fbt = newimage();
+	helpImg = newimage();
+	keyHelp = newimage();
 	getimage(escBG,"images\\bg\\black.png",0,0);
 	getimage(pauseImg,"images\\menu\\pause.png",0,0);
 	getimage(victoryUI,"images\\menu\\victoryUI.png",0,0);
 	getimage(gray,"images\\menu\\bk.png",0,0);
 	getimage(gameover,"images\\bg\\gameover.png",0,0);
 	getimage(fbt,"images\\menu\\F.png",0,0);
+	getimage(helpImg,"images\\menu\\help.png",0,0);
+	getimage(keyHelp,"images\\menu\\keyHelp.png",0,0);
 
 	mciSendString (TEXT("open audio\\bgm\\home.mp3 alias homemusic"), NULL,0,NULL);
 	mciSendString (TEXT("play homemusic repeat"), NULL,0,NULL);
@@ -126,8 +131,13 @@ void lunch()
 			}
 		}
 		else if (esc) {
+			if (inHelp) {
+				putimage_withalpha(NULL,keyHelp,0,0);
+			}
+			else {
+				escScreen();
+			}
 			escListener();
-			escScreen();
 		}
 		else {
 			if (inFight) 

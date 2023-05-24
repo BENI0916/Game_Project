@@ -5,8 +5,8 @@
 #include "lib/event.h"
 #include "lib/effect.h"
 
-extern int key,esc,victory,fade;
-extern PIMAGE screen,escBG,pauseImg,SetImg;
+extern int key,esc,victory,fade,inHelp;
+extern PIMAGE screen,escBG,pauseImg,SetImg,helpImg,keyHelp;
 extern Human player;
 
 int mX,mY;
@@ -16,6 +16,7 @@ void escScreen() {
     putimage_alphablend(NULL,escBG,0,0,0xC0,0,0,wid,hih);
     putimage_withalpha(NULL,pauseImg,593,300);
     putimage_withalpha(NULL,SetImg,1170,35);
+    putimage_withalpha(NULL,helpImg,1070,35);
     playerBlood(player.hp,player.fhp);
     putMoney();
 }
@@ -26,18 +27,25 @@ void escListener() {
         if (key == key_esc) {
             key = 0;
             esc = 0;
+            inHelp = 0;
         }
     }
-    mousepos(&mX,&mY);
-	if((mX >= 600 && mX <= 710) && (mY >= 320 && mY <= 410) && keystate(key_mouse_l)) {
-        //結束esc
-        flushmouse();
-        esc = 0;
-	}
-    if((mX >= 1177 && mX <= 1229) && (mY >= 46 && mY <= 86) && keystate(key_mouse_l)) {
-		//點擊設定
-		setting();
-	}
+    if (!inHelp) {
+        mousepos(&mX,&mY);
+	    if((mX >= 600 && mX <= 710) && (mY >= 320 && mY <= 410) && keystate(key_mouse_l)) {
+            //結束esc
+            flushmouse();
+            esc = 0;
+	    }
+        if((mX >= 1177 && mX <= 1229) && (mY >= 46 && mY <= 86) && keystate(key_mouse_l)) {
+		    //點擊設定
+		    setting();
+	    }
+        if((mX >= 1070 && mX <= 1140) && (mY >= 35 && mY <= 105) && keystate(key_mouse_l)) {
+		    //點擊幫助
+		    inHelp = 1;
+	    }
+    }
 }
 
 void vicListener() {
