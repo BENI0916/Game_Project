@@ -1,10 +1,9 @@
 # Game_Project
-1.優化
+1.ESC增加幫助按鈕及按鍵說明
 
 更動檔案
 
-initialization.cpp
-player_move3D.cpp
-game_start.cpp
+images/menu/
+
 lunch.cpp
-save_load.cpp / .h
+esc.cpp
