@@ -1,34 +1,15 @@
 # Game_Project
-1.ESC增加幫助按鈕及按鍵說明
+
+1.新增介面右下角資料夾圖案，有存檔讀檔功能(未完成)
 
 更動檔案
 
-images/menu/
+images/menu
 
-lunch.cpp
-esc.cpp
--------------------------------
-二更
-1.修復人物死後重打Boss沒有Bgm的問題。
+images/save_load_img
 
-2.修復人物死後重打Boss時，Boss的上個技能未消失的問題。
+lib/save_load.h
 
-3.調整敵人0的攻擊參數與判定(更寬鬆
-
-更動檔案
-
-main.cpp
-
-initialization.cpp
-
-lunch.cpp
-
-enemy_atk.cpp
-
-enemy_give_dmg.cpp
-
-output_img.cpp
-
-player_atk.cpp
+game_start.cpp
 
 save_load.cpp
