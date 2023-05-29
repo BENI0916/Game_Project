@@ -5,7 +5,7 @@
 #include "lib/setting.h"
 #include "lib/effect.h"
 
-PIMAGE SetImg;
+PIMAGE SetImg,FolderImg;
 
 //遊戲開始執行會先跳來這邊 
 void gameStart() 
@@ -50,6 +50,10 @@ void gameStart()
     SetImg = newimage();
     getimage(SetImg,"images\\menu\\setting.png");
     putimage_withalpha(NULL,SetImg,1170,35);
+    //foler button
+    FolderImg = newimage();
+    getimage(FolderImg,"images\\menu\\white_folder.png");
+    putimage_withalpha(NULL,FolderImg,1170,580);
     
     mouse_msg msg = {0};
 	
@@ -100,6 +104,13 @@ void gameStart()
 			flushkey();
 			flushmouse();
 			setting();
+		}
+		else if((msg.x >= 1176 && msg.x <= 1238) && (msg.y >= 595 && msg.y <= 638) && msg.is_left())
+		{
+			//點擊資料夾
+			flushkey();
+			flushmouse();
+			SaveLoadSystem();
 		}
 	}
     /*

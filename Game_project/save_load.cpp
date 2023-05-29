@@ -6,7 +6,10 @@
 
 extern Human player;
 extern int bgX,bgY,enemy_num,bp[3][bpL],bpIdx[3][bpL],bpAmount[3],inMaz;
-extern char BgName[]; 
+extern char BgName[];
+PIMAGE CellImg;
+int IsEmpty1 = 0,IsEmpty2 = 0,IsEmpty3 = 0;
+char cellstr[50]; 
 
 //新遊戲 初始化數值
 void newGame() {
@@ -30,6 +33,113 @@ void newGame() {
 	player.fhp = 10;//最大血量
 	player.damage = 5;//傷害
 	enemy_num = -1;//BOSS數
+}
+
+void SaveLoadSystem()
+{
+	CellScreen();
+	PrintCellinfo();
+	CellButton();
+}
+
+void CellScreen()
+{
+	CellImg = newimage();
+    getimage(CellImg,"images\\save_load_img\\three_cell.png");
+    putimage_withalpha(NULL,CellImg,200,160);
+}
+
+void PrintCellinfo()
+{
+	if(IsEmpty1 == 0)
+	{
+		setbkmode(TRANSPARENT);
+  		setcolor(BLACK);
+  		setfont(50,0,"Fixedsys");
+  		outtextxy(333,336,"EMPTY");
+	}
+	//if(IsEmpty2 == 1)
+	//{
+		//顯示有存東西
+	//}
+	
+	if(IsEmpty2 == 0)
+	{
+		setbkmode(TRANSPARENT);
+  		setcolor(BLACK);
+  		setfont(50,0,"Fixedsys");
+  		outtextxy(585,336,"EMPTY");
+	}
+	//if(IsEmpty2 == 1)
+	//{
+		//顯示有存東西
+	//}
+	
+	if(IsEmpty3 == 0)
+	{
+		setbkmode(TRANSPARENT);
+  		setcolor(BLACK);
+  		setfont(50,0,"Fixedsys");
+  		outtextxy(835,336,"EMPTY");
+	}
+	//if(IsEmpty3 == 1)
+	//{
+		//顯示有存東西
+	//}
+	
+}
+
+void CellButton()
+{
+	mouse_msg msg = {0};
+	
+    for(;CellImg != NULL;delay_fps(60))
+    {
+    	//獲取鼠標訊息
+    	while (mousemsg())
+    	{
+    		msg = getmouse();
+		}
+		if((msg.x >= 294 && msg.x <= 490) && (msg.y >= 276 && msg.y <= 447) && msg.is_left())
+		{
+			//按第一個處存格
+			flushkey();
+			flushmouse();
+			sprintf(cellstr,"%s","data\\save\\save1.dat");
+			//print save load delete button
+		}
+		else if((msg.x >= 546 && msg.x <= 740) && (msg.y >= 276 && msg.y <= 447) && msg.is_left())
+		{
+			//按第二個處存格
+			flushkey();
+			flushmouse();
+			sprintf(cellstr,"%s","data\\save\\save2.dat");
+			//print save load delete button
+		}
+		else if((msg.x >= 801 && msg.x <= 995) && (msg.y >= 276 && msg.y <= 447) && msg.is_left())
+		{
+			//按第三個處存格
+			flushkey();
+			flushmouse();
+			sprintf(cellstr,"%s","data\\save\\save3.dat");
+			//print save load delete button
+		}
+		
+		//if(mouse在save && 按左鍵)
+		//{
+			//flushkey();
+			//flushmouse();
+			//save1作save;
+			//print 處存格有東西;
+			//Isempty1 = 1;
+		//}
+		//if(mouse在load && 按左鍵)
+		//{
+			//flushkey();
+			//flushmouse();
+			//load();
+		//}
+	}
 }
 
 //存檔用函式 
