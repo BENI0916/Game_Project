@@ -11,6 +11,11 @@ PIMAGE CellImg;
 int IsEmpty1 = 0,IsEmpty2 = 0,IsEmpty3 = 0;
 char cellstr[50]; 
 
+//概念:
+//右下角資料夾圖案
+//點進去會顯示三個儲存格(顯示 empty or 有存檔)，且有 delete,back 按鈕(分別執行delete,back)
+//點儲存格，會出現 save,load 按鈕(分別執行save,load)
+
 //新遊戲 初始化數值
 void newGame() {
 	sprintf(BgName,"%s","images\\bg\\home2.png");//當前背景
