@@ -1,15 +1,17 @@
 # Game_Project
 
-1.新增介面右下角資料夾圖案，有存檔讀檔功能(未完成)
+1.完成武器和藥水之使用
 
 更動檔案
 
 images/menu
 
-images/save_load_img
+lib/bebao.h
 
-lib/save_load.h
+event.cpp
 
-game_start.cpp
+bebao.cpp
 
-save_load.cpp
+initialization.cpp
+
+lunch.cpp
