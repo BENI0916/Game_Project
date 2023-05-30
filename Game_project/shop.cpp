@@ -92,19 +92,28 @@ void shop(){
                                 mousepos(&mX,&mY);
                                 //按確認
                                 if((mX >= 1156 && mX <= 1265) && (mY >= 532 && mY <= 619) && keystate(key_mouse_l)) {
+                                    int have=0;
                                     for(;is_run();delay_fps(60)) {
                                         if(keystate(key_mouse_l)==0) break;
                                     }
-                                    if(bp[0][0] >= swordPrice[i] && bpAmount[1] < 10) {
+                                    for (int j = 0;j<bpAmount[1];j++) {
+                                        if (bpIdx[1][j]==i) {
+                                            have = 1;
+                                            break;
+                                        }
+                                    }
+                                    if(have){
+                                        //已經有了
+                                    }
+                                    else if(bp[0][0] >= swordPrice[i] && bpAmount[1] < 10) {
                                         //錢夠
                                         bp[0][0]-= swordPrice[i]; 
                                         //更新背包
-                                        updateBp(1,i);
+                                        updateBp(1,i,-1);
                                     }
                                     else {
                                         //錢不夠
                                     }
-                                    //if(bp[0][bpIdx[0][i]]==0) updateBp(0,bpIdx[0][i]);
                                     break;
                                 }
                                 //按取消
@@ -156,24 +165,8 @@ void shop(){
                                 putMoney();
                                 putimage_withalpha(NULL,cancel,1156,624);
                                 putimage_withalpha(NULL,choose,180+x,y-6);
-                                //putimage_withalpha(NULL,quantity,861,636);
                                 putimage_withalpha(NULL,confirm,1156,532);
                                 mousepos(&mX,&mY);
-                                /*xyprintf(994,677,"%d",num);
-                                //按+
-                                if((mX >= 1094 && mX <= 1128) && (mY >= 636 && mY <= 719) && keystate(key_mouse_l)) {
-                                    for(;is_run();delay_fps(60)) {
-                                        if(keystate(key_mouse_l)==0) break;
-                                    }
-                                    if(potionPrice[i]*num < bp[0][0]) num++;
-                                }
-                                //按-
-                                if((mX >= 861 && mX <= 896) && (mY >= 636 && mY <= 719) && keystate(key_mouse_l)) {
-                                    for(;is_run();delay_fps(60)) {
-                                        if(keystate(key_mouse_l)==0) break;
-                                    }
-                                    if(num > 0) num--;
-                                }*/
                                 //按確認
                                 if((mX >= 1156 && mX <= 1265) && (mY >= 532 && mY <= 619) && keystate(key_mouse_l)) {
                                     for(;is_run();delay_fps(60)) {
@@ -182,7 +175,7 @@ void shop(){
                                     if(potionPrice[i] < bp[0][0] && bpAmount[2] < 10) {
                                         //錢夠
                                         bp[0][0]-= potionPrice[i]; 
-                                        updateBp(2,i);
+                                        updateBp(2,i,-1);
                                     }
                                     else {
                                         //錢不夠
@@ -262,7 +255,7 @@ void shop(){
                                 }
                                 bp[0][0]+=num*1000;
                                 bp[0][bpIdx[0][i]]-=num;
-                                if(bp[0][bpIdx[0][i]]==0) updateBp(0,bpIdx[0][i]);
+                                if(bp[0][bpIdx[0][i]]==0) updateBp(0,bpIdx[0][i],1);
                                 break;
                             }
                             //按取消
@@ -284,6 +277,7 @@ void shop(){
             flushkey();
             break;
         }
+        
     }
     delimage(Agil);
     delimage(money);
@@ -293,4 +287,5 @@ void shop(){
     delimage(confirm);
     delimage(cancel);
     delimage(quantity);
+    flushkey();
 }

@@ -101,7 +101,7 @@ void drop(int idx) {
         dropAmount[1] = random(3);
         bp[0][0] += dropAmount[0];
         bp[0][1] += dropAmount[1];
-        if ((dropAmount[1])&&!(bp[0][1]-dropAmount[1])) updateBp(0,1);
+        if ((dropAmount[1])&&!(bp[0][1]-dropAmount[1])) updateBp(0,1,-1);
     }
     else if (idx==2) {
         dropAmount[0] = random(10)*100+100;
@@ -110,8 +110,8 @@ void drop(int idx) {
         bp[0][0] += dropAmount[0];
         bp[0][2] += dropAmount[2];
         bp[0][3] += dropAmount[3];
-        if ((dropAmount[2])&&!(bp[0][2]-dropAmount[2])) updateBp(0,2);
-        if ((dropAmount[3])&&!(bp[0][3]-dropAmount[3])) updateBp(0,3);
+        if ((dropAmount[2])&&!(bp[0][2]-dropAmount[2])) updateBp(0,2,-1);
+        if ((dropAmount[3])&&!(bp[0][3]-dropAmount[3])) updateBp(0,3,-1);
     }
 }
 

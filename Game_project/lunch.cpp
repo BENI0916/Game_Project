@@ -23,7 +23,7 @@ extern double end;
 extern char BgName[];
 
 int esc,fade,metEvent,victory,inBp,fOn,inMaz,inHelp;
-PIMAGE escBG,screen,pauseImg,bgF,victoryUI,dropImg[bpL],gray,bpImg[3],gameover,fbt,swordImg[3],potionImg[2],helpImg,keyHelp;
+PIMAGE escBG,screen,pauseImg,bgF,victoryUI,dropImg[bpL],gray,bpImg[3],gameover,fbt,swordImg[3],potionImg[2],helpImg,keyHelp,BpswordImg[3];
 
 void lunch()
 {
