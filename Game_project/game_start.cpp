@@ -88,6 +88,8 @@ void gameStart()
 			newGame();
 			lunch();
 			msg = {0};
+			mciSendString (TEXT("open audio\\bgm\\title.mp3 alias titlemusic"), NULL,0,NULL);
+			mciSendString (TEXT("play titlemusic repeat"), NULL,0,NULL);
 		}
 		else if((msg.x >= 825 && msg.x <= 991) && (msg.y >= 552 && msg.y <= 603) && msg.is_left())
 		{

@@ -80,13 +80,13 @@ int ending() {
     PIMAGE blk = newimage();
     getimage(blk,"images\\bg\\black.png",0,0);
     getimage(end,"images\\bg\\end.png",0,0);
-    for (int i = 0;i<32;delay_fps(30)) {
-		putimage_alphablend(NULL,end,0,0,0x18,0,0,wid,hih);
+    for (int i = 0;i<64;delay_fps(30)) {
+		putimage_alphablend(NULL,end,0,0,0x0c,0,0,wid,hih);
 		i++;
 	}
-    for (int i = 0;i<40;delay_fps(1)) {i++;}
-    for (int i = 0;i<32;delay_fps(30)) {
-		putimage_alphablend(NULL,blk,0,0,0x18,0,0,wid,hih);
+    for (int i = 0;i<38;delay_fps(1)) {i++;}
+    for (int i = 0;i<64;delay_fps(30)) {
+		putimage_alphablend(NULL,blk,0,0,0x0c,0,0,wid,hih);
 		i++;
 	}
     delimage(end);
