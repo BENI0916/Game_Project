@@ -5,14 +5,14 @@
 #include "lib/setting.h"
 #include "lib/effect.h"
 
-PIMAGE SetImg,FolderImg;
+PIMAGE SetImg,FolderImg,screen;
 
 //遊戲開始執行會先跳來這邊 
 void gameStart() 
 {
     initgraph(wid, hih);	// 初始化窗口 
 	printf("inigraph succes\n");
-
+	screen = newimage();
 	putLogo(); //播放LOGO
 	
 	mciSendString (TEXT("open audio\\bgm\\title.mp3 alias titlemusic"), NULL,0,NULL);
@@ -32,28 +32,27 @@ void gameStart()
     delimage(tmp);
     tmp = NULL;
     //繪製背景圖像
-	putimage(0,0,MenubgImg);
 
     //battle beast logo
     PIMAGE BattleImg = newimage();
     getimage(BattleImg,"images\\menu\\battle.png");
-    putimage_withalpha(NULL,BattleImg,50,20);
+    
     //start button
     PIMAGE StartImg = newimage();
     getimage(StartImg,"images\\menu\\start.png");
-    putimage_withalpha(NULL,StartImg,300,550);
+    
     //quit button
     PIMAGE QuitImg = newimage();
     getimage(QuitImg,"images\\menu\\quit.png");
-    putimage_withalpha(NULL,QuitImg,820,550);
+    
     //setting button
     SetImg = newimage();
     getimage(SetImg,"images\\menu\\setting.png");
-    putimage_withalpha(NULL,SetImg,1170,35);
+    
     //foler button
     FolderImg = newimage();
     getimage(FolderImg,"images\\menu\\white_folder.png");
-    putimage_withalpha(NULL,FolderImg,1170,580);
+    
     
     mouse_msg msg = {0};
 	
@@ -65,6 +64,12 @@ void gameStart()
         //mousepos(&x, &y);
         //sprintf(str, "%4d %4d", x, y);
         //outtextxy(0, 0, str);
+		putimage(0,0,MenubgImg);
+		putimage_withalpha(NULL,BattleImg,50,20);
+		putimage_withalpha(NULL,StartImg,300,550);
+		putimage_withalpha(NULL,QuitImg,820,550);
+		putimage_withalpha(NULL,SetImg,1170,35);
+		putimage_withalpha(NULL,FolderImg,1170,580);
         
     	//獲取鼠標訊息
     	while (mousemsg())
@@ -76,12 +81,13 @@ void gameStart()
 			//點擊開始
 			flushkey();
 			flushmouse();
+			getimage(screen,0,0,wid,hih);
 			fadeOut();
 			mciSendString(TEXT("stop titlemusic"),NULL,0,NULL);
 			mciSendString(TEXT("close titlemusic"),NULL,0,NULL);
 			newGame();
 			lunch();
-			break;
+			msg = {0};
 		}
 		else if((msg.x >= 825 && msg.x <= 991) && (msg.y >= 552 && msg.y <= 603) && msg.is_left())
 		{

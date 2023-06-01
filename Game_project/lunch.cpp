@@ -13,7 +13,7 @@
 #include "lib/event.h"
 #include "lib/bebao.h"
 
-extern PIMAGE bg, dropImg[bpL], win_screen;
+extern PIMAGE bg, dropImg[bpL], win_screen,screen;
 extern int enemy_atk_type, enemy_num, inFight, bgX, bgY, win_screen_cnt,inMaz,atk_cd,player_walk_cnt,player_jump_cnt,dash_cnt,atk_cnt, boss_bgm_play;
 extern Human player;
 extern Monster enemy[3];
@@ -23,7 +23,7 @@ extern double end;
 extern char BgName[];
 
 int esc,fade,metEvent,victory,inBp,fOn,inMaz,inHelp;
-PIMAGE escBG,screen,pauseImg,bgF,victoryUI,dropImg[bpL],gray,bpImg[3],gameover,fbt,swordImg[3],potionImg[2],helpImg,keyHelp,BpswordImg[3];
+PIMAGE escBG,pauseImg,bgF,victoryUI,dropImg[bpL],gray,bpImg[3],gameover,fbt,swordImg[3],potionImg[2],helpImg,keyHelp,BpswordImg[3];
 
 void lunch()
 {
@@ -43,7 +43,6 @@ void lunch()
 	metEvent = 0;
 	victory = 0;
 	escBG = newimage();
-	screen = newimage();
 	pauseImg = newimage();
 	victoryUI = newimage();
 	gray = newimage();
@@ -174,6 +173,15 @@ void lunch()
 				if (enemy_num >= 3)
 				{
 					inFight = 0;
+					ending();
+					delimage(escBG);
+					delimage(pauseImg);
+					delimage(victoryUI);
+					delimage(gray);
+					delimage(gameover);
+					delimage(fbt);
+					delimage(helpImg);
+					delimage(keyHelp);
 				}
 				
 			}

@@ -9,4 +9,6 @@ int fadeOut();
 
 int flashOut();
 
+int ending();
+
 #endif

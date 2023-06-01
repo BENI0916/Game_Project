@@ -71,3 +71,29 @@ int flashOut() {
     flushmouse();
     return 0;
 }
+
+int ending() {
+	mciSendString (TEXT("open audio\\bgm\\end.mp3 alias endbgm"), NULL,0,NULL);
+	mciSendString (TEXT("play endbgm"), NULL,0,NULL);
+    cleardevice();
+    PIMAGE end = newimage();
+    PIMAGE blk = newimage();
+    getimage(blk,"images\\bg\\black.png",0,0);
+    getimage(end,"images\\bg\\end.png",0,0);
+    for (int i = 0;i<32;delay_fps(30)) {
+		putimage_alphablend(NULL,end,0,0,0x18,0,0,wid,hih);
+		i++;
+	}
+    for (int i = 0;i<40;delay_fps(1)) {i++;}
+    for (int i = 0;i<32;delay_fps(30)) {
+		putimage_alphablend(NULL,blk,0,0,0x18,0,0,wid,hih);
+		i++;
+	}
+    delimage(end);
+    delimage(blk);
+    flushkey();
+    flushmouse();
+    mciSendString (TEXT("stop endbgm"), NULL,0,NULL);
+	mciSendString (TEXT("close endbgm"), NULL,0,NULL);
+    return 0;
+}
