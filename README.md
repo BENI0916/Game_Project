@@ -1,17 +1,13 @@
 # Game_Project
 
-1.完成武器和藥水之使用
+1.初步結束畫面
+2.修bug
 
 更動檔案
 
-images/menu
+images/bg/
 
-lib/bebao.h
-
-event.cpp
-
-bebao.cpp
-
-initialization.cpp
-
+effect.cpp / .h
 lunch.cpp
+game_start.cpp
+output_img.cpp
