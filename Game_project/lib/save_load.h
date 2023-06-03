@@ -7,12 +7,13 @@ void save();
 
 void load();
 
-void SaveLoadSystem();
+void del();
 
-void CellScreen();
-
-void CellButton();
+void SaveLoadScreen();
 
 void PrintCellinfo();
 
+void SaveLoadlistener();
+
 #endif
+
