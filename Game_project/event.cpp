@@ -11,8 +11,9 @@ extern PIMAGE bgF,dropImg[],gray;
 int type,dropIdx[bpL],dropAmount[bpL];
 
 int event() {
-    int r = random(150);
+    int r = random(450);
     if (r<1) {
+        mciSendString (TEXT("pause cave"), NULL,0,NULL);
         mciSendString (TEXT("open audio\\bgm\\battle.mp3 alias battlemusic"), NULL,0,NULL);
 	    mciSendString (TEXT("play battlemusic"), NULL,0,NULL);
         return choMon();
@@ -79,6 +80,8 @@ int choMon() {
 }
 
 void leaveFight() {
+    mciSendString (TEXT("stop vic"), NULL,0,NULL);
+    mciSendString (TEXT("close vic"), NULL,0,NULL);
     player.x = (wid-28*3.5) / 2;
 	player.y = (hih-33*3.5) / 2 + 80;
     player.output_idx = 33;// 輸出圖片編號 
@@ -92,6 +95,7 @@ void leaveFight() {
     delimage(bgF);
     metEvent = 0;
     fadeOut();
+    mciSendString (TEXT("resume cave"), NULL,0,NULL);
     fade = 1;
 }
 

@@ -107,6 +107,8 @@ void putEnemy(int idx) {
         monBlood(monster.hp,monster.fhp);
     }
     else {
+        mciSendString (TEXT("open audio\\bgm\\vic.mp3 alias vic"), NULL,0,NULL);
+	    mciSendString (TEXT("play vic"), NULL,0,NULL);
         int i = 0;
         if (idx==1) i=4;
         if (idx==2) i=12;
