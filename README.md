@@ -1,13 +1,11 @@
 # Game_Project
 
-1.初步結束畫面
-2.修bug
+1.完善副本區音樂
 
 更動檔案
 
-images/bg/
+audio/bgm/
 
-effect.cpp / .h
-lunch.cpp
-game_start.cpp
-output_img.cpp
+event.cpp
+enemy_move3D.cpp
+player_move3D.cpp
