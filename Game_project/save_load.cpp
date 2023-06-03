@@ -1,15 +1,16 @@
 #include "lib/save_load.h"
 #include "lib/var.h"
 #include <stdio.h>
+#include <stdlib.h>
 #include <assert.h>
 #include <string.h>
 
 extern Human player;
-extern int bgX,bgY,enemy_num,bp[3][bpL],bpIdx[3][bpL],bpAmount[3],inMaz;
+extern int bgX,bgY,enemy_num,bp[3][bpL],bpIdx[3][bpL],bpAmount[3],inMaz,folder,mX,mY;
 extern char BgName[];
-PIMAGE CellImg;
-int IsEmpty1 = 0,IsEmpty2 = 0,IsEmpty3 = 0;
-char cellstr[50]; 
+extern PIMAGE CellImg, ButtonImg;
+int IsEmpty1,IsEmpty2,IsEmpty3,IsPrint1,IsPrint2,IsPrint3,IsButton;
+FILE *fptr;
 
 //概念:
 //右下角資料夾圖案
@@ -40,191 +41,194 @@ void newGame() {
 	enemy_num = -1;//BOSS數
 }
 
-void SaveLoadSystem()
+void SaveLoadScreen()
 {
-	CellScreen();
-	PrintCellinfo();
-	CellButton();
-}
-
-void CellScreen()
-{
-	CellImg = newimage();
-    getimage(CellImg,"images\\save_load_img\\three_cell.png");
     putimage_withalpha(NULL,CellImg,200,160);
+	PrintCellinfo();
 }
 
 void PrintCellinfo()
 {
 	if(IsEmpty1 == 0)
 	{
-		setbkmode(TRANSPARENT);
-  		setcolor(BLACK);
-  		setfont(50,0,"Fixedsys");
-  		outtextxy(333,336,"EMPTY");
+  		outtextxy(393,366,"EMPTY");
 	}
-	//if(IsEmpty2 == 1)
-	//{
-		//顯示有存東西
-	//}
+	else if(IsEmpty1 == 1)
+	{
+		outtextxy(393,366,"SAVED");
+	}
 	
 	if(IsEmpty2 == 0)
 	{
-		setbkmode(TRANSPARENT);
-  		setcolor(BLACK);
-  		setfont(50,0,"Fixedsys");
-  		outtextxy(585,336,"EMPTY");
+  		outtextxy(645,366,"EMPTY");
 	}
-	//if(IsEmpty2 == 1)
-	//{
-		//顯示有存東西
-	//}
+	else if(IsEmpty2 == 1)
+	{
+		outtextxy(645,366,"SAVED");
+	}
 	
 	if(IsEmpty3 == 0)
 	{
-		setbkmode(TRANSPARENT);
-  		setcolor(BLACK);
-  		setfont(50,0,"Fixedsys");
-  		outtextxy(835,336,"EMPTY");
+  		outtextxy(895,366,"EMPTY");
 	}
-	//if(IsEmpty3 == 1)
-	//{
-		//顯示有存東西
-	//}
+	else if(IsEmpty3 == 1)
+	{
+		outtextxy(895,366,"SAVED");
+	}
 	
 }
 
-void CellButton()
+void SaveLoadlistener()
 {
-	mouse_msg msg = {0};
+	mousepos(&mX,&mY);
 	
-    for(;CellImg != NULL;delay_fps(60))
-    {
-    	//獲取鼠標訊息
-    	while (mousemsg())
-    	{
-    		msg = getmouse();
-		}
-		if((msg.x >= 294 && msg.x <= 490) && (msg.y >= 276 && msg.y <= 447) && msg.is_left())
-		{
-			//按第一個處存格
-			flushkey();
+	//save:305 538 491 590
+	//load:555 543 741 593
+	//delete:808 545 991 585
+	
+	if(IsButton){
+		if((mX >= 305 && mX <= 491) && (mY >= 538 && mY <= 590) && keystate(key_mouse_l)){
 			flushmouse();
-			sprintf(cellstr,"%s","data\\save\\save1.dat");
-			//print save load delete button
+			save();
 		}
-		else if((msg.x >= 546 && msg.x <= 740) && (msg.y >= 276 && msg.y <= 447) && msg.is_left())
-		{
-			//按第二個處存格
-			flushkey();
+		else if((mX >= 555 && mX <= 741) && (mY >= 543 && mY <= 593) && keystate(key_mouse_l)){
 			flushmouse();
-			sprintf(cellstr,"%s","data\\save\\save2.dat");
-			//print save load delete button
+			load();
 		}
-		else if((msg.x >= 801 && msg.x <= 995) && (msg.y >= 276 && msg.y <= 447) && msg.is_left())
-		{
-			//按第三個處存格
-			flushkey();
+		else if((mX >= 808 && mX <= 991) && (mY >= 545 && mY <= 590) && keystate(key_mouse_l)){
 			flushmouse();
-			sprintf(cellstr,"%s","data\\save\\save3.dat");
-			//print save load delete button
+			del();
 		}
-		
-		//if(mouse在save && 按左鍵)
-		//{
-			//flushkey();
-			//flushmouse();
-			//save1作save;
-			//print 處存格有東西;
-			//Isempty1 = 1;
-		//}
-		//if(mouse在load && 按左鍵)
-		//{
-			//flushkey();
-			//flushmouse();
-			//load();
-		//}
 	}
+	if((mX >= 294 && mX <= 490) && (mY >= 276 && mY <= 447) && keystate(key_mouse_l))
+	{
+		//按第一個處存格
+		flushmouse();
+		IsPrint1 = 1;
+		IsPrint2 = 0;
+		IsPrint3 = 0;
+	}
+	else if((mX >= 546 && mX <= 740) && (mY >= 276 && mY <= 447) && keystate(key_mouse_l))
+	{
+		//按第二個處存格
+		flushmouse();
+		IsPrint1 = 0;
+		IsPrint2 = 1;
+		IsPrint3 = 0;
+	}
+	else if((mX >= 801 && mX <= 995) && (mY >= 276 && mY <= 447) && keystate(key_mouse_l))
+	{
+		//按第三個處存格
+		flushmouse();
+		IsPrint1 = 0;
+		IsPrint2 = 0;
+		IsPrint3 = 1;
+	}
+	else if((mX >= 1176 && mX <= 1238) && (mY >= 595 && mY <= 638) && keystate(key_mouse_l))
+	{
+		//按第二次資料夾消除畫面
+		flushmouse();
+		folder = 0;
+	}
+	else if(IsPrint1==1 || IsPrint2==1 || IsPrint3==1){
+		//點了其中一個處存格，顯示按鈕
+		putimage_withalpha(NULL,ButtonImg,185,160);
+		IsButton = 1;
+	}
+	
 }
 
 //存檔用函式 
 void save() 
 {
-	FILE *fptr = fopen("data\\save\\save1.dat","wb");
-	if(fptr==NULL)
-	{
-		puts("ERROR: Open file failed.\n");
-		assert(0);
+	if(IsPrint1){
+		fptr = fopen("data\\save\\save1.dat", "wb");
 	}
-	if(fwrite(&player.hp,sizeof(int),1,fptr) != 1)
-	{
-		puts("ERROR: Write player_hp failed.\n");
-		fclose(fptr);
-		assert(0);
+	else if (IsPrint2){
+		fptr = fopen("data\\save\\save2.dat", "wb");
 	}
-	if(fwrite(&player.fhp,sizeof(int),1,fptr) != 1)
-	{
-		puts("ERROR: Write player_fhp failed.\n");
-		fclose(fptr);
-		assert(0);
-	}
-	if(fwrite(&player.damage,sizeof(int),1,fptr) != 1)
-	{
-		puts("ERROR: Write player_damage failed.\n");
-		fclose(fptr);
-		assert(0);
-	}
-	if(fwrite(&player.output_idx,sizeof(int),1,fptr) != 1)
-	{
-		puts("ERROR: Write player_output_idx failed.\n");
-		fclose(fptr);
-		assert(0);
-	}
-	if(fwrite(&bgX,sizeof(int),1,fptr) != 1)
-	{
-		puts("ERROR: Write bgX failed.\n");
-		fclose(fptr);
-		assert(0);
-	}
-	if(fwrite(&bgY,sizeof(int),1,fptr) != 1)
-	{
-		puts("ERROR: Write bgY failed.\n");
-		fclose(fptr);
-		assert(0);
-	}
-	if(fwrite(&enemy_num,sizeof(int),1,fptr) != 1)
-	{
-		puts("ERROR: Write enemy_num failed.\n");
-		fclose(fptr);
-		assert(0);
-	}
-	if(fwrite(BgName,sizeof(char)*strlen(BgName),1,fptr) != 1)
-	{
-		puts("ERROR: Write BgName failed.\n");
-		fclose(fptr);
-		assert(0);
-	}
-	if(fwrite(bp,sizeof(int)*(3*bpL),1,fptr) != 1)
-	{
-		puts("ERROR: Write bp failed.\n");
-		fclose(fptr);
-		assert(0);
-	}
-	if(fwrite(bpIdx,sizeof(int)*(3*bpL),1,fptr) != 1)
-	{
-		puts("ERROR: Write bpIdx failed.\n");
-		fclose(fptr);
-		assert(0);
-	}
-	if(fwrite(bpAmount,sizeof(int)*3,1,fptr) != 1)
-	{
-		puts("ERROR: Write bpAmount failed.\n");
-		fclose(fptr);
-		assert(0);
+	else if (IsPrint3){
+		fptr = fopen("data\\save\\save3.dat", "wb");
 	}
 	
-	fclose(fptr);
-	puts("Save successful\n");
+	if(fptr == NULL)
+	{
+		puts("ERROR: Open file failed.");
+		assert(0);
+	}
+	else if(fwrite(&player.hp,sizeof(int),1,fptr) != 1)
+	{
+		puts("ERROR: Write player_hp failed.");
+		fclose(fptr);
+		assert(0);
+	}
+	else if(fwrite(&player.fhp,sizeof(int),1,fptr) != 1)
+	{
+		puts("ERROR: Write player_fhp failed.");
+		fclose(fptr);
+		assert(0);
+	}
+	else if(fwrite(&player.damage,sizeof(int),1,fptr) != 1)
+	{
+		puts("ERROR: Write player_damage failed.");
+		fclose(fptr);
+		assert(0);
+	}
+	else if(fwrite(&player.output_idx,sizeof(int),1,fptr) != 1)
+	{
+		puts("ERROR: Write player_output_idx failed.");
+		fclose(fptr);
+		assert(0);
+	}
+	else if(fwrite(&bgX,sizeof(int),1,fptr) != 1)
+	{
+		puts("ERROR: Write bgX failed.");
+		fclose(fptr);
+		assert(0);
+	}
+	else if(fwrite(&bgY,sizeof(int),1,fptr) != 1)
+	{
+		puts("ERROR: Write bgY failed.");
+		fclose(fptr);
+		assert(0);
+	}
+	else if(fwrite(&enemy_num,sizeof(int),1,fptr) != 1)
+	{
+		puts("ERROR: Write enemy_num failed.");
+		fclose(fptr);
+		assert(0);
+	}
+	else if(!fwrite(BgName,sizeof(char),strlen(BgName),fptr))
+	{
+		puts("ERROR: Write BgName failed.");
+		fclose(fptr);
+		assert(0);
+	}
+	else if(!fwrite(bp,sizeof(int),3*bpL,fptr))
+	{
+		puts("ERROR: Write bp failed.");
+		fclose(fptr);
+		assert(0);
+	}
+	else if(!fwrite(bpIdx,sizeof(int),3*bpL,fptr))
+	{
+		puts("ERROR: Write bpIdx failed.");
+		fclose(fptr);
+		assert(0);
+	}
+	else if(!fwrite(bpAmount,sizeof(int),3,fptr))
+	{
+		puts("ERROR: Write bpAmount failed.");
+		fclose(fptr);
+		assert(0);
+	}
+	else{
+		fclose(fptr);
+		puts("Save successfully");
+		if(IsPrint1) IsEmpty1 = 1;
+		else if(IsPrint2) IsEmpty2 = 1;
+		else if(IsPrint3) IsEmpty3 = 1;
+	}
     //只須完成寫檔及建檔功能，寫入內容先空著就好
 	//三個存檔的檔名分別為save1.dat save2.dat sav3.dat
 	//寫入之檔案須放置在data/save裡
@@ -234,83 +238,123 @@ void save()
 //讀檔用函式 
 void load() 
 {
-	FILE *fptr = fopen("data\\save\\save1.dat","rb");
-	if(fptr == NULL)
-	{
-		puts("ERROR: The file does not exist.\n");
-		assert(0);
+	FILE *fptr;
+	if(IsPrint1){
+		fptr = fopen("data\\save\\save1.dat", "rb");
 	}
-	if(fread(&player.hp,sizeof(int),1,fptr) != 1)
-	{
-		puts("ERROR: Load player_hp failed.\n");
-		fclose(fptr);
-		assert(0);
+	else if (IsPrint2){
+		fptr = fopen("data\\save\\save2.dat", "rb");
 	}
-	if(fread(&player.fhp,sizeof(int),1,fptr) != 1)
-	{
-		puts("ERROR: Load player_fhp failed.\n");
-		fclose(fptr);
-		assert(0);
-	}
-	if(fread(&player.damage,sizeof(int),1,fptr) != 1)
-	{
-		puts("ERROR: Load player_damage failed.\n");
-		fclose(fptr);
-		assert(0);
-	}
-	if(fread(&player.output_idx,sizeof(int),1,fptr) != 1)
-	{
-		puts("ERROR: Load player_output_idx failed.\n");
-		fclose(fptr);
-		assert(0);
-	}
-	if(fread(&bgX,sizeof(int),1,fptr) != 1)
-	{
-		puts("ERROR: Load bgX failed.\n");
-		fclose(fptr);
-		assert(0);
-	}
-	if(fread(&bgY,sizeof(int),1,fptr) != 1)
-	{
-		puts("ERROR: Load bgY failed.\n");
-		fclose(fptr);
-		assert(0);
-	}
-	if(fread(&enemy_num,sizeof(int),1,fptr) != 1)
-	{
-		puts("ERROR: Load enemy_num failed.\n");
-		fclose(fptr);
-		assert(0);
-	}
-	if(fread(BgName,sizeof(char)*strlen(BgName),1,fptr) != 1)
-	{
-		puts("ERROR: Load BgName failed.\n");
-		fclose(fptr);
-		assert(0);
-	}
-	if(fread(bp,sizeof(int)*(3*bpL),1,fptr) != 1)
-	{
-		puts("ERROR: Write bp failed.\n");
-		fclose(fptr);
-		assert(0);
-	}
-	if(fread(bpIdx,sizeof(int)*(3*bpL),1,fptr) != 1)
-	{
-		puts("ERROR: Write bpIdx failed.\n");
-		fclose(fptr);
-		assert(0);
-	}
-	if(fread(bpAmount,sizeof(int)*3,1,fptr) != 1)
-	{
-		puts("ERROR: Write bpAmount failed.\n");
-		fclose(fptr);
-		assert(0);
+	else if (IsPrint3){
+		fptr = fopen("data\\save\\save3.dat", "rb");
 	}
 	
-	fclose(fptr);
-	puts("Load successful\n");
+	if(fptr == NULL)
+	{
+		puts("ERROR: The file does not exist.");
+		assert(0);
+	}
+	else if(fread(&player.hp,sizeof(int),1,fptr) != 1)
+	{
+		puts("ERROR: Load player_hp failed.");
+		fclose(fptr);
+		assert(0);
+	}
+	else if(fread(&player.fhp,sizeof(int),1,fptr) != 1)
+	{
+		puts("ERROR: Load player_fhp failed.");
+		fclose(fptr);
+		assert(0);
+	}
+	else if(fread(&player.damage,sizeof(int),1,fptr) != 1)
+	{
+		puts("ERROR: Load player_damage failed.");
+		fclose(fptr);
+		assert(0);
+	}
+	else if(fread(&player.output_idx,sizeof(int),1,fptr) != 1)
+	{
+		puts("ERROR: Load player_output_idx failed.");
+		fclose(fptr);
+		assert(0);
+	}
+	else if(fread(&bgX,sizeof(int),1,fptr) != 1)
+	{
+		puts("ERROR: Load bgX failed.");
+		fclose(fptr);
+		assert(0);
+	}
+	else if(fread(&bgY,sizeof(int),1,fptr) != 1)
+	{
+		puts("ERROR: Load bgY failed.");
+		fclose(fptr);
+		assert(0);
+	}
+	else if(fread(&enemy_num,sizeof(int),1,fptr) != 1)
+	{
+		puts("ERROR: Load enemy_num failed.");
+		fclose(fptr);
+		assert(0);
+	}
+	else if(!fread(BgName,sizeof(char),strlen(BgName),fptr))
+	{
+		puts("ERROR: Load BgName failed.");
+		fclose(fptr);
+		assert(0);
+	}
+	else if(!fread(bp,sizeof(int),3*bpL,fptr))
+	{
+		puts("ERROR: Load bp failed.");
+		fclose(fptr);
+		assert(0);
+	}
+	else if(!fread(bpIdx,sizeof(int),3*bpL,fptr))
+	{
+		puts("ERROR: Load bpIdx failed.");
+		fclose(fptr);
+		assert(0);
+	}
+	else if(!fread(bpAmount,sizeof(int),3,fptr))
+	{
+		puts("ERROR: Load bpAmount failed.");
+		fclose(fptr);
+		assert(0);
+	}
+	else{
+		fclose(fptr);
+		puts("Load successfully");
+	}
+	
+	
     //只需進行開檔及讀檔，若檔案不存在須告知玩家
 	//三個存檔的檔名分別為save1.dat save2.dat sav3.dat
 	//寫入之檔案須放置在data/save裡
 	//已經先放了一個save1.dat當作範例  
+}
+
+void del(){
+	//檔案清空
+	//print empty
+	
+	if(IsPrint1){
+		fptr = fopen("data\\save\\save1.dat", "wb");
+		IsEmpty1 = 0;
+	}
+	else if (IsPrint2){
+		fptr = fopen("data\\save\\save2.dat", "wb");
+		IsEmpty2 = 0;
+	}
+	else if (IsPrint3){
+		fptr = fopen("data\\save\\save3.dat", "wb");
+		IsEmpty3 = 0;
+	}
+	
+	if(fptr == NULL){
+		puts("ERROR: clean file failed.");
+		assert(0);
+	}
+	else{
+		puts("clean file successfully");
+		fclose(fptr);
+	}
 }

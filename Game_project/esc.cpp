@@ -5,11 +5,10 @@
 #include "lib/event.h"
 #include "lib/effect.h"
 
-extern int key,esc,victory,fade,inHelp;
-extern PIMAGE screen,escBG,pauseImg,SetImg,helpImg,keyHelp;
+extern int key,esc,victory,fade,inHelp,mX,mY,folder;
+extern PIMAGE screen,escBG,pauseImg,SetImg,helpImg,keyHelp,FolderImg;
 extern Human player;
 
-int mX,mY;
 
 void escScreen() {
     putimage(0, 0, screen);
@@ -17,6 +16,7 @@ void escScreen() {
     putimage_withalpha(NULL,pauseImg,593,300);
     putimage_withalpha(NULL,SetImg,1170,35);
     putimage_withalpha(NULL,helpImg,1070,35);
+    putimage_withalpha(NULL,FolderImg,1170,580);
     playerBlood(player.hp,player.fhp);
     putMoney();
 }
@@ -45,6 +45,12 @@ void escListener() {
 		    //點擊幫助
 		    inHelp = 1;
 	    }
+	    if((mX >= 1176 && mX <= 1238) && (mY >= 595 && mY <= 638) && keystate(key_mouse_l))
+		{
+			//點擊資料夾
+			flushmouse();
+			folder = 1;
+		}
     }
 }
 
