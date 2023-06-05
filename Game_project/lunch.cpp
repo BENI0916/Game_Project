@@ -15,7 +15,7 @@
 #include "lib/save_load.h"
 
 extern PIMAGE bg, dropImg[bpL], win_screen,screen;
-extern int enemy_atk_type, enemy_num, inFight, bgX, bgY, win_screen_cnt,inMaz,atk_cd,player_walk_cnt,player_jump_cnt,dash_cnt,atk_cnt, boss_bgm_play,IsEmpty1,IsEmpty2,IsEmpty3,IsPrint1,IsPrint2,IsPrint3,IsButton;
+extern int enemy_atk_type, enemy_num, inFight, bgX, bgY, win_screen_cnt,inMaz,atk_cd,player_walk_cnt,player_jump_cnt,dash_cnt,atk_cnt, boss_bgm_play,IsEmpty1,IsEmpty2,IsEmpty3,IsPrint1,IsPrint2,IsPrint3,IsButton, talk;
 extern Human player;
 extern Monster enemy[3];
 extern Bullet skill[6];
@@ -213,6 +213,12 @@ void lunch()
 				putimage(player.x, player.y, player.player_msk[player.output_idx], NOTSRCERASE);
 				putimage(player.x, player.y, player.player_img[player.output_idx], SRCINVERT);
 				if(fOn) putimage(720,430,fbt);
+
+				if(talk)
+				{
+					talk = 0;
+					talking();
+				}
 			}
 
 			if (metEvent) {
@@ -231,6 +237,40 @@ void lunch()
 			if (fade) {
 				fade = fadeIn();
 			}
+		}
+	}
+}
+
+void talking()
+{
+	int idx = 0;
+	char s[100], ch;
+
+	PIMAGE pic[28];
+	for(int i = 0; i < 28; i++)
+	{
+		sprintf(s, "images\\talk\\%d.png", i);
+		pic[i] = newimage();
+		getimage(pic[i], s, 0, 0);
+		printf("%d\n", i);
+	}
+	printf("get pic succes\n");
+
+	while(idx < 28)
+	{
+		putimage(abs(wid-getwidth(bg))/2 + bgX, abs(hih-getheight(bg))/2 + bgY, bg);
+		putimage_withalpha(NULL,pic[idx],0,0);
+		ch = getch();
+		
+		if(ch != NULL)
+		{
+			cleardevice();
+			printf("idx = %d\n", idx);
+			idx++;
+			delimage(pic[idx - 1]);
+			
+			flushmouse();
+			flushkey();
 		}
 	}
 }

@@ -4,7 +4,7 @@
 #include "lib/output_img.h"
 #include "lib/enemy_atk.h"
 
-extern int atk_cnt, player_walk_cnt, flag, enemy_atk_type, player_jump_cnt, atked, enemy_num,player_walk_cnt3D,bgX,bgY, inFight, get_dmg_cnt, dash_cnt, combine_cnt, atk_cd, win_screen_cnt, boss_bgm_play;
+extern int atk_cnt, player_walk_cnt, flag, enemy_atk_type, player_jump_cnt, atked, enemy_num,player_walk_cnt3D,bgX,bgY, inFight, get_dmg_cnt, dash_cnt, combine_cnt, atk_cd, win_screen_cnt, boss_bgm_play, talk;
 extern double start;
 extern Human player;
 extern Monster enemy[3];
@@ -105,6 +105,8 @@ void initialization()
 	// 0 表示沒放boss bgm
 	// 1 代表有放
 	boss_bgm_play = 0;
+
+	talk = 1; // 1代表還沒講 0代表講完了
 }
 
 void enemy_ini()
