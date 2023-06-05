@@ -3,4 +3,6 @@
 
 void lunch();
 
+void talking();
+
 #endif
