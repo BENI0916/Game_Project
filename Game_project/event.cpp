@@ -11,9 +11,9 @@ extern PIMAGE bgF,dropImg[],gray;
 int type,dropIdx[bpL],dropAmount[bpL];
 
 int event() {
-    int r = random(450);
+    int r = random(300);
     if (r<1) {
-        mciSendString (TEXT("pause cave"), NULL,0,NULL);
+        mciSendString (TEXT("pause bgm"), NULL,0,NULL);
         mciSendString (TEXT("open audio\\bgm\\battle.mp3 alias battlemusic"), NULL,0,NULL);
 	    mciSendString (TEXT("play battlemusic"), NULL,0,NULL);
         return choMon();
@@ -95,7 +95,7 @@ void leaveFight() {
     delimage(bgF);
     metEvent = 0;
     fadeOut();
-    mciSendString (TEXT("resume cave"), NULL,0,NULL);
+    mciSendString (TEXT("resume bgm"), NULL,0,NULL);
     fade = 1;
 }
 

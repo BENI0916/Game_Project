@@ -2,7 +2,7 @@
 #include "lib/bebao.h"
 #include "lib/status.h"
 
-int bp[3][bpL],bpIdx[3][bpL],bpAmount[3],equipsword=11;
+int bp[3][bpL],bpIdx[3][bpL],bpAmount[3],equipsword;
 extern int key,inBp;
 extern PIMAGE screen,bpImg[],escBG,gray,dropImg[],swordImg[],potionImg[],BpswordImg[];
 extern Human player;

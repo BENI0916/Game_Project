@@ -57,8 +57,8 @@ void output_image()
             	loadBG(BgName, 1859*1.2, 1542*1.3);
 				mciSendString (TEXT("stop win"), NULL,0,NULL);
 				mciSendString (TEXT("close win"), NULL,0,NULL);
-				mciSendString (TEXT("open audio\\bgm\\village.mp3 alias villagemusic"), NULL,0,NULL);
-	    		mciSendString (TEXT("play villagemusic repeat"), NULL,0,NULL);
+				mciSendString (TEXT("open audio\\bgm\\village.mp3 alias bgm"), NULL,0,NULL);
+	    		mciSendString (TEXT("play bgm repeat"), NULL,0,NULL);
 			}
 			
 		}

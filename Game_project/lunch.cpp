@@ -32,7 +32,7 @@ FILE *IsEmpty1_ptr, *IsEmpty2_ptr, *IsEmpty3_ptr;
 void lunch()
 {
 	initialization();
-	printf("initialization succes\n"); 
+	printf("initialization succes\n");
 	randomize();
 	setbkmode(TRANSPARENT);
 	setcolor(WHITE);
@@ -48,7 +48,7 @@ void lunch()
 	inBp = 0;
 	inFight = 0;
 	esc = 0;
-	fade = 1;
+	fade = 0;
 	metEvent = 0;
 	victory = 0;
 	escBG = newimage();
@@ -76,14 +76,14 @@ void lunch()
 	getimage(SavButImg,"images\\save_load_img\\saved_button.png");
 	getimage(EmpButImg,"images\\save_load_img\\empty_button.png");
 
-	mciSendString (TEXT("open audio\\bgm\\home.mp3 alias homemusic"), NULL,0,NULL);
-	mciSendString (TEXT("play homemusic repeat"), NULL,0,NULL);
-	
+	mciSendString (TEXT("open audio\\bgm\\home.mp3 alias bgm"), NULL,0,NULL);
+	mciSendString (TEXT("play bgm repeat"), NULL,0,NULL);
+
 	//一開始判斷三個儲存格有沒有東西
 	IsEmpty1_ptr = fopen("data\\save\\save1.dat", "rb");
 	IsEmpty2_ptr = fopen("data\\save\\save2.dat", "rb");
 	IsEmpty3_ptr = fopen("data\\save\\save3.dat", "rb");
-	
+
 	fseek(IsEmpty1_ptr, 0, SEEK_END);
 	size1 = ftell(IsEmpty1_ptr);
 	if(!size1) IsEmpty1 = 0;
@@ -102,13 +102,18 @@ void lunch()
 	fclose(IsEmpty1_ptr);
 	fclose(IsEmpty2_ptr);
 	fclose(IsEmpty3_ptr);
-	
+
 	flushkey();
 	// is_run 檢視程序是否收到關閉消息, 收到的話會返回false, 即退出程序 
 	// delay_fps 控制幀率, 60 表示"平均延時"為1000/60毫秒 
 	for (; is_run() && enemy_num < 3; delay_fps(60))
 	{
 		cleardevice(); // 把輸出的窗口清空 
+
+		if(talk) {
+			talk = 0;
+			talking();
+		}
 
 		if (player.hp<=0) {
 			if (inFight) {
@@ -239,12 +244,6 @@ void lunch()
 				putimage(player.x, player.y, player.player_msk[player.output_idx], NOTSRCERASE);
 				putimage(player.x, player.y, player.player_img[player.output_idx], SRCINVERT);
 				if(fOn) putimage(720,430,fbt);
-
-				if(talk)
-				{
-					talk = 0;
-					talking();
-				}
 			}
 
 			if (metEvent) {
@@ -269,11 +268,12 @@ void lunch()
 
 void talking()
 {
-	int idx = 0;
+	int idx = 1;
 	char s[100], ch;
+	PIMAGE img = newimage();
 
-	PIMAGE pic[28];
-	for(int i = 0; i < 28; i++)
+	PIMAGE pic[32];
+	for(int i = 1; i < 32; i++)
 	{
 		sprintf(s, "images\\talk\\%d.png", i);
 		pic[i] = newimage();
@@ -282,19 +282,36 @@ void talking()
 	}
 	printf("get pic succes\n");
 
-	while(idx < 28)
+	putimage(abs(wid-getwidth(bg))/2 + bgX, abs(hih-getheight(bg))/2 + bgY, bg);
+	putimage_withalpha(NULL,pic[idx],0,0);
+	getimage(img,0,0,wid,hih);
+	cleardevice();
+    for (int i = 0;i<16;delay_fps(30)) {
+		putimage_alphablend(NULL,img,0,0,0x30,0,0,wid,hih);
+		i++;
+	}
+	delimage(img);
+    flushkey();
+    flushmouse();
+
+
+	for(;is_run()&&idx<32;delay_fps(60))
 	{
+		cleardevice();
 		putimage(abs(wid-getwidth(bg))/2 + bgX, abs(hih-getheight(bg))/2 + bgY, bg);
 		putimage_withalpha(NULL,pic[idx],0,0);
-		ch = getch();
+		if (kbhit()) {
+			ch = getch();
+		}
 		
-		if(ch != NULL)
+		if(ch != NULL||keystate(key_mouse_l))
 		{
-			cleardevice();
+			for(;is_run();delay_fps(60))if(keystate(key_mouse_l)==0) break;
 			printf("idx = %d\n", idx);
 			idx++;
 			delimage(pic[idx - 1]);
 			
+			ch = NULL;
 			flushmouse();
 			flushkey();
 		}

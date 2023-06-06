@@ -2,10 +2,9 @@
 #include "lib/game_start.h"
 #include "lib/lunch.h"
 #include "lib/save_load.h"
-#include "lib/setting.h"
 #include "lib/effect.h"
 
-PIMAGE SetImg,screen;
+PIMAGE screen;
 int mX,mY;
 
 //遊戲開始執行會先跳來這邊 
@@ -42,9 +41,6 @@ void gameStart()
     //quit button
     PIMAGE QuitImg = newimage();
     getimage(QuitImg,"images\\menu\\quit.png");
-    //setting button
-    SetImg = newimage();
-    getimage(SetImg,"images\\menu\\setting.png");
     
     
     
@@ -55,45 +51,50 @@ void gameStart()
     	putimage_withalpha(NULL,BattleImg,50,20);
     	putimage_withalpha(NULL,StartImg,300,550);
     	putimage_withalpha(NULL,QuitImg,820,550);
-    	putimage_withalpha(NULL,SetImg,1170,35);
-    	
+    	//putimage_withalpha(NULL,FolderImg,1170,580);
     	
     	//獲取鼠標訊息
     	mousepos(&mX,&mY);
     	
-		if((mX >= 299 && mX <= 515) && (mY >= 555 && mY <= 603) && keystate(key_mouse_l))
-		{
-			//點擊開始
-			flushmouse();
-			fadeOut();
-			mciSendString(TEXT("stop titlemusic"),NULL,0,NULL);
-			mciSendString(TEXT("close titlemusic"),NULL,0,NULL);
-			newGame();
-			lunch();
-			mciSendString (TEXT("open audio\\bgm\\title.mp3 alias titlemusic"), NULL,0,NULL);
-            mciSendString (TEXT("play titlemusic repeat"), NULL,0,NULL);
-		}
-		else if((mX >= 825 && mX <= 991) && (mY >= 552 && mY <= 603) && keystate(key_mouse_l))
-		{
-			//點擊結束
-			flushmouse();
-			fadeOut();
-			mciSendString(TEXT("stop titlemusic"),NULL,0,NULL);
-			mciSendString(TEXT("close titlemusic"),NULL,0,NULL);
-			delimage(MenubgImg);
-			delimage(StartImg);
-			delimage(QuitImg);
-			delimage(BattleImg);
-			closegraph();
-			exit(0);
-		}
-		else if((mX >= 1177 && mX <= 1229) && (mY >= 46 && mY <= 86) && keystate(key_mouse_l))
-		{
-			//點擊設定
-			flushmouse();
-			setting();
-		}
-			
+    	//if (folder){
+			//SaveLoadScreen();
+			//SaveLoadlistener();
+		//}
+		//else {
+			if((mX >= 299 && mX <= 515) && (mY >= 555 && mY <= 603) && keystate(key_mouse_l))
+			{
+				//點擊開始
+				flushmouse();
+				fadeOut();
+				mciSendString(TEXT("stop titlemusic"),NULL,0,NULL);
+				mciSendString(TEXT("close titlemusic"),NULL,0,NULL);
+				newGame();
+				lunch();
+				mciSendString (TEXT("open audio\\bgm\\title.mp3 alias titlemusic"), NULL,0,NULL);
+            	mciSendString (TEXT("play titlemusic repeat"), NULL,0,NULL);
+			}
+			else if((mX >= 825 && mX <= 991) && (mY >= 552 && mY <= 603) && keystate(key_mouse_l))
+			{
+				//點擊結束
+				flushmouse();
+				fadeOut();
+				mciSendString(TEXT("stop titlemusic"),NULL,0,NULL);
+				mciSendString(TEXT("close titlemusic"),NULL,0,NULL);
+				delimage(MenubgImg);
+				delimage(StartImg);
+				delimage(QuitImg);
+				delimage(BattleImg);
+				closegraph();
+				exit(0);
+			}
+			//else if((mX >= 1176 && mX <= 1238) && (mY >= 595 && mY <= 638) && keystate(key_mouse_l))
+			//{
+				//點擊資料夾
+				//flushmouse();
+				//folder = 1;
+			//}
+		//}
+		
 	}
     /*
     遊戲的開始畫面

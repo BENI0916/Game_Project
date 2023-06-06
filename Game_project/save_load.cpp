@@ -4,9 +4,11 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <string.h>
+#include "lib/output_img.h"
+#include "lib/effect.h"
 
 extern Human player;
-extern int bgX,bgY,enemy_num,bp[3][bpL],bpIdx[3][bpL],bpAmount[3],inMaz,folder,mX,mY;
+extern int bgX,bgY,enemy_num,bp[3][bpL],bpIdx[3][bpL],bpAmount[3],inMaz,folder,mX,mY,equipsword,key,esc,fade,open;
 extern char BgName[];
 extern PIMAGE CellImg, SavButImg, EmpButImg;
 int IsEmpty1,IsEmpty2,IsEmpty3,IsPress1,IsPress2,IsPress3,IsPrintButton;
@@ -26,6 +28,7 @@ void newGame() {
 	bpAmount[0] = 0;
 	bpAmount[1] = 0;
 	bpAmount[2] = 0;
+	equipsword = 11;
 	for (int i = 0;i<bpL;i++) {//清空背包
 		bp[0][i] = 0;
 		bp[1][i] = 0;
@@ -81,6 +84,9 @@ void PrintCellinfo()
 
 void SaveLoadlistener()
 {
+	if (kbhit()) { // 檢測是否有鍵盤輸入 
+		key = getch();
+    }
 	mousepos(&mX,&mY);
 	
 	//save:305 538 491 590
@@ -175,18 +181,20 @@ void SaveLoadlistener()
 		IsPress2 = 0;
 		IsPress3 = 1;
 	}
-	else if((mX >= 1176 && mX <= 1238) && (mY >= 595 && mY <= 638) && keystate(key_mouse_l))
+	else if(((mX >= 1176 && mX <= 1238) && (mY >= 595 && mY <= 638) && keystate(key_mouse_l))||key==key_esc)
 	{
 		//按第二次資料夾消除畫面
 		for(;is_run();delay_fps(60)){
 			if(keystate(key_mouse_l) == 0) break;
 		}
 		flushmouse();
+		flushkey();
 		folder = 0;
 		IsPress1 = 0;
 		IsPress2 = 0;
 		IsPress3 = 0;
 		IsPrintButton = 0;
+		key = 0;
 	}
 	else if(IsPress1==1 || IsPress2==1 || IsPress3==1){
 		//點了其中一個處存格
@@ -283,7 +291,13 @@ void save()
 		fclose(fptr);
 		assert(0);
 	}
-	else if(!fwrite(BgName,sizeof(char),strlen(BgName),fptr))
+	/*else if(fwrite(&inMaz,sizeof(int),1,fptr) != 1)
+	{
+		puts("ERROR: Write inMaz failed.");
+		fclose(fptr);
+		assert(0);
+	}*/
+	else if(!fwrite(BgName,sizeof(char),50,fptr))
 	{
 		puts("ERROR: Write BgName failed.");
 		fclose(fptr);
@@ -381,7 +395,13 @@ void load()
 		fclose(fptr);
 		assert(0);
 	}
-	else if(!fread(BgName,sizeof(char),strlen(BgName),fptr))
+	/*else if(!fread(&inMaz,sizeof(int),1,fptr)!=1)
+	{
+		puts("ERROR: Load inMaz failed.");
+		fclose(fptr);
+		assert(0);
+	}*/
+	else if(!fread(BgName,sizeof(char),50,fptr))
 	{
 		puts("ERROR: Load BgName failed.");
 		fclose(fptr);
@@ -406,8 +426,57 @@ void load()
 		assert(0);
 	}
 	else{
+		mciSendString (TEXT("stop bgm"), NULL,0,NULL);
+        mciSendString (TEXT("close bgm"), NULL,0,NULL);
+		if (strcmp(BgName, "images\\bg\\home2.png")==0) {
+			mciSendString (TEXT("open audio\\bgm\\home.mp3 alias bgm"), NULL,0,NULL);
+	    	mciSendString (TEXT("play bgm repeat"), NULL,0,NULL);
+			loadBG(BgName,1587/2,1300/2);
+		}
+		else if (strcmp(BgName, "images\\bg\\home1.png")==0) {
+			mciSendString (TEXT("open audio\\bgm\\home.mp3 alias bgm"), NULL,0,NULL);
+	    	mciSendString (TEXT("play bgm repeat"), NULL,0,NULL);
+			loadBG(BgName,1587/2,1300/2);
+		}
+		else if (strcmp(BgName, "images\\bg\\village.png")==0) {
+			mciSendString (TEXT("open audio\\bgm\\village.mp3 alias bgm"), NULL,0,NULL);
+	    	mciSendString (TEXT("play bgm repeat"), NULL,0,NULL);
+			loadBG(BgName, 1859*1.2, 1542*1.3);
+		}
+		else if (strcmp(BgName, "images\\bg\\shop.png")==0) {
+			mciSendString (TEXT("open audio\\bgm\\shop.mp3 alias bgm"), NULL,0,NULL);
+	    	mciSendString (TEXT("play bgm repeat"), NULL,0,NULL);
+			loadBG(BgName,1587/2,1300/2);
+		}
+		else if (strcmp(BgName, "images\\bg\\cave01.png")==0) {
+			mciSendString (TEXT("open audio\\bgm\\cave01.mp3 alias bgm"), NULL,0,NULL);
+	    	mciSendString (TEXT("play bgm repeat"), NULL,0,NULL);
+			loadBG(BgName, 1463*1.3, 1957*1.3);
+		}
+		else if (strcmp(BgName, "images\\bg\\cave02.png")==0) {
+			mciSendString (TEXT("open audio\\bgm\\cave02.mp3 alias bgm"), NULL,0,NULL);
+	    	mciSendString (TEXT("play bgm repeat"), NULL,0,NULL);
+			loadBG(BgName, 1480*1.3, 1374*1.3);
+		}
+		else if (strcmp(BgName, "images\\bg\\cave03.png")==0) {
+			mciSendString (TEXT("open audio\\bgm\\cave03.mp3 alias bgm"), NULL,0,NULL);
+	    	mciSendString (TEXT("play bgm repeat"), NULL,0,NULL);
+			loadBG(BgName, 1935*1.3, 1744*1.3);
+		}
 		fclose(fptr);
 		puts("Load successfully");
+
+		folder = 0;
+		IsPress1 = 0;
+		IsPress2 = 0;
+		IsPress3 = 0;
+		IsPrintButton = 0;
+		key = 0;
+		esc = 0;
+        fadeOut();
+		fade = 1;
+		flushmouse();
+		flushkey();
 	}
 	
 	

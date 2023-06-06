@@ -8,14 +8,14 @@ int putLogo() {
     getimage(logo,"images\\bg\\logo.png",0,0);
     for (int i = 0;i<32;delay_fps(30)) {i++;}
     for (int i = 0;i<32;delay_fps(30)) {
-		putimage_alphablend(NULL,logo,0,0,0x18,0,0,wid,hih);
+		putimage_alphablend(NULL,logo,0,0,0x20,0,0,wid,hih);
 		i++;
 	}
     for (int i = 0;i<16;delay_fps(30)) {i++;}
     PIMAGE blk = newimage();
     getimage(blk,"images\\bg\\black.png",0,0);
     for (int i = 0;i<32;delay_fps(30)) {
-		putimage_alphablend(NULL,blk,0,0,0x18,0,0,wid,hih);
+		putimage_alphablend(NULL,blk,0,0,0x20,0,0,wid,hih);
 		i++;
 	}
     delimage(logo);
@@ -77,20 +77,28 @@ int ending() {
 	mciSendString (TEXT("play endbgm"), NULL,0,NULL);
     cleardevice();
     PIMAGE end = newimage();
+    PIMAGE ending = newimage();
     PIMAGE blk = newimage();
     getimage(blk,"images\\bg\\black.png",0,0);
     getimage(end,"images\\bg\\end.png",0,0);
-    for (int i = 0;i<64;delay_fps(30)) {
-		putimage_alphablend(NULL,end,0,0,0x0c,0,0,wid,hih);
+    getimage(ending,"images\\menu\\ending.png",0,0);
+    for (int i = 0;i<16;delay_fps(30)) {
+		putimage_alphablend(NULL,end,0,0,0x30,0,0,wid,hih);
 		i++;
 	}
-    for (int i = 0;i<38;delay_fps(1)) {i++;}
+    for (int i = 0;i<2840;delay_fps(71)) {
+        cleardevice();
+        putimage(0,0,end);
+        putimage_withalpha(NULL,ending,0,720-i);
+        i++;
+    }
     for (int i = 0;i<64;delay_fps(30)) {
-		putimage_alphablend(NULL,blk,0,0,0x0c,0,0,wid,hih);
+		putimage_alphablend(NULL,blk,0,0,0xd,0,0,wid,hih);
 		i++;
 	}
     delimage(end);
     delimage(blk);
+    delimage(ending);
     flushkey();
     flushmouse();
     mciSendString (TEXT("stop endbgm"), NULL,0,NULL);

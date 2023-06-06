@@ -41,10 +41,10 @@ void nextOrback() {
             bgX=20;
             bgY=-20;
             loadBG(BgName,1587/2,1300/2);
-            mciSendString (TEXT("stop cave"), NULL,0,NULL);
-            mciSendString (TEXT("close cave"), NULL,0,NULL);
-            mciSendString (TEXT("open audio\\bgm\\home.mp3 alias homemusic"), NULL,0,NULL);
-	    	mciSendString (TEXT("play homemusic repeat"), NULL,0,NULL);
+            mciSendString (TEXT("stop bgm"), NULL,0,NULL);
+            mciSendString (TEXT("close bgm"), NULL,0,NULL);
+            mciSendString (TEXT("open audio\\bgm\\home.mp3 alias bgm"), NULL,0,NULL);
+	    	mciSendString (TEXT("play bgm repeat"), NULL,0,NULL);
             fadeOut();
             fade = 1;
             inMaz = 0;
@@ -52,8 +52,8 @@ void nextOrback() {
 	    }
         if((mX >= 740 && mX <= 930) && (mY >= 400 && mY <= 480) && keystate(key_mouse_l)) {
 		    //下一層
-            mciSendString (TEXT("stop cave"), NULL,0,NULL);
-            mciSendString (TEXT("close cave"), NULL,0,NULL);
+            mciSendString (TEXT("stop bgm"), NULL,0,NULL);
+            mciSendString (TEXT("close bgm"), NULL,0,NULL);
             flushmouse();
             open = 1;//寶箱未開
             unsigned int cavenum = random(3);
@@ -67,8 +67,8 @@ void nextOrback() {
             getimage(img,"images\\3D\\obj\\door_img.png");
             getimage(msk,"images\\3D\\obj\\door_msk.png");
             if(cavenum == 0) {
-                mciSendString (TEXT("open audio\\bgm\\cave01.mp3 alias cave"), NULL,0,NULL);
-	    	    mciSendString (TEXT("play cave repeat"), NULL,0,NULL);
+                mciSendString (TEXT("open audio\\bgm\\cave01.mp3 alias bgm"), NULL,0,NULL);
+	    	    mciSendString (TEXT("play bgm repeat"), NULL,0,NULL);
                 loadBG(BgName, 1463*1.3, 1957*1.3);
                 if(random(2)) {
                     bgX = -1383;
@@ -85,8 +85,8 @@ void nextOrback() {
                 putimage(bg, place[5-treasurePlace][0]*1.3, place[5-treasurePlace][1]*1.3, img, SRCINVERT);
             }
             if(cavenum == 1) {
-                mciSendString (TEXT("open audio\\bgm\\cave02.mp3 alias cave"), NULL,0,NULL);
-	    	    mciSendString (TEXT("play cave repeat"), NULL,0,NULL);
+                mciSendString (TEXT("open audio\\bgm\\cave02.mp3 alias bgm"), NULL,0,NULL);
+	    	    mciSendString (TEXT("play bgm repeat"), NULL,0,NULL);
                 loadBG(BgName, 1480*1.3, 1374*1.3);
                 if(random(2)) {
                     bgX = -1153;
@@ -102,8 +102,8 @@ void nextOrback() {
                 putimage(bg, place[5-treasurePlace][0]*1.3, place[5-treasurePlace][1]*1.3, img, SRCINVERT);
             }
             if(cavenum == 2) {
-                mciSendString (TEXT("open audio\\bgm\\cave03.mp3 alias cave"), NULL,0,NULL);
-	    	    mciSendString (TEXT("play cave repeat"), NULL,0,NULL);
+                mciSendString (TEXT("open audio\\bgm\\cave03.mp3 alias bgm"), NULL,0,NULL);
+	    	    mciSendString (TEXT("play bgm repeat"), NULL,0,NULL);
                 loadBG(BgName, 1935*1.3, 1744*1.3);
                 if(random(2)) {
                     bgX = -2343;
@@ -270,10 +270,10 @@ void keyListener() {
             loadBG(BgName, 1859*1.2, 1542*1.3);
             bgX = -483;
             bgY = -1077;
-            mciSendString (TEXT("stop homemusic"), NULL,0,NULL);
-            mciSendString (TEXT("close homemusic"), NULL,0,NULL);
-            mciSendString (TEXT("open audio\\bgm\\village.mp3 alias villagemusic"), NULL,0,NULL);
-	    	mciSendString (TEXT("play villagemusic repeat"), NULL,0,NULL);
+            mciSendString (TEXT("stop bgm"), NULL,0,NULL);
+            mciSendString (TEXT("close bgm"), NULL,0,NULL);
+            mciSendString (TEXT("open audio\\bgm\\village.mp3 alias bgm"), NULL,0,NULL);
+	    	mciSendString (TEXT("play bgm repeat"), NULL,0,NULL);
             fadeOut();
             fade = 1;
         }
@@ -306,10 +306,10 @@ void keyListener() {
             bgY=-171;
             sprintf(BgName,"%s","images\\bg\\home1.png");
             loadBG(BgName,1587/2,1300/2);
-            mciSendString (TEXT("stop villagemusic"), NULL,0,NULL);
-            mciSendString (TEXT("close villagemusic"), NULL,0,NULL);
-            mciSendString (TEXT("open audio\\bgm\\home.mp3 alias homemusic"), NULL,0,NULL);
-	    	mciSendString (TEXT("play homemusic repeat"), NULL,0,NULL);
+            mciSendString (TEXT("stop bgm"), NULL,0,NULL);
+            mciSendString (TEXT("close bgm"), NULL,0,NULL);
+            mciSendString (TEXT("open audio\\bgm\\home.mp3 alias bgm"), NULL,0,NULL);
+	    	mciSendString (TEXT("play bgm repeat"), NULL,0,NULL);
             fadeOut();
             fade = 1;
         }
@@ -319,15 +319,15 @@ void keyListener() {
             bgY=-171;
             sprintf(BgName,"%s","images\\bg\\shop.png");
             loadBG(BgName,1587/2,1300/2);
-            mciSendString (TEXT("stop villagemusic"), NULL,0,NULL);
-            mciSendString (TEXT("close villagemusic"), NULL,0,NULL);
-            mciSendString (TEXT("open audio\\bgm\\shop.mp3 alias shopmusic"), NULL,0,NULL);
-	    	mciSendString (TEXT("play shopmusic repeat"), NULL,0,NULL);
+            mciSendString (TEXT("stop bgm"), NULL,0,NULL);
+            mciSendString (TEXT("close bgm"), NULL,0,NULL);
+            mciSendString (TEXT("open audio\\bgm\\shop.mp3 alias bgm"), NULL,0,NULL);
+	    	mciSendString (TEXT("play bgm repeat"), NULL,0,NULL);
             fadeOut();
             fade = 1;
         }
         //賭場
-        if(bgX >= -1404 && bgX <=-1359 && bgY >=-1620 && bgY <=-1596) {
+        /*if(bgX >= -1404 && bgX <=-1359 && bgY >=-1620 && bgY <=-1596) {
             bgX=219;
             bgY=-171;
             sprintf(BgName,"%s","images\\bg\\home1.png");
@@ -338,7 +338,7 @@ void keyListener() {
 	    	mciSendString (TEXT("play shopmusic repeat"), NULL,0,NULL);
             fadeOut();
             fade = 1;
-        }
+        }*/
         //村子右邊BOSS傳送門
         if(bgX < -1956) {
             inFight=1;
@@ -351,13 +351,13 @@ void keyListener() {
             bgX = -1940;
             sprintf(BgName,"%s","images\\bg\\back_ground_01.png");
             loadBG(BgName);
-            mciSendString (TEXT("stop villagemusic"), NULL,0,NULL);
-            mciSendString (TEXT("close villagemusic"), NULL,0,NULL);
+            mciSendString (TEXT("stop bgm"), NULL,0,NULL);
+            mciSendString (TEXT("close bgm"), NULL,0,NULL);
         }
         //村子上方刷怪副本
         if(bgY > -300 && bgX > -1123 && bgX < -1003) {
-            mciSendString (TEXT("stop villagemusic"), NULL,0,NULL);
-            mciSendString (TEXT("close villagemusic"), NULL,0,NULL);
+            mciSendString (TEXT("stop bgm"), NULL,0,NULL);
+            mciSendString (TEXT("close bgm"), NULL,0,NULL);
             //還沒做完
             open = 1;//寶箱未開
             unsigned int cavenum = random(3);
@@ -371,8 +371,8 @@ void keyListener() {
             getimage(img,"images\\3D\\obj\\door_img.png");
             getimage(msk,"images\\3D\\obj\\door_msk.png");
             if(cavenum == 0) {
-                mciSendString (TEXT("open audio\\bgm\\cave01.mp3 alias cave"), NULL,0,NULL);
-	    	    mciSendString (TEXT("play cave repeat"), NULL,0,NULL);
+                mciSendString (TEXT("open audio\\bgm\\cave01.mp3 alias bgm"), NULL,0,NULL);
+	    	    mciSendString (TEXT("play bgm repeat"), NULL,0,NULL);
                 loadBG(BgName, 1463*1.3, 1957*1.3);
                 if(random(2)) {
                     bgX = -1383;
@@ -389,8 +389,8 @@ void keyListener() {
                 putimage(bg, place[5-treasurePlace][0]*1.3, place[5-treasurePlace][1]*1.3, img, SRCINVERT);
             }
             if(cavenum == 1) {
-                mciSendString (TEXT("open audio\\bgm\\cave02.mp3 alias cave"), NULL,0,NULL);
-	    	    mciSendString (TEXT("play cave repeat"), NULL,0,NULL);
+                mciSendString (TEXT("open audio\\bgm\\cave02.mp3 alias bgm"), NULL,0,NULL);
+	    	    mciSendString (TEXT("play bgm repeat"), NULL,0,NULL);
                 loadBG(BgName, 1480*1.3, 1374*1.3);
                 if(random(2)) {
                     bgX = -1153;
@@ -406,8 +406,8 @@ void keyListener() {
                 putimage(bg, place[5-treasurePlace][0]*1.3, place[5-treasurePlace][1]*1.3, img, SRCINVERT);
             }
             if(cavenum == 2) {
-                mciSendString (TEXT("open audio\\bgm\\cave03.mp3 alias cave"), NULL,0,NULL);
-	    	    mciSendString (TEXT("play cave repeat"), NULL,0,NULL);
+                mciSendString (TEXT("open audio\\bgm\\cave03.mp3 alias bgm"), NULL,0,NULL);
+	    	    mciSendString (TEXT("play bgm repeat"), NULL,0,NULL);
                 loadBG(BgName, 1935*1.3, 1744*1.3);
                 if(random(2)) {
                     bgX = -2343;
@@ -456,10 +456,10 @@ void keyListener() {
             loadBG(BgName, 1859*1.2, 1542*1.3);
             bgX = -1293;
             bgY = -1077;
-            mciSendString (TEXT("stop shopmusic"), NULL,0,NULL);
-            mciSendString (TEXT("close shopmusic"), NULL,0,NULL);
-            mciSendString (TEXT("open audio\\bgm\\village.mp3 alias villagemusic"), NULL,0,NULL);
-	    	mciSendString (TEXT("play villagemusic repeat"), NULL,0,NULL);
+            mciSendString (TEXT("stop bgm"), NULL,0,NULL);
+            mciSendString (TEXT("close bgm"), NULL,0,NULL);
+            mciSendString (TEXT("open audio\\bgm\\village.mp3 alias bgm"), NULL,0,NULL);
+	    	mciSendString (TEXT("play bgm repeat"), NULL,0,NULL);
             fadeOut();
             fade = 1;
         }
@@ -630,7 +630,7 @@ void keyListener() {
             nextOrback();
         }
     }
-    cout << bgX << " " << bgY << "       \r";
+    //cout << bgX << " " << bgY << "       \r";
 
     key = 0;
 }
