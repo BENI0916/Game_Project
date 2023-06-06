@@ -15,7 +15,7 @@
 #include "lib/save_load.h"
 
 extern PIMAGE bg, dropImg[bpL], win_screen,screen;
-extern int enemy_atk_type, enemy_num, inFight, bgX, bgY, win_screen_cnt,inMaz,atk_cd,player_walk_cnt,player_jump_cnt,dash_cnt,atk_cnt, boss_bgm_play,IsEmpty1,IsEmpty2,IsEmpty3,IsPrint1,IsPrint2,IsPrint3,IsButton, talk;
+extern int enemy_atk_type, enemy_num, inFight, bgX, bgY, win_screen_cnt,inMaz,atk_cd,player_walk_cnt,player_jump_cnt,dash_cnt,atk_cnt, boss_bgm_play, IsEmpty1, IsEmpty2, IsEmpty3, IsPress1, IsPress2, IsPress3, IsPrintButton, talk;
 extern Human player;
 extern Monster enemy[3];
 extern Bullet skill[6];
@@ -24,8 +24,10 @@ extern double end;
 extern char BgName[];
 extern FILE *fptr;
 
+long int size1, size2, size3;
 int esc,fade,metEvent,victory,inBp,fOn,inMaz,inHelp,folder;
-PIMAGE escBG,pauseImg,bgF,victoryUI,dropImg[bpL],gray,bpImg[3],gameover,fbt,swordImg[3],potionImg[2],helpImg,keyHelp,BpswordImg[3],FolderImg,CellImg,ButtonImg;
+PIMAGE escBG,pauseImg,bgF,victoryUI,dropImg[bpL],gray,bpImg[3],gameover,fbt,swordImg[3],potionImg[2],helpImg,keyHelp,BpswordImg[3],FolderImg,CellImg,SavButImg,EmpButImg;
+FILE *IsEmpty1_ptr, *IsEmpty2_ptr, *IsEmpty3_ptr;
 
 void lunch()
 {
@@ -38,13 +40,10 @@ void lunch()
 	settextjustify(1,1);
 	
 	folder = 0;
-	IsEmpty1 = 0;
-	IsEmpty2 = 0;
-	IsEmpty3 = 0;
-	IsPrint1 = 0;
-	IsPrint2 = 0;
-	IsPrint3 = 0;
-	IsButton = 0;
+	IsPress1 = 0;
+	IsPress2 = 0;
+	IsPress3 = 0;
+	IsPrintButton = 0;
 	inHelp = 0;
 	inBp = 0;
 	inFight = 0;
@@ -62,7 +61,8 @@ void lunch()
 	keyHelp = newimage();
 	FolderImg = newimage();
 	CellImg = newimage();
-	ButtonImg = newimage();
+	SavButImg = newimage();
+	EmpButImg = newimage();
 	getimage(escBG,"images\\bg\\black.png",0,0);
 	getimage(pauseImg,"images\\menu\\pause.png",0,0);
 	getimage(victoryUI,"images\\menu\\victoryUI.png",0,0);
@@ -73,10 +73,36 @@ void lunch()
 	getimage(keyHelp,"images\\menu\\keyHelp.png",0,0);
 	getimage(FolderImg,"images\\menu\\white_folder.png");
 	getimage(CellImg,"images\\save_load_img\\three_cell.png");
-	getimage(ButtonImg,"images\\save_load_img\\save_load_button.png");
+	getimage(SavButImg,"images\\save_load_img\\saved_button.png");
+	getimage(EmpButImg,"images\\save_load_img\\empty_button.png");
 
 	mciSendString (TEXT("open audio\\bgm\\home.mp3 alias homemusic"), NULL,0,NULL);
 	mciSendString (TEXT("play homemusic repeat"), NULL,0,NULL);
+	
+	//一開始判斷三個儲存格有沒有東西
+	IsEmpty1_ptr = fopen("data\\save\\save1.dat", "rb");
+	IsEmpty2_ptr = fopen("data\\save\\save2.dat", "rb");
+	IsEmpty3_ptr = fopen("data\\save\\save3.dat", "rb");
+	
+	fseek(IsEmpty1_ptr, 0, SEEK_END);
+	size1 = ftell(IsEmpty1_ptr);
+	if(!size1) IsEmpty1 = 0;
+	else IsEmpty1 = 1;
+	
+	fseek(IsEmpty2_ptr, 0, SEEK_END);
+	size2 = ftell(IsEmpty2_ptr);
+	if(!size2) IsEmpty2 = 0;
+	else IsEmpty2 = 1;
+	
+	fseek(IsEmpty3_ptr, 0, SEEK_END);
+	size3 = ftell(IsEmpty3_ptr);
+	if(!size3) IsEmpty3 = 0;
+	else IsEmpty3 = 1;
+	
+	fclose(IsEmpty1_ptr);
+	fclose(IsEmpty2_ptr);
+	fclose(IsEmpty3_ptr);
+	
 	flushkey();
 	// is_run 檢視程序是否收到關閉消息, 收到的話會返回false, 即退出程序 
 	// delay_fps 控制幀率, 60 表示"平均延時"為1000/60毫秒 

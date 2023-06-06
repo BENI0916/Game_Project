@@ -8,8 +8,8 @@
 extern Human player;
 extern int bgX,bgY,enemy_num,bp[3][bpL],bpIdx[3][bpL],bpAmount[3],inMaz,folder,mX,mY;
 extern char BgName[];
-extern PIMAGE CellImg, ButtonImg;
-int IsEmpty1,IsEmpty2,IsEmpty3,IsPrint1,IsPrint2,IsPrint3,IsButton;
+extern PIMAGE CellImg, SavButImg, EmpButImg;
+int IsEmpty1,IsEmpty2,IsEmpty3,IsPress1,IsPress2,IsPress3,IsPrintButton;
 FILE *fptr;
 
 //概念:
@@ -49,6 +49,7 @@ void SaveLoadScreen()
 
 void PrintCellinfo()
 {
+	//判斷儲存格是否為空，並印出字體
 	if(IsEmpty1 == 0)
 	{
   		outtextxy(393,366,"EMPTY");
@@ -86,54 +87,138 @@ void SaveLoadlistener()
 	//load:555 543 741 593
 	//delete:808 545 991 585
 	
-	if(IsButton){
+	if(IsPrintButton == 2) {
+		//按empty儲存格
 		if((mX >= 305 && mX <= 491) && (mY >= 538 && mY <= 590) && keystate(key_mouse_l)){
+			for(;is_run();delay_fps(60)){
+				if(keystate(key_mouse_l) == 0) break;
+			}
 			flushmouse();
 			save();
-		}
-		else if((mX >= 555 && mX <= 741) && (mY >= 543 && mY <= 593) && keystate(key_mouse_l)){
-			flushmouse();
-			load();
-		}
-		else if((mX >= 808 && mX <= 991) && (mY >= 545 && mY <= 590) && keystate(key_mouse_l)){
-			flushmouse();
-			del();
+			IsPress1 = 0;
+			IsPress2 = 0;
+			IsPress3 = 0;
+			IsPrintButton = 0;
 		}
 	}
+	if(IsPrintButton == 1) {
+		//按saved儲存格
+		if((mX >= 305 && mX <= 491) && (mY >= 538 && mY <= 590) && keystate(key_mouse_l)){
+			//按save
+			for(;is_run();delay_fps(60)){
+				if(keystate(key_mouse_l) == 0) break;
+			}
+			flushmouse();
+			save();
+			IsPress1 = 0;
+			IsPress2 = 0;
+			IsPress3 = 0;
+			IsPrintButton = 0;
+		}
+		else if((mX >= 555 && mX <= 741) && (mY >= 543 && mY <= 593) && keystate(key_mouse_l)){
+			//按load
+			for(;is_run();delay_fps(60)){
+				if(keystate(key_mouse_l) == 0) break;
+			}
+			flushmouse();
+			load();
+			IsPress1 = 0;
+			IsPress2 = 0;
+			IsPress3 = 0;
+			IsPrintButton = 0;
+		}
+		else if((mX >= 808 && mX <= 991) && (mY >= 545 && mY <= 590) && keystate(key_mouse_l)){
+			//按delete
+			for(;is_run();delay_fps(60)){
+				if(keystate(key_mouse_l) == 0) break;
+			}
+			flushmouse();
+			del();
+			IsPress1 = 0;
+			IsPress2 = 0;
+			IsPress3 = 0;
+			IsPrintButton = 0;
+		}
+		
+	}
+		
 	if((mX >= 294 && mX <= 490) && (mY >= 276 && mY <= 447) && keystate(key_mouse_l))
 	{
 		//按第一個處存格
+		for(;is_run();delay_fps(60)){
+			if(keystate(key_mouse_l) == 0) break;
+		}
 		flushmouse();
-		IsPrint1 = 1;
-		IsPrint2 = 0;
-		IsPrint3 = 0;
+		IsPress1 = 1;
+		IsPress2 = 0;
+		IsPress3 = 0;
 	}
 	else if((mX >= 546 && mX <= 740) && (mY >= 276 && mY <= 447) && keystate(key_mouse_l))
 	{
 		//按第二個處存格
+		for(;is_run();delay_fps(60)){
+			if(keystate(key_mouse_l) == 0) break;
+		}
 		flushmouse();
-		IsPrint1 = 0;
-		IsPrint2 = 1;
-		IsPrint3 = 0;
+		IsPress1 = 0;
+		IsPress2 = 1;
+		IsPress3 = 0;
 	}
 	else if((mX >= 801 && mX <= 995) && (mY >= 276 && mY <= 447) && keystate(key_mouse_l))
 	{
 		//按第三個處存格
+		for(;is_run();delay_fps(60)){
+			if(keystate(key_mouse_l) == 0) break;
+		}
 		flushmouse();
-		IsPrint1 = 0;
-		IsPrint2 = 0;
-		IsPrint3 = 1;
+		IsPress1 = 0;
+		IsPress2 = 0;
+		IsPress3 = 1;
 	}
 	else if((mX >= 1176 && mX <= 1238) && (mY >= 595 && mY <= 638) && keystate(key_mouse_l))
 	{
 		//按第二次資料夾消除畫面
+		for(;is_run();delay_fps(60)){
+			if(keystate(key_mouse_l) == 0) break;
+		}
 		flushmouse();
 		folder = 0;
+		IsPress1 = 0;
+		IsPress2 = 0;
+		IsPress3 = 0;
+		IsPrintButton = 0;
 	}
-	else if(IsPrint1==1 || IsPrint2==1 || IsPrint3==1){
-		//點了其中一個處存格，顯示按鈕
-		putimage_withalpha(NULL,ButtonImg,185,160);
-		IsButton = 1;
+	else if(IsPress1==1 || IsPress2==1 || IsPress3==1){
+		//點了其中一個處存格
+		for(;is_run();delay_fps(60)){
+			if(keystate(key_mouse_l) == 0) break;
+		}
+		//顯示按鈕
+		if(IsPress1==1 && IsEmpty1==1) {
+			putimage_withalpha(NULL,SavButImg,185,160);
+			IsPrintButton = 1;
+		}
+		else if(IsPress2==1 && IsEmpty2==1) {
+			putimage_withalpha(NULL,SavButImg,185,160);
+			IsPrintButton = 1;
+		}
+		else if(IsPress3==1 && IsEmpty3==1) {
+			putimage_withalpha(NULL,SavButImg,185,160);
+			IsPrintButton = 1;
+		}
+		else if(IsPress1==1 && IsEmpty1==0) {
+			putimage_withalpha(NULL,EmpButImg,185,160);
+			IsPrintButton = 2;
+		}
+		else if(IsPress2==1 && IsEmpty2==0) {
+			putimage_withalpha(NULL,EmpButImg,185,160);
+			IsPrintButton = 2;
+		}
+		else if(IsPress3==1 && IsEmpty3==0) {
+			putimage_withalpha(NULL,EmpButImg,185,160);
+			IsPrintButton = 2;
+		}
+		
 	}
 	
 }
@@ -141,13 +226,13 @@ void SaveLoadlistener()
 //存檔用函式 
 void save() 
 {
-	if(IsPrint1){
+	if(IsPress1){
 		fptr = fopen("data\\save\\save1.dat", "wb");
 	}
-	else if (IsPrint2){
+	else if (IsPress2){
 		fptr = fopen("data\\save\\save2.dat", "wb");
 	}
-	else if (IsPrint3){
+	else if (IsPress3){
 		fptr = fopen("data\\save\\save3.dat", "wb");
 	}
 	
@@ -225,9 +310,9 @@ void save()
 	else{
 		fclose(fptr);
 		puts("Save successfully");
-		if(IsPrint1) IsEmpty1 = 1;
-		else if(IsPrint2) IsEmpty2 = 1;
-		else if(IsPrint3) IsEmpty3 = 1;
+		if(IsPress1) IsEmpty1 = 1;
+		else if(IsPress2) IsEmpty2 = 1;
+		else if(IsPress3) IsEmpty3 = 1;
 	}
     //只須完成寫檔及建檔功能，寫入內容先空著就好
 	//三個存檔的檔名分別為save1.dat save2.dat sav3.dat
@@ -239,13 +324,13 @@ void save()
 void load() 
 {
 	FILE *fptr;
-	if(IsPrint1){
+	if(IsPress1){
 		fptr = fopen("data\\save\\save1.dat", "rb");
 	}
-	else if (IsPrint2){
+	else if (IsPress2){
 		fptr = fopen("data\\save\\save2.dat", "rb");
 	}
-	else if (IsPrint3){
+	else if (IsPress3){
 		fptr = fopen("data\\save\\save3.dat", "rb");
 	}
 	
@@ -332,19 +417,19 @@ void load()
 	//已經先放了一個save1.dat當作範例  
 }
 
+//刪除存檔用函式
 void del(){
 	//檔案清空
 	//print empty
-	
-	if(IsPrint1){
+	if(IsPress1){
 		fptr = fopen("data\\save\\save1.dat", "wb");
 		IsEmpty1 = 0;
 	}
-	else if (IsPrint2){
+	else if (IsPress2){
 		fptr = fopen("data\\save\\save2.dat", "wb");
 		IsEmpty2 = 0;
 	}
-	else if (IsPrint3){
+	else if (IsPress3){
 		fptr = fopen("data\\save\\save3.dat", "wb");
 		IsEmpty3 = 0;
 	}
