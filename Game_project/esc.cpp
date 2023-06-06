@@ -48,6 +48,9 @@ void escListener() {
 	    if((mX >= 1176 && mX <= 1238) && (mY >= 595 && mY <= 638) && keystate(key_mouse_l))
 		{
 			//點擊資料夾
+			for(;is_run();delay_fps(60)){
+				if(keystate(key_mouse_l) == 0) break;
+			}
 			flushmouse();
 			folder = 1;
 		}
