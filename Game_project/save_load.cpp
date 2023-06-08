@@ -291,12 +291,24 @@ void save()
 		fclose(fptr);
 		assert(0);
 	}
-	/*else if(fwrite(&inMaz,sizeof(int),1,fptr) != 1)
+	else if(fwrite(&inMaz,sizeof(int),1,fptr) != 1)
 	{
 		puts("ERROR: Write inMaz failed.");
 		fclose(fptr);
 		assert(0);
-	}*/
+	}
+	else if(fwrite(&equipsword,sizeof(int),1,fptr) != 1)
+	{
+		puts("ERROR: Write equipsword failed.");
+		fclose(fptr);
+		assert(0);
+	}
+	else if(fwrite(&open,sizeof(int),1,fptr) != 1)
+	{
+		puts("ERROR: Write open failed.");
+		fclose(fptr);
+		assert(0);
+	}
 	else if(!fwrite(BgName,sizeof(char),50,fptr))
 	{
 		puts("ERROR: Write BgName failed.");
@@ -395,12 +407,24 @@ void load()
 		fclose(fptr);
 		assert(0);
 	}
-	/*else if(!fread(&inMaz,sizeof(int),1,fptr)!=1)
+	else if(fread(&inMaz,sizeof(int),1,fptr) != 1)
 	{
 		puts("ERROR: Load inMaz failed.");
 		fclose(fptr);
 		assert(0);
-	}*/
+	}
+	else if(fread(&equipsword,sizeof(int),1,fptr) != 1)
+	{
+		puts("ERROR: Load equipsword failed.");
+		fclose(fptr);
+		assert(0);
+	}
+	else if(fread(&open,sizeof(int),1,fptr) != 1)
+	{
+		puts("ERROR: Load open failed.");
+		fclose(fptr);
+		assert(0);
+	}
 	else if(!fread(BgName,sizeof(char),50,fptr))
 	{
 		puts("ERROR: Load BgName failed.");
