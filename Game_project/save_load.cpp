@@ -334,9 +334,57 @@ void save()
 		fclose(fptr);
 		assert(0);
 	}
-	else if(!fwrite(enemy,sizeof(Monster),3,fptr))
+	else if(fwrite(&enemy[0].x,sizeof(int),1,fptr) != 1)
 	{
-		puts("ERROR: Write enemy failed.");
+		puts("ERROR: Write enemy[0].x failed.");
+		fclose(fptr);
+		assert(0);
+	}
+	else if(fwrite(&enemy[1].x,sizeof(int),1,fptr) != 1)
+	{
+		puts("ERROR: Write enemy[1].x failed.");
+		fclose(fptr);
+		assert(0);
+	}
+	else if(fwrite(&enemy[2].x,sizeof(int),1,fptr) != 1)
+	{
+		puts("ERROR: Write enemy[2].x failed.");
+		fclose(fptr);
+		assert(0);
+	}
+	else if(fwrite(&enemy[0].hp,sizeof(int),1,fptr) != 1)
+	{
+		puts("ERROR: Write enemy[0].hp failed.");
+		fclose(fptr);
+		assert(0);
+	}
+	else if(fwrite(&enemy[1].hp,sizeof(int),1,fptr) != 1)
+	{
+		puts("ERROR: Write enemy[1].hp failed.");
+		fclose(fptr);
+		assert(0);
+	}
+	else if(fwrite(&enemy[2].hp,sizeof(int),1,fptr) != 1)
+	{
+		puts("ERROR: Write enemy[2].hp failed.");
+		fclose(fptr);
+		assert(0);
+	}
+	else if(fwrite(&enemy[0].output_idx,sizeof(int),1,fptr) != 1)
+	{
+		puts("ERROR: Write enemy[0].output_idx failed.");
+		fclose(fptr);
+		assert(0);
+	}
+	else if(fwrite(&enemy[1].output_idx,sizeof(int),1,fptr) != 1)
+	{
+		puts("ERROR: Write enemy[1].output_idx failed.");
+		fclose(fptr);
+		assert(0);
+	}
+	else if(fwrite(&enemy[2].output_idx,sizeof(int),1,fptr) != 1)
+	{
+		puts("ERROR: Write enemy[2].output_idx failed.");
 		fclose(fptr);
 		assert(0);
 	}
@@ -456,9 +504,57 @@ void load()
 		fclose(fptr);
 		assert(0);
 	}
-	else if(!fread(enemy,sizeof(Monster),3,fptr))
+	else if(fread(&enemy[0].x,sizeof(int),1,fptr) != 1)
 	{
-		puts("ERROR: Load enemy failed.");
+		puts("ERROR: Load enemy[0].x failed.");
+		fclose(fptr);
+		assert(0);
+	}
+	else if(fread(&enemy[1].x,sizeof(int),1,fptr) != 1)
+	{
+		puts("ERROR: Load enemy[1].x failed.");
+		fclose(fptr);
+		assert(0);
+	}
+	else if(fread(&enemy[2].x,sizeof(int),1,fptr) != 1)
+	{
+		puts("ERROR: Load enemy[2].x failed.");
+		fclose(fptr);
+		assert(0);
+	}
+	else if(fread(&enemy[0].hp,sizeof(int),1,fptr) != 1)
+	{
+		puts("ERROR: Load enemy[0].hp failed.");
+		fclose(fptr);
+		assert(0);
+	}
+	else if(fread(&enemy[1].hp,sizeof(int),1,fptr) != 1)
+	{
+		puts("ERROR: Load enemy[1].hp failed.");
+		fclose(fptr);
+		assert(0);
+	}
+	else if(fread(&enemy[2].hp,sizeof(int),1,fptr) != 1)
+	{
+		puts("ERROR: Load enemy[2].hp failed.");
+		fclose(fptr);
+		assert(0);
+	}
+	else if(fread(&enemy[0].output_idx,sizeof(int),1,fptr) != 1)
+	{
+		puts("ERROR: Load enemy[0].output_idx failed.");
+		fclose(fptr);
+		assert(0);
+	}
+	else if(fread(&enemy[1].output_idx,sizeof(int),1,fptr) != 1)
+	{
+		puts("ERROR: Load enemy[1].output_idx failed.");
+		fclose(fptr);
+		assert(0);
+	}
+	else if(fread(&enemy[2].output_idx,sizeof(int),1,fptr) != 1)
+	{
+		puts("ERROR: Load enemy[2].output_idx failed.");
 		fclose(fptr);
 		assert(0);
 	}
