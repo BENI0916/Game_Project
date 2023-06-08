@@ -7,6 +7,7 @@
 #include "lib/output_img.h"
 #include "lib/effect.h"
 
+extern Monster enemy[3];
 extern Human player;
 extern int bgX,bgY,enemy_num,bp[3][bpL],bpIdx[3][bpL],bpAmount[3],inMaz,folder,mX,mY,equipsword,key,esc,fade,open;
 extern char BgName[];
@@ -333,6 +334,12 @@ void save()
 		fclose(fptr);
 		assert(0);
 	}
+	else if(!fwrite(enemy,sizeof(Monster),3,fptr))
+	{
+		puts("ERROR: Write enemy failed.");
+		fclose(fptr);
+		assert(0);
+	}
 	else{
 		fclose(fptr);
 		puts("Save successfully");
@@ -446,6 +453,12 @@ void load()
 	else if(!fread(bpAmount,sizeof(int),3,fptr))
 	{
 		puts("ERROR: Load bpAmount failed.");
+		fclose(fptr);
+		assert(0);
+	}
+	else if(!fread(enemy,sizeof(Monster),3,fptr))
+	{
+		puts("ERROR: Load enemy failed.");
 		fclose(fptr);
 		assert(0);
 	}
