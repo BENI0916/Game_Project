@@ -1,6 +1,7 @@
 # Game_Project
 
 1.修正無法存取變數:equipsword、inMaz、open的bug
+
 2.修game_start
 
 更動檔案
