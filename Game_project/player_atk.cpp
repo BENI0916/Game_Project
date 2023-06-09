@@ -166,7 +166,7 @@ void win_music()
 {
 	if(enemy_num > -1 && enemy[enemy_num].hp <= 0)
 	{
-		mciSendString (TEXT("open audio\\boss_bgm\\win.mp3 alias win"), NULL,0,NULL);
+		mciSendString (TEXT("open audio\\bgm\\vic.mp3 alias win"), NULL,0,NULL);
 		mciSendString (TEXT("play win"), NULL,0,NULL);
 	}
 }

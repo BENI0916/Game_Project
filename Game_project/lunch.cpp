@@ -272,8 +272,8 @@ void talking()
 	char s[100], ch;
 	PIMAGE img = newimage();
 
-	PIMAGE pic[32];
-	for(int i = 1; i < 32; i++)
+	PIMAGE pic[33];
+	for(int i = 1; i < 33; i++)
 	{
 		sprintf(s, "images\\talk\\%d.png", i);
 		pic[i] = newimage();
@@ -295,7 +295,7 @@ void talking()
     flushmouse();
 
 
-	for(;is_run()&&idx<32;delay_fps(60))
+	for(;is_run()&&idx<33;delay_fps(60))
 	{
 		cleardevice();
 		putimage(abs(wid-getwidth(bg))/2 + bgX, abs(hih-getheight(bg))/2 + bgY, bg);
